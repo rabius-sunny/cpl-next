@@ -8,20 +8,8 @@ import { DialogTitle } from '../ui/dialog'
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetTrigger } from "../ui/sheet"
 
 export default async function Header() {
-  // const [currentHash, setCurrentHash] = useState('')
-
-  // useEffect(() => {
-  //   if (window) {
-  //     const id = window.location.hash?.substring(1) || ''
-  //     setCurrentHash(id)
-  //     scrollToElement(id)
-  //   }
-  // }, [])
-
   const data = await retrieveHomepage()
-
   const siteData = data?.data?.nav
-
 
   return (
     <header className="top-0 z-50 sticky bg-white p-4 w-full">
@@ -39,10 +27,6 @@ export default async function Header() {
                   "block px-3 py-2.5 text-gray-800 hover:text-secondary cursor-pointer",
                   // { "text-secondary": currentHash === item?.title }
                 )}
-              // onClick={() => {
-              //   scrollToElement(item.title?.replaceAll(' ', '_').toLowerCase())
-              //   setCurrentHash(item.title)
-              // }}
               >
                 {item?.title}
               </button>
@@ -77,24 +61,10 @@ export default async function Header() {
                       <button
                         key={item?.title}
                         className="block px-3 py-3.5 text-white hover:text-gray-50 cursor-pointer"
-                      // onClick={() => {
-                      //   scrollToElement(item.title?.replaceAll(' ', '_').toLowerCase())
-                      //   setCurrentHash(item.title)
-                      // }}
                       >
                         {item?.title}
                       </button>
                     )}
-
-                    {/* <button
-                      className="block px-3 py-3.5 text-white hover:text-secondary cursor-pointer"
-                      onClick={() => {
-                        scrollToElement('contact')
-                        setCurrentHash('Contact')
-                      }}
-                    >
-                      Contact Us
-                    </button> */}
                   </div>
                 </SheetDescription>
               </SheetContent>
