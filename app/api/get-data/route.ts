@@ -1,5 +1,5 @@
 import { connectToDatabase } from '@/configs/dbConnect'
-import SiteContent from '@/models/SiteContent'
+import SiteContent from '@/models/HomePage'
 import { NextResponse } from 'next/server'
 
 /**
@@ -16,123 +16,95 @@ export async function GET() {
     if (!content) {
       content = await SiteContent.create({
         content: {
-          // Logo
-          logo: {
-            thumbnail: '',
-            file: '',
-            fileId: ''
-          },
-          // Banners section
-          banners: [
-            {
-              title: '',
-              subTitle: '',
-              description: '',
-              image: {
-                thumbnail: '',
-                file: '',
-                fileId: ''
-              },
-              product: {
-                description: '',
-                features: [
+          nav: {
+            logo: {
+              file: '',
+              fileId: '',
+              thumbnail: ''
+            },
+            cta: {
+              text: '',
+              link: ''
+            },
+            items: [
+              {
+                title: '',
+                link: '',
+                childrens: [
                   {
-                    key: '',
-                    value: ''
-                  }
-                ],
-                images: [
-                  {
-                    thumbnail: '',
-                    file: '',
-                    fileId: ''
+                    title: '',
+                    link: ''
                   }
                 ]
               }
+            ]
+          },
+          sliders: [
+            {
+              backgroundImage: {
+                file: '',
+                fileId: '',
+                thumbnail: ''
+              },
+              title: '',
+              subtitle: '',
+              images: [
+                {
+                  file: '',
+                  fileId: '',
+                  thumbnail: ''
+                }
+              ]
             }
           ],
-          // About section
           about: {
             title: '',
-            subtitle: '',
-            description: '',
-            images: [
-              {
-                thumbnail: '',
-                file: '',
-                fileId: ''
-              }
-            ],
+            description: ''
+          },
+          stats: {
+            title: '',
+            backgroundImage: {
+              file: '',
+              fileId: '',
+              thumbnail: ''
+            },
             stats: [
               {
                 title: '',
-                count: 2
-              }
-            ],
-            teamfirst: [
-              {
-                name: '',
-                designation: '',
-                image: {
-                  thumbnail: '',
-                  file: '',
-                  fileId: ''
-                }
-              }
-            ],
-            teamsecond: [
-              {
-                name: '',
-                designation: '',
-                image: {
-                  thumbnail: '',
-                  file: '',
-                  fileId: ''
-                }
+                count: 0
               }
             ]
           },
-          // Clients section
-          clients: {
+          testimonials: {
             title: '',
             subtitle: '',
-            logos: [
+            items: [
               {
-                image: {
-                  thumbnail: '',
-                  file: '',
-                  fileId: ''
-                },
-                link: ''
+                message: '',
+                name: '',
+                designation: ''
               }
             ]
           },
-          // Contact section
-          contact: {
-            title: '',
-            subtitle: '',
-            banner: {
-              thumbnail: '',
-              file: '',
-              fileId: ''
-            }
+          video: {
+            file: '',
+            fileId: '',
+            thumbnail: ''
           },
-          // Footer section
           footer: {
-            aboutText: '',
-            getInTouch: [
-              {
-                key: '',
-                value: ''
-              }
-            ],
-            socialMoto: '',
-            socialLinks: [
+            office: {
+              items: ['']
+            },
+            factory: {
+              items: ['']
+            },
+            social: [
               {
                 icon: '',
                 link: ''
               }
-            ]
+            ],
+            copyright: ''
           }
         }
       })

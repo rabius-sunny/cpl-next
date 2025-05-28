@@ -1,14 +1,14 @@
 'use server'
 
 import { connectToDatabase } from '@/configs/dbConnect'
-import SiteContent from '@/models/SiteContent'
+import SiteContent from '@/models/HomePage'
 import { revalidatePath, revalidateTag } from 'next/cache'
 
 /**
  * Create or update the homepage content
  * This function will create a new record if none exists, or update the existing one
  */
-export async function saveHomepageContent(content: SiteContentData) {
+export async function saveHomepageContent(content: HomePageContent) {
   try {
     // Connect to the database
     await connectToDatabase()
@@ -29,7 +29,7 @@ export async function saveHomepageContent(content: SiteContentData) {
 
     // Revalidate the homepage path to update the cache
     revalidatePath('/')
-    revalidateTag('data')
+    revalidateTag('homepage')
 
     return {
       success: true,
@@ -49,7 +49,7 @@ export async function saveHomepageContent(content: SiteContentData) {
  */
 export async function getHomepageContent(): Promise<{
   success: boolean
-  data?: SiteContentData | null
+  data?: HomePageContent | null
   error?: string
 }> {
   try {
@@ -75,9 +75,9 @@ export async function getHomepageContent(): Promise<{
 /**
  * Update a specific section of the homepage content
  */
-export async function updateHomepageSection<T extends keyof SiteContentData>(
+export async function updateHomepageSection<T extends keyof HomePageContent>(
   section: T,
-  data: SiteContentData[T]
+  data: HomePageContent[T]
 ) {
   try {
     // Connect to the database
@@ -93,7 +93,7 @@ export async function updateHomepageSection<T extends keyof SiteContentData>(
 
       // Revalidate the homepage path
       revalidatePath('/')
-      revalidateTag('data')
+      revalidateTag('homepage')
 
       return {
         success: true
@@ -106,7 +106,7 @@ export async function updateHomepageSection<T extends keyof SiteContentData>(
 
     // Revalidate the homepage path
     revalidatePath('/')
-    revalidateTag('data')
+    revalidateTag('homepage')
 
     return {
       success: true
