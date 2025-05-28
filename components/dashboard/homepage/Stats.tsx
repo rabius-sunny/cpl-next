@@ -223,33 +223,21 @@ export default function Stats({ data }: TProps) {
           </Card>
 
           {/* Stats Items */}
-          <div className='space-y-4'>
-            {statFields.map((field, index) => (
-              <Card key={field.id} className='p-3 border border-gray-200 hover:border-black'>
-                <CardHeader className='p-0 pb-3'>
-                  <div className='flex justify-between items-center'>
-                    <CardTitle className='text-base'>Stat {index + 1}</CardTitle>
-                    <Button
-                      type='button'
-                      onClick={() => removeStat(index)}
-                      variant='ghost'
-                      size='icon'
-                      className='size-7 bg-red-100 text-destructive hover:text-white cursor-pointer hover:bg-destructive'
-                      disabled={statFields.length <= 1}
-                    >
-                      <Trash2 className='h-4 w-4' />
-                    </Button>
-                  </div>
-                </CardHeader>
+          {statFields.length > 0 && (
+            <Card className='border border-gray-200 hover:border-black'>
+              <CardHeader className='p-4 pb-3'>
+                <CardTitle className='text-base'>Stats Items</CardTitle>
+              </CardHeader>
 
-                <CardContent className='p-0 space-y-3'>
-                  <div className='grid md:grid-cols-2 gap-3'>
+              <CardContent className='p-4 pt-0 space-y-3'>
+                {statFields.map((field, index) => (
+                  <div key={field.id} className='flex items-end gap-2'>
                     {/* Title field */}
                     <FormField
                       control={form.control}
                       name={`stats.${index}.title`}
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem className='flex-1'>
                           <FormLabel className='text-xs text-muted-foreground'>Title</FormLabel>
                           <FormControl>
                             <Input
@@ -268,12 +256,12 @@ export default function Stats({ data }: TProps) {
                       control={form.control}
                       name={`stats.${index}.count`}
                       render={({ field }) => (
-                        <FormItem>
+                        <FormItem className='w-24'>
                           <FormLabel className='text-xs text-muted-foreground'>Count</FormLabel>
                           <FormControl>
                             <Input
                               type='number'
-                              placeholder='Enter count'
+                              placeholder='0'
                               {...field}
                               onChange={(e) => field.onChange(Number(e.target.value))}
                               className='h-7 text-sm'
@@ -283,11 +271,23 @@ export default function Stats({ data }: TProps) {
                         </FormItem>
                       )}
                     />
+
+                    {/* Remove button */}
+                    <Button
+                      type='button'
+                      onClick={() => removeStat(index)}
+                      variant='ghost'
+                      size='icon'
+                      className='size-7 bg-red-100 text-destructive hover:text-white cursor-pointer hover:bg-destructive mb-0'
+                      disabled={statFields.length <= 1}
+                    >
+                      <Trash2 className='h-3 w-3' />
+                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                ))}
+              </CardContent>
+            </Card>
+          )}
 
           {statFields.length === 0 && (
             <div className='text-center py-8 text-muted-foreground border border-dashed rounded-md'>
