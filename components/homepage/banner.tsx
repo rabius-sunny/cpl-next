@@ -6,133 +6,11 @@ import { AnimatePresence, motion, useScroll, useTransform } from "motion/react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
 
-const bannerSlides = [
-    {
-        id: 1,
-        title: "Premium Paper Manufacturing",
-        subtitle: "Excellence in Every Sheet",
-        description:
-            "Leading the industry with sustainable practices and innovative paper solutions for over three decades.",
-        image: "/placeholder.svg?height=800&width=1200",
-        products: [
-            {
-                id: 1,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#27ae60",
-                title: "Creative Classic A4",
-                specs: "80gsm",
-                offset: { x: 0, y: 0, z: 5, rotate: 0 },
-            },
-            {
-                id: 2,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#2980b9",
-                title: "Creative Classic A4",
-                specs: "70gsm",
-                offset: { x: 40, y: 10, z: 4, rotate: 2 },
-            },
-            {
-                id: 3,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#ffffff",
-                title: "Creative Classic A4",
-                specs: "90gsm",
-                offset: { x: 80, y: 20, z: 3, rotate: 4 },
-            },
-            {
-                id: 4,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#f39c12",
-                title: "Creative Classic A4",
-                specs: "100gsm",
-                offset: { x: 120, y: 30, z: 2, rotate: 6 },
-            },
-        ],
-    },
-    {
-        id: 2,
-        title: "Sustainable Innovation",
-        subtitle: "Eco-Friendly Solutions",
-        description: "Committed to environmental responsibility while delivering the highest quality paper products.",
-        image: "/placeholder.svg?height=800&width=1200",
-        products: [
-            {
-                id: 1,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#16a085",
-                title: "EcoFriendly A4",
-                specs: "75gsm",
-                offset: { x: 0, y: 0, z: 5, rotate: 0 },
-            },
-            {
-                id: 2,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#1abc9c",
-                title: "Recycled A4",
-                specs: "80gsm",
-                offset: { x: 40, y: 10, z: 4, rotate: 2 },
-            },
-            {
-                id: 3,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#2ecc71",
-                title: "Green Series A4",
-                specs: "70gsm",
-                offset: { x: 80, y: 20, z: 3, rotate: 4 },
-            },
-        ],
-    },
-    {
-        id: 3,
-        title: "Global Distribution",
-        subtitle: "Worldwide Excellence",
-        description: "Serving customers across continents with reliable supply chains and consistent quality.",
-        image: "/placeholder.svg?height=800&width=1200",
-        products: [
-            {
-                id: 1,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#e74c3c",
-                title: "Premium Export A4",
-                specs: "90gsm",
-                offset: { x: 0, y: 0, z: 5, rotate: 0 },
-            },
-            {
-                id: 2,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#3498db",
-                title: "Office Pro A4",
-                specs: "80gsm",
-                offset: { x: 40, y: 10, z: 4, rotate: 2 },
-            },
-            {
-                id: 3,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#f1c40f",
-                title: "Creative Gold A4",
-                specs: "100gsm",
-                offset: { x: 80, y: 20, z: 3, rotate: 4 },
-            },
-            {
-                id: 4,
-                image: "/placeholder.svg?height=400&width=300",
-                color: "#9b59b6",
-                title: "Creative Premium A4",
-                specs: "120gsm",
-                offset: { x: 120, y: 30, z: 2, rotate: 6 },
-            },
-        ],
-    },
-]
+type TPops = {
+    data?: SliderItem[]
+}
 
-const floatingElements = [
-    { id: 1, size: 60, delay: 0 },
-    { id: 2, size: 40, delay: 0.5 },
-    { id: 3, size: 80, delay: 1 },
-    { id: 4, size: 30, delay: 1.5 },
-]
-
-export default function Banner() {
+export default function Banner({ data }: TPops) {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [isAutoPlaying, setIsAutoPlaying] = useState(true)
     const { scrollY } = useScroll()
@@ -145,24 +23,27 @@ export default function Banner() {
         if (!isAutoPlaying) return
 
         const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % bannerSlides.length)
+            setCurrentSlide((prev) => (prev + 1) % data?.length!)
         }, 5000)
 
         return () => clearInterval(interval)
     }, [isAutoPlaying])
 
+    if (!data?.length) return null
+
     const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % bannerSlides.length)
+        setCurrentSlide((prev) => (prev + 1) % data.length)
         setIsAutoPlaying(false)
     }
 
     const prevSlide = () => {
-        setCurrentSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length)
+        data
+        setCurrentSlide((prev) => (prev - 1 + data.length) % data.length)
         setIsAutoPlaying(false)
     }
 
     return (
-        <div className="relative bg-gray-900 py-32 h-auto overflow-hidden">
+        <div className="relative bg-gray-100 py-32 h-auto overflow-hidden">
             {/* Background Images with Parallax */}
             <AnimatePresence mode="wait">
                 <motion.div
@@ -170,18 +51,17 @@ export default function Banner() {
                     initial={{ scale: 1.1, opacity: 0, y: -1000 }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{ scale: 0.9, opacity: 0, y: -1000 }}
-                    transition={{ duration: 1.5, ease: "easeInOut" }}
+                    transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
                     className="absolute inset-0"
                     style={{ y: backgroundY }}
                 >
                     <div
                         className="bg-cover bg-no-repeat bg-center w-full h-full"
-                        style={{ backgroundImage: `url(${bannerSlides[currentSlide].image})` }}
+                        style={{ backgroundImage: `url(${data[currentSlide].backgroundImage?.file})` }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
                 </motion.div>
             </AnimatePresence>
-
 
 
             {/* Mobile Product Display */}
@@ -195,9 +75,9 @@ export default function Banner() {
                     className="md:hidden right-0 bottom-24 left-0 z-30 absolute px-6"
                 >
                     <div className="flex space-x-4 pb-4 overflow-x-auto scrollbar-hide">
-                        {bannerSlides[currentSlide].products.map((product, index) => (
+                        {data[currentSlide]?.images?.map((product, index) => (
                             <motion.div
-                                key={product.id}
+                                key={index}
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: index * 0.1, duration: 0.4 }}
@@ -206,17 +86,12 @@ export default function Banner() {
                                 whileTap={{ scale: 0.95 }}
                             >
                                 <div
-                                    className="rounded-sm w-24 h-32"
+                                    className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-sm w-24 h-32 overflow-hidden"
                                     style={{
-                                        backgroundColor: product.color,
                                         boxShadow: "2px 2px 10px rgba(0,0,0,0.2)",
                                     }}
                                 >
-                                    <div className="flex flex-col justify-between items-center p-2 h-full text-center">
-                                        <div className="font-bold text-white text-xs">Creative</div>
-                                        <div className="font-bold text-white text-xl">A4</div>
-                                        <div className="font-bold text-white text-xs">{product.specs}</div>
-                                    </div>
+                                    <Image src={product.file || "/placeholder.svg"} alt="Product" fill className="object-cover" />
                                 </div>
                             </motion.div>
                         ))}
@@ -235,16 +110,8 @@ export default function Banner() {
                                     initial={{ opacity: 0, y: 50 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -50 }}
-                                    transition={{ duration: 0.8, ease: "easeOut" }}
+                                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
                                 >
-                                    <motion.h3
-                                        className="mb-4 font-medium text-orange-400 text-lg"
-                                        initial={{ opacity: 0, x: -30 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                        transition={{ delay: 0.2, duration: 0.6 }}
-                                    >
-                                        {bannerSlides[currentSlide].subtitle}
-                                    </motion.h3>
 
                                     <motion.h1
                                         className="mb-6 font-bold text-white text-5xl md:text-7xl leading-tight"
@@ -252,17 +119,26 @@ export default function Banner() {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.4, duration: 0.8 }}
                                     >
-                                        {bannerSlides[currentSlide].title}
+                                        {data[currentSlide].title}
                                     </motion.h1>
 
-                                    <motion.p
+                                    <motion.h3
+                                        className="mb-4 font-medium text-gray-400 text-lg"
+                                        initial={{ opacity: 0, x: -30 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        transition={{ delay: 0.2, duration: 0.6 }}
+                                    >
+                                        {data[currentSlide].subtitle}
+                                    </motion.h3>
+
+                                    {/* <motion.p
                                         className="mb-8 text-white/80 text-xl leading-relaxed"
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.6, duration: 0.6 }}
                                     >
-                                        {bannerSlides[currentSlide].description}
-                                    </motion.p>
+                                        {data[currentSlide].description}
+                                    </motion.p> */}
 
                                     {/* <motion.div
                                         className="flex sm:flex-row flex-col gap-4"
@@ -293,37 +169,37 @@ export default function Banner() {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                transition={{ duration: 0.8 }}
+                                transition={{ duration: 0.8, delay: 0.5, }}
                                 className="hidden md:block"
                                 style={{ perspective: "1000px" }}
                             >
                                 <div className="relative" style={{ transformStyle: "preserve-3d", width: "350px", height: "420px" }}>
-                                    {bannerSlides[currentSlide].products.map((product, index) => (
+                                    {data[currentSlide].images?.map((item, index) => (
                                         <motion.div
-                                            key={product.id}
+                                            key={index}
                                             className="absolute origin-center"
                                             initial={{
                                                 opacity: 0,
-                                                x: product.offset.x + 50,
-                                                y: product.offset.y + 50,
-                                                rotateY: product.offset.rotate + 15,
+                                                x: index + 5 * 50,
+                                                y: index + 5 * 50,
+                                                rotateY: -index + 5 * 50,
                                                 scale: 0.8,
                                             }}
                                             animate={{
                                                 opacity: 1,
-                                                x: product.offset.x,
-                                                y: product.offset.y,
-                                                rotateY: product.offset.rotate,
+                                                x: 10 * index,
+                                                y: 10 * index,
+                                                rotateY: index - 15,
                                                 scale: 1,
                                             }}
                                             exit={{
-                                                opacity: 0, x: product.offset.x + 500,
-                                                y: product.offset.y + 50,
-                                                rotateY: product.offset.rotate + 150,
+                                                opacity: 0, x: 500 * index,
+                                                y: 50 * index,
+                                                rotateY: 150 * index,
                                                 scale: 0.8,
                                             }}
                                             transition={{
-                                                delay: index * 0.2,
+                                                delay: index * 0.1,
                                                 duration: 0.8,
                                                 ease: "easeOut",
                                                 type: "spring",
@@ -335,13 +211,13 @@ export default function Banner() {
                                             //     transition: { duration: 0.3 },
                                             // }}
                                             style={{
-                                                zIndex: bannerSlides[currentSlide].products.length * index,
+                                                zIndex: (data[currentSlide]?.images?.length ?? 0) * index,
                                                 filter: "drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.3))",
                                             }}
                                         >
                                             {/* Paper Package */}
                                             <div className="relative w-75 h-96 cursor-pointer">
-                                                <Image src={'/32432.png'} alt="" fill />
+                                                <Image src={item.file!} alt="" fill />
                                             </div>
                                         </motion.div>
                                     ))}
@@ -360,7 +236,7 @@ export default function Banner() {
                 </Button>
 
                 <div className="flex space-x-2">
-                    {bannerSlides.map((_, index) => (
+                    {data.map((_, index) => (
                         <motion.button
                             key={index}
                             onClick={() => {
@@ -389,20 +265,4 @@ export default function Banner() {
             />
         </div>
     )
-}
-
-// Helper function to adjust color brightness
-function adjustBrightness(hex: string, percent: number) {
-    // Convert hex to RGB
-    let r = Number.parseInt(hex.substring(1, 3), 16)
-    let g = Number.parseInt(hex.substring(3, 5), 16)
-    let b = Number.parseInt(hex.substring(5, 7), 16)
-
-    // Adjust brightness
-    r = Math.max(0, Math.min(255, r + percent))
-    g = Math.max(0, Math.min(255, g + percent))
-    b = Math.max(0, Math.min(255, b + percent))
-
-    // Convert back to hex
-    return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`
 }
