@@ -136,7 +136,7 @@ type Aboutus = {
     fileId?: string
     thumbnail?: string
   }
-  history?: {
+  sections?: {
     title?: string
     description?: string
     image?: {
@@ -144,16 +144,7 @@ type Aboutus = {
       fileId?: string
       thumbnail?: string
     }
-  }
-  mission?: {
-    title?: string
-    description?: string
-    image?: {
-      file?: string
-      fileId?: string
-      thumbnail?: string
-    }
-  }
+  }[]
   leadership?: {
     title?: string
     description?: string

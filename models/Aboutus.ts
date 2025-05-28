@@ -9,24 +9,18 @@ const aboutusSchema = new Schema(
       thumbnail: String
     },
 
-    history: {
-      title: String,
-      description: String,
-      image: {
-        file: String,
-        fileId: String,
-        thumbnail: String
+    sections: [
+      {
+        title: String,
+        description: String,
+        image: {
+          file: String,
+          fileId: String,
+          thumbnail: String
+        }
       }
-    },
-    mission: {
-      title: String,
-      description: String,
-      image: {
-        file: String,
-        fileId: String,
-        thumbnail: String
-      }
-    },
+    ],
+
     leadership: {
       title: String,
       description: String,
@@ -38,6 +32,7 @@ const aboutusSchema = new Schema(
         }
       ]
     },
+
     bottomImage: {
       file: String,
       fileId: String,
