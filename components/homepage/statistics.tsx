@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { AnimatedCounter } from "../common/CounterStats";
 
 type TPops = {
     data?: StatsSection
@@ -8,6 +9,8 @@ type TPops = {
 
 export default function StatisticsSection({ data }: TPops) {
     const [firstWord, ...rest] = (data?.title || '').split(" ");
+
+    console.log('data :>> ', data);
     return (
         <section id="about_us" className={cn("py-20 bg-white")}>
             <div className="mx-auto px-4 max-w-7xl container">
@@ -15,6 +18,16 @@ export default function StatisticsSection({ data }: TPops) {
                     {/* <SectionHeading title={data?.title} /> */}
                     <h2 className='font-bold text-5xl'>{firstWord} <span className='text-secondary'>{rest}</span></h2>
                     {data?.backgroundImage?.file && <Image src={data?.backgroundImage?.file} width={1920} height={1200} alt="" />}
+
+                    <div className="flex gap-6 shadow-gray-200 shadow-md rounded-xl w-full">
+                        {data?.stats?.map((data, index) => (
+                            <div className="flex flex-col justify-center items-center gap-4 px-6 py-10 text-center basis-1/3" key={index}>
+                                <AnimatedCounter to={data?.count ?? 0} className='font-black text-secondary text-9xl' />
+                                <h2 className="font-bold text-secondary text-xl uppercase">{data?.title}</h2>
+                            </div>
+                        ))}
+                    </div>
+
                 </div>
             </div>
         </section>
