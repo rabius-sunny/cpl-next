@@ -24,11 +24,14 @@ export default function Header() {
   const { siteData } = useSiteData()
 
   return (
-    <header className="top-0 z-20 sticky bg-white p-4 w-full">
+    <header className="top-0 z-20 sticky bg-white px-4 w-full">
       <div className="mx-auto lg:px-4 container">
-        <nav className="flex justify-between items-center">
-          <Link href='/' className="">
-            <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={20} width={140} />
+        <nav className="relative flex justify-between items-center">
+
+          <Link href='/' className="h-auto">
+            <div className="flex justify-start items-start py-2">
+              <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={65} width={130} className='ml-0 h- object-cover' />
+            </div>
           </Link>
 
           <div className="hidden lg:flex space-x-4">
@@ -85,16 +88,6 @@ export default function Header() {
                         {item?.title}
                       </button>
                     )}
-
-                    {/* <button
-                      className="block px-3 py-3.5 text-white hover:text-secondary cursor-pointer"
-                      onClick={() => {
-                        scrollToElement('contact')
-                        setCurrentHash('Contact')
-                      }}
-                    >
-                      Contact Us
-                    </button> */}
                   </div>
                 </SheetDescription>
               </SheetContent>

@@ -56,7 +56,7 @@ export default function AboutSection({ data = {} }: TProps) {
                         </div>
                         <button
                             onClick={onOpen}
-                            className="hover:bg-primary px-5 py-3 border hover:border-primary border-black rounded-md font-montserrat font-normal hover:text-white text-xl cursor-pointer">Who We Are</button>
+                            className="hover:bg-primary px-5 py-3 border hover:border-primary border-black rounded-md font-normal hover:text-white text-xl cursor-pointer">Who We Are</button>
                     </div>
                 </div>
             </div>

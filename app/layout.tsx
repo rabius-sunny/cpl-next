@@ -3,25 +3,19 @@ import { UserProvider } from '@/lib/auth'
 import { SiteDataProvider } from '@/lib/dataContext'
 import retrieveUserFromSession from '@/utils/getUser'
 import type { Metadata } from 'next'
-import { League_Script, Montserrat, Poppins } from 'next/font/google'
+import { Poppins, Raleway } from 'next/font/google'
 import './globals.css'
 
 const poppins = Poppins({
-  weight: ['200', '300', '400', '500', '600', '700'],
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
   variable: '--font-poppins'
 })
 
-const leagueScript = League_Script({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-league-script'
-})
-
-const montserrat = Montserrat({
-  weight: ['200', '300', '400', '500', '600', '700'],
-  subsets: ['latin'],
-  variable: '--font-montserrat'
+const raleway = Raleway({
+  weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
+  subsets: ['latin', 'cyrillic'],
+  variable: '--font-raleway'
 })
 
 export const metadata: Metadata = {
@@ -42,7 +36,7 @@ export default async function RootLayout({
     return (
       <html lang='en'>
         <body
-          className={`${poppins.className} ${leagueScript.variable} ${montserrat.variable}`}
+          className={`${poppins.className} ${raleway.variable}`}
           suppressHydrationWarning
         >
           <UserProvider userPromise={userPromise}>
@@ -85,7 +79,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${poppins.className} ${leagueScript.variable} ${montserrat.variable}`}
+        className={`${poppins.className} ${raleway.variable}`}
         suppressHydrationWarning
       >
         <UserProvider userPromise={userPromise}>
