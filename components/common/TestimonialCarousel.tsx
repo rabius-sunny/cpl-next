@@ -68,7 +68,7 @@ const TestimonialItem = ({ data }: { data: TestimonialItem }) => {
         <div className="flex flex-col justify-center h-full text-start">
             <p className="mb-4 text-gray-600 text-lg line-clamp-6 lg:line-clamp-5 leading-loose">{data?.message}</p>
             <h4 className="font-semibold text-gray-900">{data?.name}</h4>
-            <p className="text-gray-500 text-sm">{data?.designation}</p>
+            <p className="text-gray-500">{data?.designation}</p>
         </div>
     )
 }

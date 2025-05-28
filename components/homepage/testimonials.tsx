@@ -9,7 +9,7 @@ type TProps = {
 export const TestimonialSection = ({ data }: TProps) => {
 
     return (
-        <section id="about_us" className={cn("py-20 bg-gray-50")}>
+        <section id="about_us" className={cn("py-20")}>
             <div className="mx-auto px-4 max-w-7xl container">
                 <div className="flex flex-row justify-between items-center gap-20 w-full">
                     <div className="hidden xl:block relative w-64">
