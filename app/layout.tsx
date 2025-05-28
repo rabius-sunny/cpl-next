@@ -1,6 +1,5 @@
 import { Toaster } from '@/components/ui/sonner'
 import { UserProvider } from '@/lib/auth'
-import { SiteDataProvider } from '@/lib/dataContext'
 import retrieveUserFromSession from '@/utils/getUser'
 import type { Metadata } from 'next'
 import { League_Script, Montserrat, Poppins } from 'next/font/google'
@@ -46,40 +45,12 @@ export default async function RootLayout({
           suppressHydrationWarning
         >
           <UserProvider userPromise={userPromise}>
-            <SiteDataProvider initialData={null}>
-              <Toaster richColors closeButton />
-              <>{children}</>
-            </SiteDataProvider>
+            <Toaster richColors closeButton />
+            <>{children}</>
           </UserProvider>
         </body>
       </html>
     )
-  }
-
-  const homeDataRes = await fetch(`${process.env.NEXT_PUBLIC_API}/get-data`, {
-    next: { tags: ['data'], revalidate: 120 }
-  })
-  const othersDataRes = await fetch(`${process.env.NEXT_PUBLIC_API}/others-content`, {
-    next: { tags: ['others'], revalidate: 120 }
-  })
-
-  if (!homeDataRes.ok || !othersDataRes.ok) {
-    throw new Error('No data available')
-  }
-
-  const data: ResponseData = await homeDataRes.json()
-  const othersData: OthersResponse = await othersDataRes.json()
-
-  if (!data.data || !othersData.data) {
-    throw new Error('No data available')
-  }
-
-  const siteContent = data.data
-  const othersContent = othersData.data
-
-  const allData = {
-    ...siteContent,
-    ...othersContent
   }
 
   return (
@@ -89,10 +60,8 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <UserProvider userPromise={userPromise}>
-          <SiteDataProvider initialData={allData}>
-            <Toaster richColors closeButton />
-            <>{children}</>
-          </SiteDataProvider>
+          <Toaster richColors closeButton />
+          <>{children}</>
         </UserProvider>
       </body>
     </html>
