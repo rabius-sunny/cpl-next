@@ -1,0 +1,24 @@
+services:
+  app:
+    container_name: ingress-solution-next
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=${MONGODB_URI}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL}
+      - JWT_SECRET=${JWT_SECRET}
+      - IMAGEKIT_PRIVATE_KEY=${IMAGEKIT_PRIVATE_KEY}
+      - IMAGEKIT_PUBLIC_KEY=${IMAGEKIT_PUBLIC_KEY}
+      - NEXT_PUBLIC_API=${NEXT_PUBLIC_API}
+      # Add any other required environment variables here
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
