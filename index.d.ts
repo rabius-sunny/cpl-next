@@ -128,3 +128,44 @@ type Product = {
     thumbnail: string
   }>
 }
+
+type Aboutus = {
+  title?: string
+  backgroundImage?: {
+    file?: string
+    fileId?: string
+    thumbnail?: string
+  }
+  history?: {
+    title?: string
+    description?: string
+    image?: {
+      file?: string
+      fileId?: string
+      thumbnail?: string
+    }
+  }
+  mission?: {
+    title?: string
+    description?: string
+    image?: {
+      file?: string
+      fileId?: string
+      thumbnail?: string
+    }
+  }
+  leadership?: {
+    title?: string
+    description?: string
+    leaders?: Array<{
+      name?: string
+      designation?: string
+      bio?: string
+    }>
+  }
+  bottomImage?: {
+    file?: string
+    fileId?: string
+    thumbnail?: string
+  }
+}

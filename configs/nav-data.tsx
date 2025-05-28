@@ -2,7 +2,6 @@ import {
   FileText,
   Home,
   Lightbulb,
-  LucideBadgePlus,
   Phone,
   Settings,
   ShoppingBag,
@@ -20,7 +19,12 @@ export const siteContentNavItems = [
   {
     label: 'Products',
     link: '/dashboard/products',
-    icon: <LucideBadgePlus className='mr-2 w-4 h-4' />
+    icon: <ShoppingBag className='mr-2 w-4 h-4' />
+  },
+  {
+    label: 'About',
+    link: '/dashboard/about',
+    icon: <FileText className='mr-2 w-4 h-4' />
   },
   {
     label: 'Services',
@@ -31,11 +35,6 @@ export const siteContentNavItems = [
     label: 'Projects',
     link: '/dashboard/projects',
     icon: <SquareStack className='mr-2 w-4 h-4' />
-  },
-  {
-    label: 'About',
-    link: '/dashboard/about',
-    icon: <FileText className='mr-2 w-4 h-4' />
   },
   {
     label: 'Clients',
