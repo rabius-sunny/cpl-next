@@ -231,7 +231,7 @@ export default function Banner({ data }: TPops) {
 
             {/* Slide Navigation */}
             <div className="bottom-8 left-1/2 z-30 absolute flex items-center space-x-4 -translate-x-1/2">
-                <Button variant="ghost" size="icon" onClick={prevSlide} className="hover:bg-white/20 rounded-full text-secondary">
+                <Button variant="ghost" size="icon" onClick={prevSlide} className="hover:bg-white/20 rounded-full text-gray-300">
                     <ChevronLeft className="w-6 h-6" />
                 </Button>
 
@@ -243,7 +243,7 @@ export default function Banner({ data }: TPops) {
                                 setCurrentSlide(index)
                                 setIsAutoPlaying(false)
                             }}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-secondary w-8" : "bg-secondary/50"
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-gray-300 w-8" : "bg-gray-300/50"
                                 }`}
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
@@ -251,14 +251,14 @@ export default function Banner({ data }: TPops) {
                     ))}
                 </div>
 
-                <Button variant="ghost" size="icon" onClick={nextSlide} className="hover:bg-white/20 rounded-full text-secondary">
+                <Button variant="ghost" size="icon" onClick={nextSlide} className="hover:bg-white/20 rounded-full text-gray-300">
                     <ChevronRight className="w-6 h-6" />
                 </Button>
             </div>
 
             {/* Progress Bar */}
             <motion.div
-                className="bottom-0 left-0 z-30 absolute bg-secondary h-1"
+                className="bottom-0 left-0 z-30 absolute bg-gray-300 h-1"
                 initial={{ width: "0%" }}
                 animate={{ width: isAutoPlaying ? "100%" : "0%" }}
                 transition={{ duration: 5, ease: "linear", repeat: isAutoPlaying ? Number.POSITIVE_INFINITY : 0 }}

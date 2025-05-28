@@ -11,14 +11,14 @@ type TProps = {
 export const TestimonialCarousel = ({ data }: TProps) => {
     const [index, setIndex] = useState(0)
     const [firstWord, ...rest] = (data?.title || '').split(" ");
-    const total = data?.items?.length ?? 0
+    // const total = data?.items?.length ?? 0
 
-    const paginate = (direction: number) => {
-        setIndex((prev) => (prev + direction + total) % total)
-    }
+    // const paginate = (direction: number) => {
+    //     setIndex((prev) => (prev + direction + total) % total)
+    // }
 
     return (
-        <div className="relative space-y-6 mx-auto w-full max-w-4xl">
+        <div className="relative space-y-6 lg:ml-auto w-full max-w-5xl">
             {/* Controls */}
             <div className="flex justify-between items-center mt-2">
                 <div className="space-y-2">
@@ -53,7 +53,7 @@ export const TestimonialCarousel = ({ data }: TProps) => {
                     //     if (swipe < -100) paginate(1)
                     //     else if (swipe > 100) paginate(-1)
                     // }}
-                    className="w-full h-full cursor-grab active:cursor-grabbing"
+                    className="w-full h-64 cursor-grab active:cursor-grabbing"
                 >
                     {data?.items && <TestimonialItem data={data.items[index]} />}
                 </motion.div>
@@ -66,7 +66,7 @@ export const TestimonialCarousel = ({ data }: TProps) => {
 const TestimonialItem = ({ data }: { data: TestimonialItem }) => {
     return (
         <div className="flex flex-col justify-center h-full text-start">
-            <p className="mb-4 text-gray-600 text-lg leading-loose">{data?.message}</p>
+            <p className="mb-4 text-gray-600 text-lg line-clamp-6 lg:line-clamp-5 leading-loose">{data?.message}</p>
             <h4 className="font-semibold text-gray-900">{data?.name}</h4>
             <p className="text-gray-500 text-sm">{data?.designation}</p>
         </div>
