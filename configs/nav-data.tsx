@@ -1,7 +1,6 @@
 import {
   FileText,
   Home,
-  Image,
   Images,
   LayoutDashboard,
   Lightbulb,
@@ -15,9 +14,9 @@ import {
 
 export const siteContentNavItems = [
   {
-    label: 'Logo',
-    link: '/dashboard/logo',
-    icon: <Image className='mr-2 w-4 h-4' />
+    label: 'Home Page',
+    link: '/dashboard/homepage',
+    icon: <Home className='mr-2 w-4 h-4' />
   },
   {
     label: 'Banners',
