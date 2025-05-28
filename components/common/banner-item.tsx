@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 
 type TProps = {
-    item: BannersSection
+    item: SliderItem
 }
 
 export default function BannerItem({ item }: TProps) {
@@ -16,7 +16,7 @@ export default function BannerItem({ item }: TProps) {
                 'flex items-center bg-cover bg-no-repeat bg-center py-20 w-full h-screen lg:h-[70vh]'
             )}
             style={{
-                backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.05), rgba(0,0,0,0)), url(${item?.image?.file})`
+                backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.05), rgba(0,0,0,0)), url(${item?.backgroundImage?.file})`
             }}
         >
             <div className='mx-auto px-4 container'>
@@ -38,7 +38,7 @@ export default function BannerItem({ item }: TProps) {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             className='text-gray-400 text-4xl leading-tight'
                         >
-                            {item?.subTitle}
+                            {item?.subtitle}
                         </motion.h4>
                         {/* <p className='font-light text-lg'>{item?.description}</p> */}
                         {/* <button onClick={onOpen} className="bg-white hover:bg-white px-6 py-3 rounded-lg text-gray-800 text-lg cursor-pointer">Products</button> */}
@@ -46,7 +46,7 @@ export default function BannerItem({ item }: TProps) {
 
                     <div className="flex justify-center items-center w-full h-full">
                         <div className="">
-                            {item?.product?.images?.map((data) =>
+                            {item?.images?.map((data) =>
                                 data?.file && <Image src={data?.file} height={400} width={400} alt={data.fileId || ''} />
                             )}
                         </div>
