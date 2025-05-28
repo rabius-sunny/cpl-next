@@ -24,7 +24,7 @@ export default async function Header() {
 
 
   return (
-    <header className="top-0 z-20 sticky bg-white p-4 w-full">
+    <header className="top-0 z-50 sticky bg-white p-4 w-full">
       <div className="mx-auto lg:px-4 container">
         <nav className="flex justify-between items-center">
           <Link href='/' className="">

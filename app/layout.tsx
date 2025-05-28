@@ -2,13 +2,13 @@ import { Toaster } from '@/components/ui/sonner'
 import { UserProvider } from '@/lib/auth'
 import retrieveUserFromSession from '@/utils/getUser'
 import type { Metadata } from 'next'
-import { Poppins, Raleway } from 'next/font/google'
+import { Raleway, Roboto } from 'next/font/google'
 import './globals.css'
 
-const poppins = Poppins({
+const roboto = Roboto({
   weight: ['200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
-  variable: '--font-poppins'
+  variable: '--font-roboto'
 })
 
 const raleway = Raleway({
@@ -35,7 +35,7 @@ export default async function RootLayout({
     return (
       <html lang='en'>
         <body
-          className={`${poppins.className} ${raleway.variable}`}
+          className={`${roboto.variable} ${raleway.variable}`}
           suppressHydrationWarning
         >
           <UserProvider userPromise={userPromise}>
@@ -50,7 +50,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${poppins.className} ${raleway.variable}`}
+        className={`${roboto.variable} ${raleway.variable}`}
         suppressHydrationWarning
       >
         <UserProvider userPromise={userPromise}>

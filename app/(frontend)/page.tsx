@@ -1,4 +1,5 @@
 import { retrieveHomepage } from "@/actions/data/homepage";
+import AboutSection from "@/components/homepage/about";
 import Banner from "@/components/homepage/banner";
 
 export default async function HomePage() {
@@ -8,6 +9,7 @@ export default async function HomePage() {
   return (
     <>
       <Banner data={siteData.sliders} />
+      <AboutSection data={siteData.about} />
     </>
   )
 }
