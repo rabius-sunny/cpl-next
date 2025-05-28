@@ -96,7 +96,7 @@ export default function Nav({ data }: TProps) {
           _id: createStableId('item', index)
         })) || []
     },
-    mode: 'onBlur'
+    mode: 'onSubmit'
   })
 
   // Set up field array for managing nav items

@@ -1,3 +1,4 @@
+import About from '@/components/dashboard/homepage/About'
 import Nav from '@/components/dashboard/homepage/Nav'
 import Sliders from '@/components/dashboard/homepage/Sliders'
 
@@ -23,6 +24,9 @@ export default async function LogoPage() {
       <Nav data={data.data.nav} />
       <div className='h-1 bg-secondary w-full my-4' />
       <Sliders data={data.data.sliders} />
+      <div className='h-1 bg-secondary w-full my-4' />
+      <About data={data.data.about} />
+      <div className='h-1 bg-secondary w-full my-4' />
     </div>
   )
 }

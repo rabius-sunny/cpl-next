@@ -94,7 +94,7 @@ export default function Sliders({ data }: TProps) {
           _id: createStableId(index)
         })) || []
     },
-    mode: 'onBlur'
+    mode: 'onSubmit'
   })
 
   // Set up field array for managing slider items
