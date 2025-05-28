@@ -1,3 +1,4 @@
+import { retrieveHomepage } from '@/actions/data/homepage'
 import About from '@/components/dashboard/homepage/About'
 import AdminFooter from '@/components/dashboard/homepage/Footer'
 import Nav from '@/components/dashboard/homepage/Nav'
@@ -6,19 +7,8 @@ import Stats from '@/components/dashboard/homepage/Stats'
 import Testimonials from '@/components/dashboard/homepage/Testimonials'
 import Video from '@/components/dashboard/homepage/Video'
 
-type TResponse = {
-  success: boolean
-  data: HomePageContent
-}
-
 export default async function Homepage() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/get-data`, {
-    next: { tags: ['homepage'] }
-  })
-  if (!res.ok) {
-    throw new Error('Failed to fetch data')
-  }
-  const data: TResponse = await res.json()
+  const data = await retrieveHomepage()
 
   if (!data.success) {
     throw new Error('Failed to fetch data')

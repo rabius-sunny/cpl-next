@@ -4,6 +4,11 @@ import { connectToDatabase } from '@/configs/dbConnect'
 import SiteContent from '@/models/HomePage'
 import { revalidatePath, revalidateTag } from 'next/cache'
 
+type TResponse = {
+  success: boolean
+  data: HomePageContent
+}
+
 /**
  * Create or update the homepage content
  * This function will create a new record if none exists, or update the existing one
@@ -118,4 +123,14 @@ export async function updateHomepageSection<T extends keyof HomePageContent>(
       error: error.message || `Failed to update ${section} section`
     }
   }
+}
+
+export async function retrieveHomepage(): Promise<TResponse> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/get-data`, {
+    next: { tags: ['homepage'] }
+  })
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+  return await res.json()
 }
