@@ -1,9 +1,8 @@
 import {
   FileText,
   Home,
-  Images,
-  LayoutDashboard,
   Lightbulb,
+  LucideBadgePlus,
   Phone,
   Settings,
   ShoppingBag,
@@ -19,14 +18,9 @@ export const siteContentNavItems = [
     icon: <Home className='mr-2 w-4 h-4' />
   },
   {
-    label: 'Banners',
-    link: '/dashboard/banners',
-    icon: <Images className='mr-2 w-4 h-4' />
-  },
-  {
     label: 'Products',
     link: '/dashboard/products',
-    icon: <LayoutDashboard className='mr-2 w-4 h-4' />
+    icon: <LucideBadgePlus className='mr-2 w-4 h-4' />
   },
   {
     label: 'Services',

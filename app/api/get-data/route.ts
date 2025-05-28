@@ -1,5 +1,5 @@
 import { connectToDatabase } from '@/configs/dbConnect'
-import SiteContent from '@/models/HomePage'
+import HomePage from '@/models/HomePage'
 import { NextResponse } from 'next/server'
 
 /**
@@ -11,10 +11,10 @@ export async function GET() {
     await connectToDatabase()
 
     // Find existing content
-    let content = await SiteContent.findOne()
+    let content = await HomePage.findOne()
 
     if (!content) {
-      content = await SiteContent.create({
+      content = await HomePage.create({
         content: {
           nav: {
             logo: {

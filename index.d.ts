@@ -108,3 +108,23 @@ type HomePageContent = {
   video?: VideoSection
   footer?: FooterSection
 }
+
+type Product = {
+  name: string
+  description: string
+  features: Array<{
+    key: string
+    value: string
+    _id?: string
+  }>
+  thumbnail?: {
+    file: string
+    fileId: string
+    thumbnail: string
+  }
+  images?: Array<{
+    file: string
+    fileId: string
+    thumbnail: string
+  }>
+}
