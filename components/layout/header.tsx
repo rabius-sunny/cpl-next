@@ -1,16 +1,18 @@
 import { retrieveHomepage } from '@/actions/data/homepage'
 import { SheetHeader } from '@/components/ui/sheet'
-import { siteConfig } from "@/configs/nav-data"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
+import AnimatedButton from '../common/AnimatedButton'
 import { DialogTitle } from '../ui/dialog'
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetTrigger } from "../ui/sheet"
+import ResponsiveMenu, { MobileMenuItem } from './MultiLevelMenu'
 
 export default async function Header() {
   const data = await retrieveHomepage()
   const siteData = data?.data?.nav
 
+  console.log('siteData :>> ', siteData);
   return (
     <header className="top-0 z-50 sticky bg-white p-4 w-full">
       <div className="mx-auto lg:px-4 max-w-7xl container">
@@ -19,18 +21,13 @@ export default async function Header() {
             <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={20} width={140} />
           </Link>
 
-          <div className="hidden lg:flex space-x-4">
-            {siteConfig?.mainNav?.map((item) =>
-              <button
-                key={item?.title}
-                className={cn(
-                  "block px-3 py-2.5 text-gray-800 hover:text-secondary cursor-pointer",
-                  // { "text-secondary": currentHash === item?.title }
-                )}
-              >
-                {item?.title}
-              </button>
-            )}
+          <div className="hidden lg:flex items-center space-x-4">
+            <ResponsiveMenu items={siteData?.items || []} />
+
+            {siteData?.cta &&
+              <AnimatedButton href={siteData?.cta?.link}>
+                {siteData?.cta?.text}
+              </AnimatedButton>}
           </div>
 
           <div className="lg:hidden block">
@@ -42,7 +39,7 @@ export default async function Header() {
                   <span className="bg-gray-800 w-6 h-[3px]" />
                 </span>
               </SheetTrigger>
-              <SheetContent className="bg-primary !border-none w-[85%] max-w-sm">
+              <SheetContent className="bg-white !border-none w-[85%] max-w-sm">
                 <SheetHeader>
                   <DialogTitle className='hidden'>Menu</DialogTitle>
                   <SheetClose className={cn("absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background !bg-primary !z-50 transition-opacity hover:opacity-100 focus:outline-none focus:ring-0 focus:ring-ring focus:ring-offset-0 disabled:pointer-events-none data-[state=open]:bg-accent")}>
@@ -56,15 +53,10 @@ export default async function Header() {
 
 
                 <SheetDescription asChild>
-                  <div className="flex flex-col justify-center space-x-4 pb-20 overflow-y-auto text-center">
-                    {siteConfig?.mainNav?.map((item) =>
-                      <button
-                        key={item?.title}
-                        className="block px-3 py-3.5 text-white hover:text-gray-50 cursor-pointer"
-                      >
-                        {item?.title}
-                      </button>
-                    )}
+                  <div className="relative pb-20 max-w-full overflow-y-auto">
+                    {siteData?.items?.map((item, index) => (
+                      <MobileMenuItem key={index} item={item} />
+                    ))}
                   </div>
                 </SheetDescription>
               </SheetContent>
