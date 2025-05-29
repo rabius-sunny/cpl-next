@@ -10,7 +10,6 @@ type TPops = {
 export default function StatisticsSection({ data }: TPops) {
     const [firstWord, ...rest] = (data?.title || '').split(" ");
 
-    console.log('data :>> ', data);
     return (
         <section id="about_us" className={cn("py-20 bg-white")}>
             <div className="mx-auto px-4 max-w-7xl container">

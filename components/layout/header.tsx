@@ -13,7 +13,7 @@ export default async function Header() {
 
   return (
     <header className="top-0 z-50 sticky bg-white p-4 w-full">
-      <div className="mx-auto lg:px-4 container">
+      <div className="mx-auto lg:px-4 max-w-7xl container">
         <nav className="flex justify-between items-center">
           <Link href='/' className="">
             <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={20} width={140} />
