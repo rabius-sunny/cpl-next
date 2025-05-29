@@ -11,13 +11,12 @@ export default async function Header() {
   const data = await retrieveHomepage()
   const siteData = data?.data?.nav
 
-  console.log('siteData :>> ', siteData);
   return (
     <header className="top-0 z-50 sticky bg-white px-4 py-2 lg:py-4 w-full">
       <div className="mx-auto lg:px-4 max-w-7xl container">
         <nav className="flex justify-between items-center">
           <Link href='/' className="basis-1/3">
-            <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={50} width={300} layout="responsive" />
+            <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={20} width={140} />
           </Link>
 
           <div className="hidden lg:flex items-center space-x-4">
