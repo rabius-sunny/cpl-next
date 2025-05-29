@@ -114,7 +114,6 @@ const SocialLinksEditor: React.FC<SocialLinksEditorProps> = ({ initialLinks = []
         const filteredLinks = links.filter((link) => link.network && link.link)
 
         // Show success message or notification
-        console.log('Social links updated successfully', filteredLinks)
       } catch (error) {
         console.error('Failed to update social links:', error)
       } finally {
