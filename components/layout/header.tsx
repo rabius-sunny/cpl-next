@@ -1,6 +1,5 @@
 import { retrieveHomepage } from '@/actions/data/homepage'
 import { SheetHeader } from '@/components/ui/sheet'
-import { cn } from "@/lib/utils"
 import Image from "next/image"
 import Link from "next/link"
 import AnimatedButton from '../common/AnimatedButton'
@@ -14,11 +13,11 @@ export default async function Header() {
 
   console.log('siteData :>> ', siteData);
   return (
-    <header className="top-0 z-50 sticky bg-white p-4 w-full">
+    <header className="top-0 z-50 sticky bg-white px-4 py-2 lg:py-4 w-full">
       <div className="mx-auto lg:px-4 max-w-7xl container">
         <nav className="flex justify-between items-center">
-          <Link href='/' className="">
-            <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={20} width={140} />
+          <Link href='/' className="basis-1/3">
+            <Image src={siteData?.logo?.file || '/images/logo.png'} alt="Logo" height={50} width={300} layout="responsive" />
           </Link>
 
           <div className="hidden lg:flex items-center space-x-4">
@@ -41,14 +40,8 @@ export default async function Header() {
               </SheetTrigger>
               <SheetContent className="bg-white !border-none w-[85%] max-w-sm">
                 <SheetHeader>
-                  <DialogTitle className='hidden'>Menu</DialogTitle>
-                  <SheetClose className={cn("absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background !bg-primary !z-50 transition-opacity hover:opacity-100 focus:outline-none focus:ring-0 focus:ring-ring focus:ring-offset-0 disabled:pointer-events-none data-[state=open]:bg-accent")}>
-                    <span className="group lg:hidden flex flex-col justify-center items-center gap-1.5 p-2 rounded-md focus:outline-none focus:ring-0 focus:ring-primary focus:ring-offset-0 font-medium text-white text-sm cursor-pointer">
-                      <span className="bg-white w-6 h-[3px]" />
-                      <span className="bg-white -ml-5 group-hover:-ml-0 w-6 h-[3px] transition-all duration-300 ease-in-out transform" />
-                      <span className="bg-white w-6 h-[3px]" />
-                    </span>
-                  </SheetClose>
+                  <DialogTitle className=''>Menu</DialogTitle>
+                  <SheetClose />
                 </SheetHeader>
 
 

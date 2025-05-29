@@ -61,7 +61,7 @@ export function MobileMenuItem({ item, level = 0 }: { item: NavItem; level?: num
 
     return (
         <div className="relative w-full">
-            <div className={`flex justify-between items-center px-4 py-2 overflow-hidden mr-10 text-base font-medium ${level > 0 ? 'pl-6' : ''}`}
+            <div className={`flex justify-between items-center px-4 py-2 overflow-hidden text-base font-medium ${level > 0 ? 'pl-6' : ''}`}
                 onClick={() => setOpen((o) => !o)}
             >
                 {item.link ? (
@@ -72,7 +72,7 @@ export function MobileMenuItem({ item, level = 0 }: { item: NavItem; level?: num
                     <span>{item.title}</span>
                 )}
                 {hasChildren && (
-                    <button onClick={() => setOpen((o) => !o)}>
+                    <button className='cursor-pointer'>
                         {open ? <Minus size={20} /> : <Plus size={20} />}
                     </button>
                 )}
