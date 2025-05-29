@@ -27,8 +27,8 @@ export const siteContentNavItems = [
     icon: <FileText className='mr-2 w-4 h-4' />
   },
   {
-    label: 'Services',
-    link: '/dashboard/services',
+    label: 'Others pages',
+    link: '/dashboard/others',
     icon: <Lightbulb className='mr-2 w-4 h-4' />
   },
   {
