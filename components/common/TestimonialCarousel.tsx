@@ -22,14 +22,14 @@ export const TestimonialCarousel = ({ data }: TProps) => {
             {/* Controls */}
             <div className="flex justify-between items-center mt-2">
                 <div className="space-y-2">
-                    <p className='font-semibold text-secondary text-sm uppercase'>{data?.subtitle}</p>
-                    <h2 className='font-bold text-4xl'>{firstWord} <span className='text-secondary'>{rest}</span></h2>
+                    <p className='font-semibold text-primary text-sm uppercase'>{data?.subtitle}</p>
+                    <h2 className='font-bold text-4xl'>{firstWord} <span className='text-primary'>{rest}</span></h2>
                 </div>
                 <div className="flex gap-2">
                     {data?.items?.map((_, i) => (
                         <div
                             key={i}
-                            className={`size-2.5 rounded-full transition-colors duration-300 cursor-pointer ${i === index ? 'bg-secondary' : 'bg-gray-300'
+                            className={`size-2.5 rounded-full transition-colors duration-300 cursor-pointer ${i === index ? 'bg-primary' : 'bg-gray-300'
                                 }`}
                             onClick={() => setIndex(i)}
                         />

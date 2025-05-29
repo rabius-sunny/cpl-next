@@ -35,7 +35,7 @@ export default function ProductCard({ item }: TProps) {
 
             {/* Animated Description Box */}
             <motion.div
-                className="right-0 bottom-0 left-0 z-10 absolute space-y-6 bg-secondary/95 group-hover:bg-gray-950/90 px-6 py-6 transition-colors duration-500 ease-in-out"
+                className="right-0 bottom-0 left-0 z-10 absolute space-y-6 bg-primary/95 group-hover:bg-gray-950/90 px-6 py-6 transition-colors duration-500 ease-in-out"
                 variants={{
                     rest: { height: 80 },
                     hover: { height: 200 },
@@ -70,7 +70,7 @@ export default function ProductCard({ item }: TProps) {
                     }}
                     transition={{ delay: 0.2 }}
                 >
-                    <Link href="/#" className="block font-extrabold text-secondary">
+                    <Link href="/#" className="block font-extrabold text-primary">
                         See more
                     </Link>
                 </motion.div>

@@ -16,7 +16,7 @@ export const TestimonialSection = ({ data }: TProps) => {
                         <div className="relative size-fit">
                             <Image src={'/images/testimonial.jpg'} alt="" height={386} width={198} />
 
-                            <div className="inline-flex top-1/6 right-0 absolute justify-center items-center bg-secondary p-2 w-14 h-24 text-white text-8xl leading-20 translate-x-1/2">
+                            <div className="inline-flex top-1/6 right-0 absolute justify-center items-center bg-primary p-2 w-14 h-24 text-white text-8xl leading-20 translate-x-1/2">
                                 <span className="bottom-5 absolute bg-amber-600 leading-0">&ldquo;</span>
                             </div>
                         </div>
