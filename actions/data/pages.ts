@@ -29,13 +29,29 @@ export async function updatePage(pageId: string, data: Partial<CustomPage>) {
   try {
     await connectToDatabase()
 
+    // Get the current page to check if slug is changing
+    const currentPage = await Pages.findById(pageId)
+    if (!currentPage) {
+      return { success: false, error: 'Page not found' }
+    }
+
     const updatedPage = await Pages.findByIdAndUpdate(pageId, data, { new: true })
 
     if (!updatedPage) {
       return { success: false, error: 'Page not found' }
     }
 
+    // Revalidate dashboard
     revalidatePath('/dashboard/custom')
+
+    // If slug changed, revalidate both old and new paths
+    if (data.slug && currentPage.slug !== data.slug) {
+      revalidatePath(`/${currentPage.slug}`) // Old path
+      revalidatePath(`/${data.slug}`) // New path
+    } else if (currentPage.slug) {
+      // If just updating other fields, revalidate current slug
+      revalidatePath(`/${currentPage.slug}`)
+    }
 
     return { success: true, data: JSON.parse(JSON.stringify(updatedPage)) }
   } catch (error) {
@@ -48,8 +64,19 @@ export async function deletePage(pageId: string) {
   try {
     await connectToDatabase()
 
+    // First get the page to access the slug for cache revalidation
+    const page = await Pages.findById(pageId)
+
+    if (!page) {
+      return { success: false, error: 'Page not found' }
+    }
+
+    // Delete the page
     await Pages.findByIdAndDelete(pageId)
+
+    // Revalidate both dashboard and the dynamic page cache
     revalidatePath('/dashboard/custom')
+    revalidatePath(`/${page.slug}`)
 
     return { success: true }
   } catch (error) {

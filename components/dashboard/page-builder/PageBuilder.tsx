@@ -2,6 +2,7 @@
 
 import {
   createPage,
+  deletePage,
   getPageById,
   getPages,
   updatePage,
@@ -21,6 +22,7 @@ import { Label } from '@/components/ui/label'
 import {
   ArrowDown,
   ArrowUp,
+  Edit,
   Eye,
   FileText,
   Grid3X3,
@@ -28,6 +30,7 @@ import {
   Layout,
   Plus,
   Save,
+  Trash2,
   Video
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
@@ -49,6 +52,11 @@ export default function PageBuilder() {
   const [showCreateDialog, setShowCreateDialog] = useState(false)
   const [newPageTitle, setNewPageTitle] = useState('')
   const [newPageSlug, setNewPageSlug] = useState('')
+
+  // Edit page metadata
+  const [showEditDialog, setShowEditDialog] = useState(false)
+  const [editPageTitle, setEditPageTitle] = useState('')
+  const [editPageSlug, setEditPageSlug] = useState('')
 
   useEffect(() => {
     loadPages()
@@ -227,6 +235,88 @@ export default function PageBuilder() {
     }
   }
 
+  const openEditDialog = (page: CustomPage) => {
+    setEditPageTitle(page.title)
+    setEditPageSlug(page.slug)
+    setShowEditDialog(true)
+  }
+
+  const updatePageMetadata = async () => {
+    if (!currentPage) {
+      toast.error('No page selected')
+      return
+    }
+
+    if (!editPageTitle.trim() || !editPageSlug.trim()) {
+      toast.error('Please provide both title and slug')
+      return
+    }
+
+    setSaving(true)
+    try {
+      const oldSlug = currentPage.slug
+      const result = await updatePage(currentPage._id!, {
+        title: editPageTitle,
+        slug: editPageSlug
+      })
+
+      if (result.success && result.data) {
+        // Update current page
+        setCurrentPage(result.data)
+
+        // Update pages list
+        setPages((prev) => prev.map((page) => (page._id === currentPage._id ? result.data : page)))
+
+        // If slug changed, revalidate both old and new paths
+        if (oldSlug !== editPageSlug) {
+          // The updatePage function already handles revalidation
+        }
+
+        setShowEditDialog(false)
+        toast.success('Page updated successfully')
+      } else {
+        toast.error(result.error || 'Failed to update page')
+      }
+    } catch (error) {
+      console.error('Error updating page:', error)
+      toast.error('Failed to update page')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const deletePageHandler = async (pageId: string, pageTitle: string) => {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${pageTitle}"? This action cannot be undone.`
+    )
+
+    if (!confirmed) return
+
+    setLoading(true)
+    try {
+      const result = await deletePage(pageId)
+      if (result.success) {
+        // Remove from pages list
+        setPages((prev) => prev.filter((page) => page._id !== pageId))
+
+        // Clear current page if it was the deleted one
+        if (currentPage?._id === pageId) {
+          setCurrentPage(null)
+          setSections([])
+        }
+
+        toast.success('Page deleted successfully')
+      } else {
+        toast.error(result.error || 'Failed to delete page')
+      }
+    } catch (error) {
+      console.error('Error deleting page:', error)
+      toast.error('Failed to delete page')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const openPagePreview = () => {
     if (!currentPage) {
       toast.error('No page selected')
@@ -327,6 +417,41 @@ export default function PageBuilder() {
             </DialogContent>
           </Dialog>
 
+          {/* Edit Page Dialog */}
+          <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Edit Page</DialogTitle>
+              </DialogHeader>
+              <div className='space-y-4 pt-4'>
+                <div className='space-y-2'>
+                  <Label>Page Title</Label>
+                  <Input
+                    value={editPageTitle}
+                    onChange={(e) => setEditPageTitle(e.target.value)}
+                    placeholder='Enter page title'
+                  />
+                </div>
+                <div className='space-y-2'>
+                  <Label>Page Slug</Label>
+                  <Input
+                    value={editPageSlug}
+                    onChange={(e) => setEditPageSlug(e.target.value)}
+                    placeholder='enter-page-slug'
+                  />
+                </div>
+                <div className='flex justify-end gap-2'>
+                  <Button variant='outline' onClick={() => setShowEditDialog(false)}>
+                    Cancel
+                  </Button>
+                  <Button onClick={updatePageMetadata} disabled={saving}>
+                    {saving ? 'Updating...' : 'Update Page'}
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
           {currentPage && (
             <div className='flex gap-2'>
               <Button onClick={savePage} disabled={saving}>
@@ -361,36 +486,57 @@ export default function PageBuilder() {
               <CardTitle>Pages</CardTitle>
             </CardHeader>
             <CardContent className='p-0'>
-              <div className='space-y-1'>
+              <div className='space-y-2'>
                 {pages.map((page) => (
-                  <button
+                  <div
                     key={page._id}
-                    onClick={() => loadPage(page._id!)}
-                    className={`w-full text-left p-3 hover:bg-muted transition-colors ${
-                      currentPage?._id === page._id ? 'bg-muted font-medium' : ''
+                    className={`border cursor-pointer  transition-all duration-200 hover:shadow-sm ${
+                      currentPage?._id === page._id
+                        ? 'bg-primary/30 border-primary/20 shadow-sm'
+                        : 'bg-background border-border hover:bg-muted/50'
                     }`}
+                    onClick={() => loadPage(page._id!)}
                   >
-                    <div className='flex items-center justify-between'>
-                      <div>
-                        <div className='font-medium'>{page.title}</div>
-                        <div className='text-sm text-muted-foreground'>/{page.slug}</div>
-                      </div>
-                      <div
-                        className={`text-xs px-2 py-1 rounded-full ${
-                          page.isPublished
-                            ? 'bg-green-100 text-green-800'
-                            : 'bg-gray-100 text-gray-600'
-                        }`}
-                      >
-                        {page.isPublished ? 'Published' : 'Draft'}
+                    <div className='flex items-start justify-between p-3 gap-3'>
+                      <button className='flex-1 text-left min-w-0'>
+                        <div className='space-y-1'>
+                          <div className='font-medium text-sm leading-tight truncate pr-2'>
+                            {page.title}
+                          </div>
+                          <div className='text-xs text-muted-foreground truncate'>/{page.slug}</div>
+                        </div>
+                      </button>
+
+                      <div className='flex items-center gap-2 flex-shrink-0'>
+                        <div
+                          className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${
+                            page.isPublished
+                              ? 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400'
+                              : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400'
+                          }`}
+                        >
+                          {page.isPublished ? 'Published' : 'Draft'}
+                        </div>
+
+                        <Button
+                          variant='ghost'
+                          size='sm'
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            deletePageHandler(page._id!, page.title)
+                          }}
+                          className='h-8 w-8 p-0 text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950'
+                        >
+                          <Trash2 className='h-4 w-4' />
+                        </Button>
                       </div>
                     </div>
-                  </button>
+                  </div>
                 ))}
                 {pages.length === 0 && (
-                  <p className='p-3 text-center text-muted-foreground'>
-                    No pages yet. Create your first page!
-                  </p>
+                  <div className='p-6 text-center text-muted-foreground border border-dashed rounded-lg'>
+                    <p>No pages yet. Create your first page!</p>
+                  </div>
                 )}
               </div>
             </CardContent>
@@ -455,8 +601,16 @@ export default function PageBuilder() {
               {/* Page Info */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Editing: {currentPage.title}</CardTitle>
-                  <p className='text-sm text-muted-foreground'>Slug: /{currentPage.slug}</p>
+                  <div className='flex justify-between items-start'>
+                    <div>
+                      <CardTitle>Editing: {currentPage.title}</CardTitle>
+                      <p className='text-sm text-muted-foreground'>Slug: /{currentPage.slug}</p>
+                    </div>
+                    <Button variant='outline' size='sm' onClick={() => openEditDialog(currentPage)}>
+                      <Edit className='h-4 w-4 mr-2' />
+                      Edit Page
+                    </Button>
+                  </div>
                 </CardHeader>
               </Card>
 
