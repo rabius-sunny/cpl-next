@@ -1,6 +1,7 @@
 /* Tiptap Editor Styles */
 .ProseMirror {
   outline: none;
+  overflow: visible;
 }
 
 .ProseMirror p.is-editor-empty:first-child::before {
@@ -160,6 +161,131 @@
 .ProseMirror iframe {
   border-radius: 0.5rem;
   margin: 1rem 0;
+}
+
+/* Inline Image Styles */
+.ProseMirror img.inline-image {
+  max-width: 200px;
+  height: auto;
+  border-radius: 0.375rem;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.ProseMirror img.small-inline-image {
+  max-width: 100px;
+  height: auto;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+/* Float positioning for inline images */
+.ProseMirror img.float-left {
+  float: left;
+  clear: left;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.ProseMirror img.float-right {
+  float: right;
+  clear: right;
+  margin-left: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Enhanced floating image support */
+.ProseMirror .float-container {
+  overflow: auto;
+  zoom: 1; /* IE clearfix */
+}
+
+.ProseMirror img.inline-image,
+.ProseMirror img.small-inline-image {
+  display: inline;
+  vertical-align: top;
+}
+
+/* Prevent images from overlapping with subsequent content */
+.ProseMirror img.float-left ~ p,
+.ProseMirror img.float-left ~ div,
+.ProseMirror img.float-left ~ h1,
+.ProseMirror img.float-left ~ h2,
+.ProseMirror img.float-left ~ h3 {
+  margin-left: 0;
+}
+
+.ProseMirror img.float-right ~ p,
+.ProseMirror img.float-right ~ div,
+.ProseMirror img.float-right ~ h1,
+.ProseMirror img.float-right ~ h2,
+.ProseMirror img.float-right ~ h3 {
+  margin-right: 0;
+}
+
+/* Additional margin utilities (keep for backwards compatibility) */
+.ProseMirror img.mr-4 {
+  margin-right: 1rem;
+}
+
+.ProseMirror img.ml-4 {
+  margin-left: 1rem;
+}
+
+.ProseMirror img.mr-2 {
+  margin-right: 0.5rem;
+}
+
+.ProseMirror img.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ProseMirror img.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.ProseMirror img.mb-1 {
+  margin-bottom: 0.25rem;
+}
+
+.ProseMirror img.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ProseMirror img.block {
+  display: block;
+}
+
+/* Clear floats after paragraphs with floating images */
+.ProseMirror p:after {
+  content: '';
+  display: table;
+  clear: both;
+}
+
+/* Ensure proper text wrapping around floating images */
+.ProseMirror p {
+  overflow: visible;
+  line-height: 1.6;
+}
+
+/* Ensure floating images have proper spacing from text */
+.ProseMirror img.float-left + * {
+  margin-left: 0;
+}
+
+.ProseMirror img.float-right + * {
+  margin-right: 0;
+}
+
+/* Hover effects for inline images */
+.ProseMirror img.inline-image:hover,
+.ProseMirror img.small-inline-image:hover {
+  transform: scale(1.02);
+  transition: transform 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 /* Highlight colors */

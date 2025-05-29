@@ -1,6 +1,12 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu'
 import { Separator } from '@/components/ui/separator'
 import CharacterCount from '@tiptap/extension-character-count'
 import CodeBlockLowlight from '@tiptap/extension-code-block-lowlight'
@@ -35,6 +41,7 @@ import {
   AlignLeft,
   AlignRight,
   Bold,
+  ChevronDown,
   Code,
   Heading1,
   Heading2,
@@ -65,6 +72,8 @@ import ImageResize from 'tiptap-extension-resize-image'
 import {
   getEditorStats,
   insertImageFromUrl,
+  insertInlineImageFromUrl,
+  insertSmallInlineImage,
   insertTable,
   insertVideoFromUrl,
   setLinkFromUrl
@@ -177,6 +186,34 @@ export default function Editor({
     const url = window.prompt('Enter image URL:')
     if (url && editor) {
       insertImageFromUrl(editor, url)
+    }
+  }, [editor])
+
+  const addInlineImageLeft = useCallback(() => {
+    const url = window.prompt('Enter image URL for inline image (left):')
+    if (url && editor) {
+      insertInlineImageFromUrl(editor, url, 'left')
+    }
+  }, [editor])
+
+  const addInlineImageRight = useCallback(() => {
+    const url = window.prompt('Enter image URL for inline image (right):')
+    if (url && editor) {
+      insertInlineImageFromUrl(editor, url, 'right')
+    }
+  }, [editor])
+
+  const addSmallInlineImageLeft = useCallback(() => {
+    const url = window.prompt('Enter image URL for small inline image (left):')
+    if (url && editor) {
+      insertSmallInlineImage(editor, url, 'left')
+    }
+  }, [editor])
+
+  const addSmallInlineImageRight = useCallback(() => {
+    const url = window.prompt('Enter image URL for small inline image (right):')
+    if (url && editor) {
+      insertSmallInlineImage(editor, url, 'right')
     }
   }, [editor])
 
@@ -468,9 +505,44 @@ export default function Editor({
           <Separator orientation='vertical' className='mx-1 h-6' />
 
           {/* Media */}
-          <Button variant='ghost' size='sm' onClick={addImage}>
-            <ImageIcon className='h-4 w-4' />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant='ghost' size='sm' className='flex items-center gap-1'>
+                <ImageIcon className='h-4 w-4' />
+                <ChevronDown className='h-3 w-3' />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align='start' className='w-48'>
+              <DropdownMenuItem onClick={addImage}>
+                <ImageIcon className='h-4 w-4 mr-2' />
+                Regular Image
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={addInlineImageLeft}>
+                <div className='flex items-center'>
+                  <ImageIcon className='h-4 w-4 mr-2' />
+                  Inline Left
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={addInlineImageRight}>
+                <div className='flex items-center'>
+                  <ImageIcon className='h-4 w-4 mr-2' />
+                  Inline Right
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={addSmallInlineImageLeft}>
+                <div className='flex items-center'>
+                  <ImageIcon className='h-3 w-3 mr-2' />
+                  Small Left
+                </div>
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={addSmallInlineImageRight}>
+                <div className='flex items-center'>
+                  <ImageIcon className='h-3 w-3 mr-2' />
+                  Small Right
+                </div>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
           <Button variant='ghost' size='sm' onClick={addYoutubeVideo}>
             <YoutubeIcon className='h-4 w-4' />
           </Button>

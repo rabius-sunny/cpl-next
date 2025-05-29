@@ -6,6 +6,46 @@ export const insertImageFromUrl = (editor: Editor, url: string) => {
   }
 }
 
+export const insertInlineImageFromUrl = (
+  editor: Editor,
+  url: string,
+  alignment: 'left' | 'right' | 'center' = 'left'
+) => {
+  if (url) {
+    let className = 'inline-image'
+
+    if (alignment === 'left') {
+      className += ' float-left'
+    } else if (alignment === 'right') {
+      className += ' float-right'
+    } else {
+      className += ' mx-auto block'
+    }
+
+    const imageHtml = `<img src="${url}" class="${className}" alt="Inline image" />`
+    editor.chain().focus().insertContent(imageHtml).run()
+  }
+}
+
+export const insertSmallInlineImage = (
+  editor: Editor,
+  url: string,
+  alignment: 'left' | 'right' = 'left'
+) => {
+  if (url) {
+    let className = 'small-inline-image'
+
+    if (alignment === 'left') {
+      className += ' float-left'
+    } else {
+      className += ' float-right'
+    }
+
+    const imageHtml = `<img src="${url}" class="${className}" alt="Small inline image" />`
+    editor.chain().focus().insertContent(imageHtml).run()
+  }
+}
+
 export const insertVideoFromUrl = (editor: Editor, url: string) => {
   if (url) {
     editor.chain().focus().setYoutubeVideo({ src: url }).run()
