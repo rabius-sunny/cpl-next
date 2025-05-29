@@ -42,16 +42,26 @@ export default function Banner({ data }: TPops) {
         setIsAutoPlaying(false)
     }
 
+    const [firstWord, ...rest] = (data[currentSlide].title || '').split(" ");
+
     return (
         <div className="relative bg-gray-100 py-32 h-auto overflow-hidden">
             {/* Background Images with Parallax */}
             <AnimatePresence mode="wait">
                 <motion.div
                     key={`bg-${currentSlide}`}
-                    initial={{ scale: 1.1, opacity: 0, y: -1000 }}
+                    initial={{
+                        scale: 1.1,
+                        opacity: 0,
+                        y: currentSlide % 2 === 0 ? -1000 : 1000
+                    }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
-                    exit={{ scale: 0.9, opacity: 0, y: -1000 }}
-                    transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
+                    exit={{
+                        scale: 0.9,
+                        opacity: 0,
+                        y: currentSlide % 2 === 0 ? -1000 : 1000
+                    }}
+                    transition={{ duration: 0.5, delay: 1.5, ease: "easeInOut" }}
                     className="absolute inset-0"
                     style={{ y: backgroundY }}
                 >
@@ -114,16 +124,17 @@ export default function Banner({ data }: TPops) {
                                 >
 
                                     <motion.h1
-                                        className="mb-6 font-raleway font-semibold text-gray-900 text-5xl md:text-6xl leading-tight"
+                                        className="mb-6 font-raleway font-semibold text-gray-800 text-5xl md:text-6xl capitalize leading-tight"
                                         initial={{ opacity: 0, y: 30 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.4, duration: 0.8 }}
                                     >
-                                        {data[currentSlide].title}
+                                        {firstWord} <br />
+                                        {rest}
                                     </motion.h1>
 
                                     <motion.h3
-                                        className="mb-4 font-roboto font-light text-zinc-500 text-3xl"
+                                        className="mb-4 font-roboto font-light text-zinc-500 text-3xl leading-normal"
                                         initial={{ opacity: 0, x: -30 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.2, duration: 0.6 }}
