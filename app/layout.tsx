@@ -3,7 +3,6 @@ import { UserProvider } from '@/lib/auth'
 import retrieveUserFromSession from '@/utils/getUser'
 import type { Metadata } from 'next'
 import { Poppins, Raleway } from 'next/font/google'
-import Script from 'next/script'
 import './globals.css'
 
 const poppins = Poppins({
@@ -34,13 +33,6 @@ export default async function RootLayout({
 
   return (
     <html lang='en'>
-      <head>
-        <Script
-          src='https://cdn.tiny.cloud/1/lhtsirzbcxie2ohkeo9aizd7q5ih3alfz8pr3nxt89nnanxd/tinymce/7/tinymce.min.js'
-          referrerPolicy='origin'
-          strategy='beforeInteractive'
-        />
-      </head>
       <body className={`${poppins.className} ${raleway.variable}`} suppressHydrationWarning>
         <UserProvider userPromise={userPromise}>
           <Toaster richColors closeButton />
