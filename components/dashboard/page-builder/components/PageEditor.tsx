@@ -14,12 +14,13 @@ import {
   Save,
   Video
 } from 'lucide-react'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import BottomMediaEditor from '../BottomMediaEditor'
 import ContentSectionEditor from '../ContentSectionEditor'
 import GridLayoutEditor from '../GridLayoutEditor'
 import HeaderBannerEditor from '../HeaderBannerEditor'
 import ImageTextEditor from '../ImageTextEditor'
+import DropZone from './DropZone'
 
 interface PageEditorProps {
   currentPage: CustomPage
@@ -33,6 +34,7 @@ interface PageEditorProps {
   deleteSection: (sectionId: string) => void
   moveSectionUp: (index: number) => void
   moveSectionDown: (index: number) => void
+  addSection: (type: PageSection['type'], position?: number) => void
 }
 
 export default function PageEditor({
@@ -46,8 +48,34 @@ export default function PageEditor({
   updateSection,
   deleteSection,
   moveSectionUp,
-  moveSectionDown
+  moveSectionDown,
+  addSection
 }: PageEditorProps) {
+  const [isDragActive, setIsDragActive] = useState(false)
+
+  useEffect(() => {
+    const handleDragEnter = () => setIsDragActive(true)
+    const handleDragLeave = (e: DragEvent) => {
+      if (!e.relatedTarget) {
+        setIsDragActive(false)
+      }
+    }
+    const handleDrop = () => setIsDragActive(false)
+
+    document.addEventListener('dragenter', handleDragEnter)
+    document.addEventListener('dragleave', handleDragLeave)
+    document.addEventListener('drop', handleDrop)
+
+    return () => {
+      document.removeEventListener('dragenter', handleDragEnter)
+      document.removeEventListener('dragleave', handleDragLeave)
+      document.removeEventListener('drop', handleDrop)
+    }
+  }, [])
+
+  const handleDropZoneDrop = (sectionType: PageSection['type'], position: number) => {
+    addSection(sectionType, position)
+  }
   const getSectionIcon = (type: string): ReactNode => {
     switch (type) {
       case 'header-banner':
@@ -145,10 +173,15 @@ export default function PageEditor({
             <p className='text-muted-foreground mb-4'>
               No sections added yet. Use the sidebar to add your first section.
             </p>
+            {/* Drop zone for empty page */}
+            <DropZone onDrop={handleDropZoneDrop} position={0} isVisible={isDragActive} />
           </CardContent>
         </Card>
       ) : (
         <div className='space-y-6'>
+          {/* Drop zone before first section */}
+          <DropZone onDrop={handleDropZoneDrop} position={0} isVisible={isDragActive} />
+
           {sections.map((section, index) => (
             <div key={section.id} className='relative'>
               {/* Section Controls */}
@@ -181,6 +214,9 @@ export default function PageEditor({
 
               {/* Section Editor */}
               {renderSectionEditor(section)}
+
+              {/* Drop zone after each section */}
+              <DropZone onDrop={handleDropZoneDrop} position={index + 1} isVisible={isDragActive} />
             </div>
           ))}
         </div>

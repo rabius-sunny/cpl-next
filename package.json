@@ -5,11 +5,12 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "./docker-setup.sh",
+    "start": "next start",
     "lint": "next lint",
     "check": "pnpm tsc --noEmit"
   },
   "dependencies": {
+    "@hello-pangea/dnd": "^18.0.1",
     "@hookform/resolvers": "^5.0.1",
     "@imagekit/next": "^2.1.0",
     "@radix-ui/react-accordion": "^1.2.11",

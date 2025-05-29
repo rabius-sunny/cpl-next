@@ -1,10 +1,12 @@
 'use client'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { FileText, Grid3X3, ImageIcon, Layout, Plus, Video } from 'lucide-react'
+import { FileText, Grid3X3, GripVertical, ImageIcon, Layout, Plus, Video } from 'lucide-react'
+import { DragData } from '../hooks/useDragAndDrop'
 
 interface SectionButtonsProps {
   onAddSection: (type: PageSection['type']) => void
+  isDragging?: boolean
 }
 
 interface SectionType {
@@ -59,7 +61,17 @@ const sectionTypes: SectionType[] = [
   }
 ]
 
-export default function SectionButtons({ onAddSection }: SectionButtonsProps) {
+export default function SectionButtons({ onAddSection, isDragging }: SectionButtonsProps) {
+  const handleDragStart = (e: React.DragEvent, sectionType: PageSection['type']) => {
+    const dragData: DragData = {
+      type: 'section',
+      sectionType,
+      source: 'palette'
+    }
+    e.dataTransfer.setData('application/json', JSON.stringify(dragData))
+    e.dataTransfer.effectAllowed = 'copy'
+  }
+
   return (
     <Card className='mt-4'>
       <CardHeader className='pb-4'>
@@ -68,13 +80,15 @@ export default function SectionButtons({ onAddSection }: SectionButtonsProps) {
           Add Section
         </CardTitle>
         <p className='text-sm text-muted-foreground mt-1'>
-          Choose a section type to add to your page
+          Click to add or drag to position sections on your page
         </p>
       </CardHeader>
       <CardContent className='space-y-3'>
         {sectionTypes.map((section) => (
           <div
             key={section.type}
+            draggable
+            onDragStart={(e) => handleDragStart(e, section.type)}
             onClick={() => onAddSection(section.type)}
             className='group relative overflow-hidden rounded-lg border border-border/50 bg-card hover:bg-accent/50 transition-all duration-200 cursor-pointer hover:border-primary/50 hover:shadow-md'
           >
@@ -85,6 +99,11 @@ export default function SectionButtons({ onAddSection }: SectionButtonsProps) {
 
             <div className='relative p-4'>
               <div className='flex items-start gap-3'>
+                {/* Drag Handle */}
+                <div className='flex-shrink-0 opacity-0 group-hover:opacity-60 transition-opacity duration-200 pt-1'>
+                  <GripVertical className='h-4 w-4 text-muted-foreground' />
+                </div>
+
                 {/* Icon */}
                 <div
                   className={`flex-shrink-0 p-2 rounded-lg ${section.iconBg} group-hover:scale-110 transition-transform duration-200`}
@@ -114,7 +133,7 @@ export default function SectionButtons({ onAddSection }: SectionButtonsProps) {
         {/* Info Text */}
         <div className='mt-4 p-3 rounded-lg bg-muted/50 border border-dashed border-muted-foreground/30'>
           <p className='text-xs text-muted-foreground text-center'>
-            💡 Tip: You can reorder sections after adding them using the arrow buttons
+            💡 Tip: Click to add at the end, or drag to position anywhere on your page
           </p>
         </div>
       </CardContent>

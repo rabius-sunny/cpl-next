@@ -53,14 +53,26 @@ export function useCurrentPage() {
     }
   }
 
-  const addSection = (type: PageSection['type']) => {
+  const addSection = (type: PageSection['type'], position?: number) => {
     const newSection: PageSection = {
       id: `section-${Date.now()}`,
       type,
-      order: sections.length,
+      order: position ?? sections.length,
       data: getDefaultDataForType(type)
     }
-    setSections((prev) => [...prev, newSection])
+
+    if (position !== undefined && position < sections.length) {
+      // Insert at specific position
+      setSections((prev) => {
+        const newSections = [...prev]
+        newSections.splice(position, 0, newSection)
+        // Update order for all sections
+        return newSections.map((section, i) => ({ ...section, order: i }))
+      })
+    } else {
+      // Add at the end
+      setSections((prev) => [...prev, newSection])
+    }
   }
 
   const updateSection = (sectionId: string, data: any) => {

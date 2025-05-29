@@ -8,6 +8,7 @@ import PageEditor from './components/PageEditor'
 import PageList from './components/PageList'
 import SectionButtons from './components/SectionButtons'
 import { useCurrentPage } from './hooks/useCurrentPage'
+import { useDragAndDrop } from './hooks/useDragAndDrop'
 import { usePages } from './hooks/usePages'
 
 export default function PageBuilder() {
@@ -44,6 +45,9 @@ export default function PageBuilder() {
     setCurrentPage,
     setSections
   } = useCurrentPage()
+
+  // Drag and drop state
+  const { isDragging } = useDragAndDrop()
 
   const loading = pagesLoading || pageLoading
 
@@ -141,7 +145,7 @@ export default function PageBuilder() {
             onDeletePage={handleDeletePage}
           />
 
-          {currentPage && <SectionButtons onAddSection={addSection} />}
+          {currentPage && <SectionButtons onAddSection={addSection} isDragging={isDragging} />}
         </div>
 
         {/* Main Content - Page Editor */}
@@ -159,6 +163,7 @@ export default function PageBuilder() {
               deleteSection={deleteSection}
               moveSectionUp={moveSectionUp}
               moveSectionDown={moveSectionDown}
+              addSection={addSection}
             />
           ) : (
             <Card>

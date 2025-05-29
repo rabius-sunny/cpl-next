@@ -15,11 +15,13 @@ A comprehensive page builder system with refactored architecture for better sepa
 - **PageEditor.tsx** - Main page editing interface with sections management
 - **PageList.tsx** - Sidebar component showing all pages with delete functionality
 - **SectionButtons.tsx** - Sidebar component with buttons to add different section types
+- **DropZone.tsx** - Drop zones for drag and drop section placement
 
 ### Custom Hooks (`/hooks`)
 
 - **usePages.ts** - Manages pages list, CRUD operations, and publishing
 - **useCurrentPage.ts** - Manages current page state, sections, and section operations
+- **useDragAndDrop.ts** - Manages drag and drop state and interactions
 
 ### Section Editors
 
@@ -121,10 +123,27 @@ export default function CustomPagesPage() {
 ### SectionButtons
 
 - `onAddSection` - Section addition handler
+- `isDragging` - Drag state for UI feedback
+
+## Drag & Drop Features
+
+### How it Works
+
+1. **Draggable Sections**: Section buttons in the sidebar are draggable
+2. **Drop Zones**: Dynamic drop zones appear between existing sections when dragging
+3. **Visual Feedback**: Drag handles appear on hover, drop zones highlight on drag over
+4. **Precise Placement**: Drop sections exactly where you want them in the page structure
+
+### Usage
+
+- **Click to Add**: Click any section button to add it at the end of the page
+- **Drag to Position**: Drag any section button to position it anywhere on the page
+- **Drop Zones**: Drop zones appear automatically when dragging sections over the editor
 
 ## Future Enhancements
 
-- [ ] Drag and drop section reordering
+- [x] Drag and drop section placement ✅ **COMPLETED**
+- [ ] Drag and drop section reordering (within existing sections)
 - [ ] Section templates/presets
 - [ ] Undo/redo functionality
 - [ ] Version history

@@ -1,4 +1,5 @@
 // Page Builder Components
+export { default as DropZone } from './components/DropZone'
 export { default as PageBuilderHeader } from './components/PageBuilderHeader'
 export { default as PageDialogs } from './components/PageDialogs'
 export { default as PageEditor } from './components/PageEditor'
@@ -15,4 +16,5 @@ export { default as ImageTextEditor } from './ImageTextEditor'
 
 // Hooks
 export { useCurrentPage } from './hooks/useCurrentPage'
+export { useDragAndDrop } from './hooks/useDragAndDrop'
 export { usePages } from './hooks/usePages'
