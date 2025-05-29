@@ -107,7 +107,7 @@ export default function PageBuilder() {
   }
 
   return (
-    <div className='p-6 max-w-7xls mx-auto'>
+    <div className='p-6'>
       {/* Header */}
       <PageBuilderHeader
         showCreateDialog={showCreateDialog}
