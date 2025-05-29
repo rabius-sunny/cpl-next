@@ -59,7 +59,7 @@ export default function Banner({ data }: TPops) {
                         className="bg-cover bg-no-repeat bg-center w-full h-full"
                         style={{ backgroundImage: `url(${data[currentSlide].backgroundImage?.file})` }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/10 to-transparent" />
                 </motion.div>
             </AnimatePresence>
 
@@ -102,7 +102,7 @@ export default function Banner({ data }: TPops) {
             {/* Main Content */}
             <motion.div className="z-20 relative flex items-center h-full" style={{ y: textY }}>
                 <div className="mx-auto px-6 container">
-                    <div className="flex justify-between gap-40">
+                    <div className="flex justify-between items-center gap-40">
                         <div className="max-w-2xl">
                             <AnimatePresence mode="wait">
                                 <motion.div
@@ -114,7 +114,7 @@ export default function Banner({ data }: TPops) {
                                 >
 
                                     <motion.h1
-                                        className="mb-6 font-bold text-white text-5xl md:text-7xl leading-tight"
+                                        className="mb-6 font-raleway font-semibold text-gray-900 text-5xl md:text-6xl leading-tight"
                                         initial={{ opacity: 0, y: 30 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.4, duration: 0.8 }}
@@ -123,7 +123,7 @@ export default function Banner({ data }: TPops) {
                                     </motion.h1>
 
                                     <motion.h3
-                                        className="mb-4 font-medium text-gray-400 text-lg"
+                                        className="mb-4 font-roboto font-light text-zinc-500 text-3xl"
                                         initial={{ opacity: 0, x: -30 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.2, duration: 0.6 }}
