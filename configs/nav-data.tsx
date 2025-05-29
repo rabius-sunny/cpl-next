@@ -1,8 +1,6 @@
 import {
   FileText,
   Home,
-  Images,
-  LayoutDashboard,
   Lightbulb,
   Phone,
   Settings,
@@ -19,14 +17,14 @@ export const siteContentNavItems = [
     icon: <Home className='mr-2 w-4 h-4' />
   },
   {
-    label: 'Banners',
-    link: '/dashboard/banners',
-    icon: <Images className='mr-2 w-4 h-4' />
-  },
-  {
     label: 'Products',
     link: '/dashboard/products',
-    icon: <LayoutDashboard className='mr-2 w-4 h-4' />
+    icon: <ShoppingBag className='mr-2 w-4 h-4' />
+  },
+  {
+    label: 'About',
+    link: '/dashboard/about',
+    icon: <FileText className='mr-2 w-4 h-4' />
   },
   {
     label: 'Services',
@@ -37,11 +35,6 @@ export const siteContentNavItems = [
     label: 'Projects',
     link: '/dashboard/projects',
     icon: <SquareStack className='mr-2 w-4 h-4' />
-  },
-  {
-    label: 'About',
-    link: '/dashboard/about',
-    icon: <FileText className='mr-2 w-4 h-4' />
   },
   {
     label: 'Clients',

@@ -108,3 +108,55 @@ type HomePageContent = {
   video?: VideoSection
   footer?: FooterSection
 }
+
+type Product = {
+  name: string
+  description: string
+  features: Array<{
+    key: string
+    value: string
+    _id?: string
+  }>
+  thumbnail?: {
+    file: string
+    fileId: string
+    thumbnail: string
+  }
+  images?: Array<{
+    file: string
+    fileId: string
+    thumbnail: string
+  }>
+}
+
+type Aboutus = {
+  title?: string
+  backgroundImage?: {
+    file?: string
+    fileId?: string
+    thumbnail?: string
+  }
+  sections?: {
+    title?: string
+    description?: string
+    image?: {
+      file?: string
+      fileId?: string
+      thumbnail?: string
+    }
+  }[]
+  leadership?: {
+    title?: string
+    description?: string
+    leaders?: Array<{
+      name?: string
+      designation?: string
+      bio?: string
+    }>
+  }
+  bottomImage?: {
+    file?: string
+    fileId?: string
+    thumbnail?: string
+  }
+}
