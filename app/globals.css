@@ -1,6 +1,9 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+/* Import Tiptap Editor styles */
+@import '../components/shared/editor.css';
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
