@@ -85,7 +85,7 @@ export const TestimonialCarousel = ({ data }: TProps) => {
       </div>
 
       {/* Testimonial Container */}
-      <div className='relative w-full h-64 overflow-hidden bg-red-300'>
+      <div className='relative w-full h-64 overflow-hidden'>
         <motion.div
           className='w-full h-full cursor-grab active:cursor-grabbing select-none'
           drag='x'
