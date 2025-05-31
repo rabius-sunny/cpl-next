@@ -122,7 +122,7 @@ export const TestimonialCarousel = ({ data }: TProps) => {
 
 const TestimonialItem = ({ data }: { data: TestimonialItem }) => {
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full px-1'>
       <div className='text-start space-y-4'>
         <div className='relative'>
           <blockquote className='text-lg lg:text-xl text-gray-600 leading-relaxed font-light'>
