@@ -1,71 +1,117 @@
 'use client'
 
-import { AnimatePresence, motion } from 'motion/react'
-import { useRef, useState } from 'react'
+import { AnimatePresence, motion, PanInfo } from 'motion/react'
+import { useCallback, useState } from 'react'
 
 type TProps = {
   data?: TestimonialsSection
 }
 
 export const TestimonialCarousel = ({ data }: TProps) => {
-  const [index, setIndex] = useState(0)
-  const [firstWord, ...rest] = (data?.title || '').split(' ')
-  const total = data?.items?.length ?? 0
-  const containerRef = useRef<HTMLDivElement>(null)
+  const [currentIndex, setCurrentIndex] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
 
-  const paginate = (direction: number) => {
-    setIndex((prev) => (prev + direction + total) % total)
+  const totalItems = data?.items?.length ?? 0
+  const [firstWord, ...rest] = (data?.title || '').split(' ')
+
+  const changeSlide = useCallback(
+    (newIndex: number) => {
+      if (newIndex < 0) {
+        setCurrentIndex(totalItems - 1)
+      } else if (newIndex >= totalItems) {
+        setCurrentIndex(0)
+      } else {
+        setCurrentIndex(newIndex)
+      }
+    },
+    [totalItems]
+  )
+
+  const handleDragStart = () => {
+    setIsDragging(true)
   }
+
+  const handleDrag = (event: any, info: PanInfo) => {
+    setDragOffset(info.offset.x)
+  }
+
+  const handleDragEnd = (event: any, info: PanInfo) => {
+    setIsDragging(false)
+    setDragOffset(0)
+
+    const threshold = 50
+    const velocity = info.velocity.x
+    const offset = info.offset.x
+
+    // Determine if we should change slides based on drag distance and velocity
+    if (Math.abs(offset) > threshold || Math.abs(velocity) > 500) {
+      if (offset > 0 || velocity > 500) {
+        // Dragged right or fast right velocity - go to previous
+        changeSlide(currentIndex - 1)
+      } else if (offset < 0 || velocity < -500) {
+        // Dragged left or fast left velocity - go to next
+        changeSlide(currentIndex + 1)
+      }
+    }
+  }
+
+  if (!data?.items?.length) return null
 
   return (
     <div className='relative space-y-6 lg:ml-auto w-full max-w-5xl'>
-      {/* Controls */}
+      {/* Header */}
       <div className='flex justify-between items-center mt-2'>
         <div className='space-y-2'>
           <p className='font-semibold text-primary text-sm uppercase'>{data?.subtitle}</p>
           <h2 className='font-bold text-4xl'>
-            {firstWord} <span className='text-primary'>{rest}</span>
+            {firstWord} <span className='text-primary'>{rest.join(' ')}</span>
           </h2>
         </div>
+
+        {/* Pagination Dots */}
         <div className='flex gap-2'>
-          {data?.items?.map((_, i) => (
-            <div
-              key={i}
-              className={`size-2.5 rounded-full transition-colors duration-300 cursor-pointer ${
-                i === index ? 'bg-primary' : 'bg-gray-300'
+          {data.items.map((_, index) => (
+            <button
+              key={index}
+              className={`size-2.5 rounded-full transition-all duration-300 ${
+                index === currentIndex ? 'bg-primary scale-125' : 'bg-gray-300 hover:bg-gray-400'
               }`}
-              onClick={() => setIndex(i)}
+              onClick={() => changeSlide(index)}
+              aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
         </div>
       </div>
 
-      {/* Fixed height container for smooth layout */}
-      <div className='w-full h-64 relative overflow-hidden'>
+      {/* Testimonial Container */}
+      <div className='relative w-full h-64 overflow-hidden bg-red-300'>
         <motion.div
-          ref={containerRef}
-          className='w-full h-full cursor-grab active:cursor-grabbing'
+          className='w-full h-full cursor-grab active:cursor-grabbing select-none'
           drag='x'
-          dragConstraints={{ left: -100, right: 100 }}
+          dragConstraints={{ left: 0, right: 0 }}
           dragElastic={0.1}
-          dragMomentum={false}
-          onDragEnd={(e, { offset, velocity }) => {
-            const swipe = offset.x + velocity.x * 20
-            if (swipe < -50) paginate(1)
-            else if (swipe > 50) paginate(-1)
+          onDragStart={handleDragStart}
+          onDrag={handleDrag}
+          onDragEnd={handleDragEnd}
+          style={{
+            x: isDragging ? dragOffset * 0.3 : 0 // Reduced drag visual feedback
           }}
           whileDrag={{ cursor: 'grabbing' }}
         >
-          <AnimatePresence mode='wait' custom={index}>
+          <AnimatePresence mode='wait'>
             <motion.div
-              key={index}
-              initial={{ x: 100, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              exit={{ x: -100, opacity: 0 }}
-              transition={{ duration: 0.4 }}
-              className='absolute inset-0'
+              key={currentIndex}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{
+                duration: 0.3,
+                ease: 'easeInOut'
+              }}
+              className='absolute inset-0 flex items-start justify-start'
             >
-              {data?.items && <TestimonialItem data={data.items[index]} />}
+              <TestimonialItem data={data.items[currentIndex]} />
             </motion.div>
           </AnimatePresence>
         </motion.div>
@@ -76,12 +122,19 @@ export const TestimonialCarousel = ({ data }: TProps) => {
 
 const TestimonialItem = ({ data }: { data: TestimonialItem }) => {
   return (
-    <div className='flex flex-col justify-center h-full text-start'>
-      <p className='mb-4 text-gray-600 text-lg line-clamp-6 lg:line-clamp-5 leading-loose'>
-        {data?.message}
-      </p>
-      <h4 className='font-semibold text-gray-900'>{data?.name}</h4>
-      <p className='text-gray-500'>{data?.designation}</p>
+    <div className='w-full h-full'>
+      <div className='text-start space-y-4'>
+        <div className='relative'>
+          <blockquote className='text-lg lg:text-xl text-gray-600 leading-relaxed font-light'>
+            {data?.message}
+          </blockquote>
+        </div>
+
+        <div className='space-y-1'>
+          <h4 className='font-semibold text-gray-900 text-lg'>{data?.name}</h4>
+          <p className='text-gray-500 text-sm'>{data?.designation}</p>
+        </div>
+      </div>
     </div>
   )
 }
