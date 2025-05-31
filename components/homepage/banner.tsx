@@ -1,6 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { useImageSliderVariants } from "@/hooks/useImageSliderVariants"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react"
 import Image from "next/image"
@@ -42,8 +43,11 @@ export default function Banner({ data }: TPops) {
         setIsAutoPlaying(false)
     }
 
-    const [firstWord, ...rest] = (data[currentSlide].title || '').split(" ");
+    const [firstWord, ...rest] = (data[currentSlide]?.title || '')?.split(" ");
 
+
+    const total = data[currentSlide].images!.length
+    const { getPreset, containerVariants } = useImageSliderVariants(total, 'horizontal')
     return (
         <div className="relative bg-gray-100 py-32 h-auto overflow-hidden">
             {/* Background Images with Parallax */}
@@ -52,16 +56,16 @@ export default function Banner({ data }: TPops) {
                     key={`bg-${currentSlide}`}
                     initial={{
                         scale: 1.1,
-                        opacity: 0,
+                        opacity: 0.8,
                         y: currentSlide % 2 === 0 ? -1000 : 1000
                     }}
                     animate={{ scale: 1, opacity: 1, y: 0 }}
                     exit={{
                         scale: 0.9,
-                        opacity: 0,
+                        opacity: 0.8,
                         y: currentSlide % 2 === 0 ? -1000 : 1000
                     }}
-                    transition={{ duration: 0.5, delay: 1.5, ease: "easeInOut" }}
+                    transition={{ duration: 1.5, delay: 0, ease: "easeInOut" }}
                     className="absolute inset-0"
                     style={{ y: backgroundY }}
                 >
@@ -117,10 +121,10 @@ export default function Banner({ data }: TPops) {
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={`content-${currentSlide}`}
-                                    initial={{ opacity: 0, y: 50 }}
+                                    initial={{ opacity: 0.1, y: 50 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -50 }}
-                                    transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
+                                    exit={{ opacity: 0.1, y: -50 }}
+                                    transition={{ duration: 1.5, delay: 0.2, ease: "easeOut" }}
                                 >
 
                                     <motion.h1
@@ -185,63 +189,46 @@ export default function Banner({ data }: TPops) {
                                 style={{ perspective: "1000px" }}
                             >
                                 <div className="relative" style={{ transformStyle: "preserve-3d", width: "350px", height: "420px" }}>
-                                    {data[currentSlide].images?.map((item, index) => (
-                                        <motion.div
-                                            key={index}
-                                            className="absolute origin-center"
-                                            initial={{
-                                                opacity: 0,
-                                                x: index + 5 * 50,
-                                                y: index + 5 * 50,
-                                                rotateY: -index + 5 * 50,
-                                                scale: 0.8,
-                                            }}
-                                            animate={{
-                                                opacity: 1,
-                                                x: 10 * index,
-                                                y: 10 * index,
-                                                rotateY: index - 15,
-                                                scale: 1,
-                                            }}
-                                            exit={{
-                                                opacity: 0, x: 500 * index,
-                                                y: 50 * index,
-                                                rotateY: 150 * index,
-                                                scale: 0.8,
-                                            }}
-                                            transition={{
-                                                delay: index * 0.1,
-                                                duration: 0.8,
-                                                ease: "easeOut",
-                                                type: "spring",
-                                                stiffness: 100,
-                                            }}
-                                            // whileHover={{
-                                            //     scale: 1.05,
-                                            //     rotateY: product.offset.rotate - 5,
-                                            //     transition: { duration: 0.3 },
-                                            // }}
-                                            style={{
-                                                zIndex: (data[currentSlide]?.images?.length ?? 0) * index,
-                                                filter: "drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.3))",
-                                            }}
-                                        >
-                                            {/* Paper Package */}
-                                            <div className="relative w-75 h-96 cursor-pointer">
-                                                <Image src={item.file!} alt="" fill />
-                                            </div>
-                                        </motion.div>
-                                    ))}
+                                    {data[currentSlide].images?.map((item, index) => {
+                                        const variants = getPreset(index)
+
+                                        return (
+                                            <motion.div
+                                                key={index}
+                                                className="absolute origin-center"
+                                                initial="initial"
+                                                animate="animate"
+                                                exit="exit"
+                                                variants={variants}
+                                                transition={{
+                                                    duration: 0.9,
+                                                    ease: 'easeInOut',
+                                                    type: 'spring',
+                                                    stiffness: 60,
+                                                    damping: 14,
+                                                }}
+                                                style={{
+                                                    zIndex: total - index,
+                                                    filter: 'drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.2))',
+                                                }}
+                                            >
+                                                <div className="relative min-w-80 min-h-96 size-full cursor-pointer">
+                                                    <Image src={item.file!} alt="" fill />
+                                                </div>
+                                            </motion.div>
+                                        )
+                                    })}
+
                                 </div>
                             </motion.div>
                         </AnimatePresence>
-                    </div>
+                    </div >
 
-                </div>
-            </motion.div>
+                </div >
+            </motion.div >
 
             {/* Slide Navigation */}
-            <div className="bottom-8 left-1/2 z-30 absolute flex items-center space-x-4 -translate-x-1/2">
+            <div className="bottom-8 left-1/2 z-30 absolute flex items-center space-x-4 -translate-x-1/2" >
                 <Button variant="ghost" size="icon" onClick={prevSlide} className="hover:bg-white/20 rounded-full text-gray-300">
                     <ChevronLeft className="w-6 h-6" />
                 </Button>
@@ -268,12 +255,13 @@ export default function Banner({ data }: TPops) {
             </div>
 
             {/* Progress Bar */}
-            <motion.div
+            < motion.div
                 className="bottom-0 left-0 z-30 absolute bg-gray-300 h-1"
-                initial={{ width: "0%" }}
+                initial={{ width: "0%" }
+                }
                 animate={{ width: isAutoPlaying ? "100%" : "0%" }}
                 transition={{ duration: 5, ease: "linear", repeat: isAutoPlaying ? Number.POSITIVE_INFINITY : 0 }}
             />
-        </div>
+        </div >
     )
 }
