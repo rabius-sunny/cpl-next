@@ -69,7 +69,6 @@ export async function updateProducts(newProducts: any[]) {
  */
 export async function addProduct(productData: any) {
   try {
-    console.log('Adding product with data:', JSON.stringify(productData, null, 2))
     await connectToDatabase()
 
     let data = await products.findOne()
@@ -103,12 +102,6 @@ export async function addProduct(productData: any) {
  */
 export async function updateProduct(index: number, productData: any) {
   try {
-    console.log(
-      'Updating product at index:',
-      index,
-      'with data:',
-      JSON.stringify(productData, null, 2)
-    )
     await connectToDatabase()
 
     let data = await products.findOne()

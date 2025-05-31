@@ -11,7 +11,7 @@ NC='\033[0m' # No Color
 set -e
 
 echo -e "${BLUE}======================================${NC}"
-echo -e "${BLUE}     Ingress Solution Docker Setup    ${NC}"
+echo -e "${BLUE}     Creative Papers Docker Setup    ${NC}"
 echo -e "${BLUE}======================================${NC}"
 
 # Check if .env file exists

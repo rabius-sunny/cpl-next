@@ -50,12 +50,8 @@ export async function updateAboutus(data: Partial<Aboutus>) {
   try {
     await connectToDatabase()
 
-    console.log('Received data in updateAboutus:', JSON.stringify(data, null, 2))
-
     // Clean the data before saving
     const cleanedData = JSON.parse(JSON.stringify(data))
-
-    console.log('Cleaned data:', JSON.stringify(cleanedData, null, 2))
 
     const result = await Aboutus.findOneAndUpdate(
       {}, // Find any document (assuming only one About Us document)
@@ -73,8 +69,6 @@ export async function updateAboutus(data: Partial<Aboutus>) {
         error: 'Failed to update About Us data'
       }
     }
-
-    console.log('Update successful:', JSON.stringify(result, null, 2))
 
     // Revalidate the related pages
     revalidatePath('/dashboard/aboutus')

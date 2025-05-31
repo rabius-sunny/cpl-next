@@ -13,7 +13,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const MobileNav = () => {
     return (
       <div className='lg:hidden flex items-center shadow-lg p-2 pb-3 w-full'>
-        <NavSheet logo='Ingress Solution Admin' items={adminNavItems} pathname={pathname} />
+        <NavSheet logo='Creative Papers Admin' items={adminNavItems} pathname={pathname} />
         <p className='ml-3 font-semibold text-lg'>Admin Dashboard</p>
       </div>
     )
@@ -28,7 +28,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <aside className='hidden z-10 fixed inset-y-0 lg:flex flex-col bg-background border-r w-64'>
           <div className='px-6 py-5 border-b'>
             <Link href='/' className='flex items-center font-bold text-lg'>
-              Ingress Solution
+              Creative Papers
             </Link>
           </div>
           <div className='flex-1 py-5 overflow-y-auto'>
@@ -36,7 +36,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
           <div className='px-6 py-4 border-t'>
             <div className='text-muted-foreground text-xs'>
-              &copy; {new Date().getFullYear()} Ingress Solution Admin
+              &copy; {new Date().getFullYear()} Creative Papers Admin
             </div>
           </div>
         </aside>
