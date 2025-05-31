@@ -17,17 +17,23 @@ export async function signToken(payload: SessionData) {
     .sign(key)
 }
 
-export async function verifyToken(input: string) {
-  const { payload } = await jwtVerify(input, key, {
-    algorithms: ['HS256']
-  })
-  return payload as SessionData
+export async function verifyToken(input: string): Promise<SessionData | null> {
+  try {
+    const { payload } = await jwtVerify(input, key, {
+      algorithms: ['HS256']
+    })
+    return payload as SessionData
+  } catch (error) {
+    // Return null if token is invalid or expired
+    return null
+  }
 }
 
-export async function getSession() {
+export async function getSession(): Promise<SessionData | null> {
   const session = (await cookies()).get('session')?.value
   if (!session) return null
-  return await verifyToken(session)
+  const verifiedSession = await verifyToken(session)
+  return verifiedSession
 }
 
 export async function setSession(user: TUser) {
