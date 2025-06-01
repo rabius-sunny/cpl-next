@@ -12,10 +12,14 @@ export const TestimonialCarousel = ({ data }: TProps) => {
     const [index, setIndex] = useState(0)
     const [firstWord, ...rest] = (data?.title || '').split(" ");
     const total = data?.items?.length ?? 0
+    const [direction, setDirection] = useState(0)
 
-    const paginate = (direction: number) => {
-        setIndex((prev) => (prev + direction + total) % total)
+    const paginate = (newDirection: number) => {
+        setDirection(newDirection)
+        setIndex((prev) => (prev + newDirection + total) % total)
     }
+    const swipePower = (offset: number, velocity: number) => Math.abs(offset) * velocity;
+    const swipeConfidenceThreshold = 8000;
 
     return (
         <div className="relative space-y-6 lg:ml-auto w-full max-w-5xl overflow-hidden">
@@ -40,28 +44,43 @@ export const TestimonialCarousel = ({ data }: TProps) => {
             {/* Fixed height container for smooth layout */}
             <AnimatePresence mode="wait">
                 <motion.div
-                    key="carousel-motion-wrapper" // Keep this constant
-                    initial={{ x: 100, opacity: 0 }}
+                    key="carousel-motion-wrapper"
+                    initial={{ x: direction > 0 ? 100 : -100, opacity: 0.5 }}
                     animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -100, opacity: 0 }}
-                    transition={{ duration: 0.4 }}
+                    exit={{ x: direction < 0 ? 100 : -100, opacity: 0.5 }}
+                    transition={{
+                        type: "spring",
+                        stiffness: 600,
+                        damping: 50,
+                        mass: 1,
+                    }}
                     drag="x"
                     dragConstraints={{ left: 0, right: 0 }}
-                    dragElastic={0.8}
-                    onDragEnd={(_e, { offset, velocity }) => {
-                        const swipe = offset.x + velocity.x * 20
-                        if (swipe < -100) paginate(1)
-                        else if (swipe > 100) paginate(-1)
+                    dragElastic={0.6}
+                    dragMomentum={true}
+                    dragTransition={{
+                        bounceStiffness: 300,
+                        bounceDamping: 20,
+                    }}
+                    onDragEnd={(_, { offset, velocity }) => {
+                        const swipe = swipePower(offset.x, velocity.x);
+                        if (swipe < -swipeConfidenceThreshold) paginate(1);
+                        else if (swipe > swipeConfidenceThreshold) paginate(-1);
                     }}
                     className="w-full h-64 cursor-grab active:cursor-grabbing"
                 >
                     <AnimatePresence mode="wait">
                         <motion.div
-                            key={index} // Animate inner content
-                            initial={{ x: 100, opacity: 0 }}
+                            key={index}
+                            initial={{ x: direction > 0 ? 100 : -100, opacity: 0.5 }}
                             animate={{ x: 0, opacity: 1 }}
-                            exit={{ x: -100, opacity: 0 }}
-                            transition={{ duration: 0.4 }}
+                            exit={{ x: direction < 0 ? 100 : -100, opacity: 0.5 }}
+                            transition={{
+                                type: "spring",
+                                stiffness: 600,
+                                damping: 50,
+                                mass: 1,
+                            }}
                             className="w-full h-full"
                         >
                             {data?.items && <TestimonialItem data={data.items[index]} />}
