@@ -18,7 +18,7 @@ export default async function middleware(request: NextRequest) {
       res.cookies.set({
         name: 'session',
         value: await signToken({
-          ...parsed
+          ...(parsed as any)
         }),
         httpOnly: true,
         secure: true,
