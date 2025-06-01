@@ -184,7 +184,7 @@ export default function Banner({ data }: TPops) {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 exit={{ opacity: 0 }}
-                                transition={{ duration: 0.8, delay: 0.5, }}
+                                transition={{ duration: 1.8, delay: 1.5, }}
                                 className="hidden md:block"
                                 style={{ perspective: "1000px" }}
                             >
@@ -201,7 +201,7 @@ export default function Banner({ data }: TPops) {
                                                 exit="exit"
                                                 variants={variants}
                                                 transition={{
-                                                    duration: 0.9,
+                                                    duration: 1.9,
                                                     ease: 'easeInOut',
                                                     type: 'spring',
                                                     stiffness: 60,
