@@ -1,66 +1,56 @@
 'use client'
 
-import { AnimatePresence, motion, PanInfo } from 'motion/react'
-import { useCallback, useState } from 'react'
+import { useRef, useState } from 'react'
+import type { Swiper as SwiperType } from 'swiper' // Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination' // Add pagination styles
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
+
+type TestimonialItem = {
+  name: string
+  designation: string
+  message: string
+}
+
+type TestimonialsSection = {
+  title?: string
+  subtitle?: string
+  items?: TestimonialItem[]
+}
 
 type TProps = {
   data?: TestimonialsSection
 }
 
-export const TestimonialCarousel = ({ data }: TProps) => {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [dragOffset, setDragOffset] = useState(0)
-  const [isDragging, setIsDragging] = useState(false)
+const TestimonialItem = ({ data }: { data: TestimonialItem }) => {
+  return (
+    <div className='z-10 flex flex-col justify-center bg-white h-full text-start cursor-pointer'>
+      <p className='mb-4 text-gray-600 text-lg line-clamp-6 lg:line-clamp-5 leading-loose'>
+        {data?.message}
+      </p>
+      <h4 className='font-semibold text-gray-900'>{data?.name}</h4>
+      <p className='text-gray-500'>{data?.designation}</p>
+    </div>
+  )
+}
 
-  const totalItems = data?.items?.length ?? 0
+export const TestimonialCarousel = ({ data }: TProps) => {
+  const swiperRef = useRef<SwiperRef>(null)
+  const [index, setIndex] = useState(0)
   const [firstWord, ...rest] = (data?.title || '').split(' ')
 
-  const changeSlide = useCallback(
-    (newIndex: number) => {
-      if (newIndex < 0) {
-        setCurrentIndex(totalItems - 1)
-      } else if (newIndex >= totalItems) {
-        setCurrentIndex(0)
-      } else {
-        setCurrentIndex(newIndex)
-      }
-    },
-    [totalItems]
-  )
-
-  const handleDragStart = () => {
-    setIsDragging(true)
+  const handleSlideChange = (swiper: SwiperType) => {
+    setIndex(swiper.realIndex)
   }
 
-  const handleDrag = (event: any, info: PanInfo) => {
-    setDragOffset(info.offset.x)
+  // Update the handleDotClick to use swiper property
+  const handleDotClick = (slideIndex: number) => {
+    swiperRef.current?.swiper.slideTo(slideIndex)
   }
-
-  const handleDragEnd = (event: any, info: PanInfo) => {
-    setIsDragging(false)
-    setDragOffset(0)
-
-    const threshold = 50
-    const velocity = info.velocity.x
-    const offset = info.offset.x
-
-    // Determine if we should change slides based on drag distance and velocity
-    if (Math.abs(offset) > threshold || Math.abs(velocity) > 500) {
-      if (offset > 0 || velocity > 500) {
-        // Dragged right or fast right velocity - go to previous
-        changeSlide(currentIndex - 1)
-      } else if (offset < 0 || velocity < -500) {
-        // Dragged left or fast left velocity - go to next
-        changeSlide(currentIndex + 1)
-      }
-    }
-  }
-
-  if (!data?.items?.length) return null
 
   return (
-    <div className='relative space-y-6 lg:ml-auto w-full max-w-5xl'>
-      {/* Header */}
+    <div className='relative space-y-6 lg:ml-auto w-full max-w-5xl overflow-hidden'>
+      {/* Controls */}
       <div className='flex justify-between items-center mt-2'>
         <div className='space-y-2'>
           <p className='font-semibold text-primary text-sm uppercase'>{data?.subtitle}</p>
@@ -68,73 +58,40 @@ export const TestimonialCarousel = ({ data }: TProps) => {
             {firstWord} <span className='text-primary'>{rest.join(' ')}</span>
           </h2>
         </div>
-
-        {/* Pagination Dots */}
         <div className='flex gap-2'>
-          {data.items.map((_, index) => (
-            <button
-              key={index}
-              className={`size-2.5 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'bg-primary scale-125' : 'bg-gray-300 hover:bg-gray-400'
+          {/* pagination buttons */}
+          {data?.items?.map((_, i) => (
+            <div
+              key={i}
+              onClick={() => handleDotClick(i)}
+              className={`size-2.5 rounded-full transition-colors duration-300 cursor-pointer ${
+                i === index ? 'bg-primary' : 'bg-gray-300'
               }`}
-              onClick={() => changeSlide(index)}
-              aria-label={`Go to testimonial ${index + 1}`}
             />
           ))}
         </div>
       </div>
 
-      {/* Testimonial Container */}
-      <div className='relative w-full h-64 overflow-hidden'>
-        <motion.div
-          className='w-full h-full cursor-grab active:cursor-grabbing select-none'
-          drag='x'
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.1}
-          onDragStart={handleDragStart}
-          onDrag={handleDrag}
-          onDragEnd={handleDragEnd}
-          style={{
-            x: isDragging ? dragOffset * 0.3 : 0 // Reduced drag visual feedback
+      {/* Animated carousel */}
+      {data?.items?.length && (
+        <Swiper
+          ref={swiperRef}
+          className='testimonialSwipe'
+          loop={true}
+          pagination={{
+            clickable: false,
+            bulletActiveClass: 'bg-primary',
+            bulletClass: 'swiper-pagination-bullet'
           }}
-          whileDrag={{ cursor: 'grabbing' }}
+          onSlideChange={handleSlideChange}
         >
-          <AnimatePresence mode='wait'>
-            <motion.div
-              key={currentIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{
-                duration: 0.3,
-                ease: 'easeInOut'
-              }}
-              className='absolute inset-0 flex items-start justify-start'
-            >
-              <TestimonialItem data={data.items[currentIndex]} />
-            </motion.div>
-          </AnimatePresence>
-        </motion.div>
-      </div>
-    </div>
-  )
-}
-
-const TestimonialItem = ({ data }: { data: TestimonialItem }) => {
-  return (
-    <div className='w-full h-full px-1'>
-      <div className='text-start space-y-4'>
-        <div className='relative'>
-          <blockquote className='text-lg lg:text-xl text-gray-600 leading-relaxed font-light'>
-            {data?.message}
-          </blockquote>
-        </div>
-
-        <div className='space-y-1'>
-          <h4 className='font-semibold text-gray-900 text-lg'>{data?.name}</h4>
-          <p className='text-gray-500 text-sm'>{data?.designation}</p>
-        </div>
-      </div>
+          {data.items?.map((items, idx) => (
+            <SwiperSlide key={idx} className='h-full'>
+              <TestimonialItem data={items} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   )
 }

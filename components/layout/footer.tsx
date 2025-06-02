@@ -1,7 +1,7 @@
 import { retrieveHomepage } from "@/actions/data/homepage";
 import Link from "next/link";
+import AnimatedButton from "../common/AnimatedButton";
 import SocialIcon from "../ui/SocialIcon";
-import { Button } from "../ui/button";
 
 export default async function Footer() {
   const data = await retrieveHomepage()
@@ -39,7 +39,9 @@ export default async function Footer() {
                 <h2 className="font-bold text-xl">Contact Information</h2>
                 <div className="space-y-4">
                   <p>If you have any query feel free to contact with us</p>
-                  <Button>Contact US</Button>
+                  <AnimatedButton href={data?.data?.nav?.cta?.link || ''} className="block text-center">
+                    {data?.data?.nav?.cta?.text}
+                  </AnimatedButton>
                 </div>
               </div>
             </div>

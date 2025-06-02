@@ -11,7 +11,7 @@ export async function getProducts() {
   try {
     await connectToDatabase()
 
-    let data = await products.findOne()
+    let data = await products.find()
 
     if (!data) {
       data = await products.create({
@@ -21,7 +21,7 @@ export async function getProducts() {
 
     return {
       success: true,
-      data: JSON.parse(JSON.stringify(data?.products)) || []
+      data: JSON.parse(JSON.stringify(data)) || []
     }
   } catch (error: any) {
     console.error('Error fetching products:', error)
@@ -33,33 +33,23 @@ export async function getProducts() {
   }
 }
 
-/**
- * Server action to update products data
- */
-export async function updateProducts(newProducts: any[]) {
+export async function getProductDetails(id: string) {
   try {
     await connectToDatabase()
 
-    let data = await products.findOne()
-
-    if (!data) {
-      data = await products.create({
-        products: newProducts
-      })
-    } else {
-      data.products = newProducts
-      await data.save()
-    }
+    let data = await products.findById(id)
+    console.log('getData :>> ', data, id)
 
     return {
       success: true,
-      data: JSON.parse(JSON.stringify(data?.products)) || []
+      data: JSON.parse(JSON.stringify(data)) || []
     }
   } catch (error: any) {
-    console.error('Error updating products:', error)
+    console.error('Error fetching product:', error)
     return {
       success: false,
-      error: error.message || 'Failed to update products'
+      error: error.message || 'Failed to fetch products',
+      data: []
     }
   }
 }
@@ -71,17 +61,7 @@ export async function addProduct(productData: any) {
   try {
     await connectToDatabase()
 
-    let data = await products.findOne()
-
-    if (!data) {
-      data = await products.create({
-        products: [productData]
-      })
-    } else {
-      data.products.push(productData)
-      await data.save()
-    }
-
+    await products.create({ productData })
     revalidatePath('/dashboard/products')
 
     return {
@@ -100,21 +80,11 @@ export async function addProduct(productData: any) {
 /**
  * Server action to update a specific product
  */
-export async function updateProduct(index: number, productData: any) {
+export async function updateProduct(index: string, productData: any) {
   try {
     await connectToDatabase()
 
-    let data = await products.findOne()
-
-    if (!data || !data.products[index]) {
-      return {
-        success: false,
-        error: 'Product not found'
-      }
-    }
-
-    data.products[index] = productData
-    await data.save()
+    let data = await products.findByIdAndUpdate(index, productData)
 
     revalidatePath('/dashboard/products')
 
@@ -134,21 +104,11 @@ export async function updateProduct(index: number, productData: any) {
 /**
  * Server action to delete a product
  */
-export async function deleteProduct(index: number) {
+export async function deleteProduct(index: string) {
   try {
     await connectToDatabase()
 
-    let data = await products.findOne()
-
-    if (!data || !data.products[index]) {
-      return {
-        success: false,
-        error: 'Product not found'
-      }
-    }
-
-    data.products.splice(index, 1)
-    await data.save()
+    let data = await products.findByIdAndDelete(index)
 
     revalidatePath('/dashboard/products')
 

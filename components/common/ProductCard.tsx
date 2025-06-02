@@ -70,7 +70,7 @@ export default function ProductCard({ item }: TProps) {
                     }}
                     transition={{ delay: 0.2 }}
                 >
-                    <Link href="/#" className="block font-extrabold text-primary">
+                    <Link href={`/products/${item?._id}`} className="block font-extrabold text-primary">
                         See more
                     </Link>
                 </motion.div>

@@ -5,7 +5,7 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
     if (total >= 4) {
       return {
         initial: {
-          opacity: 0,
+          opacity: 0.5,
           x: 500 + index * 200,
           y: 0,
           rotateY: index * 15,

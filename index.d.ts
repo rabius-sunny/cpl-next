@@ -110,6 +110,7 @@ type HomePageContent = {
 }
 
 type Product = {
+  _id: string
   name: string
   description: string
   features: Array<{
