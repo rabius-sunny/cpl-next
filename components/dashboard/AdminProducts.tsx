@@ -36,7 +36,7 @@ type TProps = {
 
 // Extended Product type with index for operations
 type ProductWithIndex = Product & {
-  index: number
+  index: string
 }
 
 // Define the Zod schema for product features
@@ -73,7 +73,7 @@ export default function AdminProducts({ data }: TProps) {
   // Create products with index for operations
   const productsWithIndex: ProductWithIndex[] = data.map((product, index) => ({
     ...product,
-    index
+    index: index.toString()
   }))
 
   // Initialize the form
@@ -129,10 +129,10 @@ export default function AdminProducts({ data }: TProps) {
       // Clean the media file data to avoid circular references
       const cleanThumbnail = thumbnailFile
         ? {
-            file: thumbnailFile.file,
-            fileId: thumbnailFile.fileId,
-            thumbnail: thumbnailFile.thumbnail
-          }
+          file: thumbnailFile.file,
+          fileId: thumbnailFile.fileId,
+          thumbnail: thumbnailFile.thumbnail
+        }
         : undefined
 
       const cleanImages = imageFiles.map((image) => ({
@@ -148,7 +148,7 @@ export default function AdminProducts({ data }: TProps) {
       }
 
       let result
-      if (editingProduct && typeof editingProduct.index === 'number') {
+      if (editingProduct) {
         result = await updateProduct(editingProduct.index, productData)
       } else {
         result = await addProduct(productData)
@@ -170,7 +170,7 @@ export default function AdminProducts({ data }: TProps) {
     }
   }
 
-  const handleDeleteProduct = async (productIndex: number) => {
+  const handleDeleteProduct = async (productIndex: string) => {
     if (!confirm('Are you sure you want to delete this product?')) {
       return
     }
@@ -190,15 +190,15 @@ export default function AdminProducts({ data }: TProps) {
   return (
     <div className='space-y-6'>
       {/* Header */}
-      <div className='flex items-center justify-between'>
+      <div className='flex justify-between items-center'>
         <div>
-          <h2 className='text-2xl font-bold'>Product Management</h2>
+          <h2 className='font-bold text-2xl'>Product Management</h2>
           <p className='text-muted-foreground'>Manage your products, features, and images</p>
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
             <Button onClick={openAddDialog}>
-              <Plus className='h-4 w-4 mr-2' />
+              <Plus className='mr-2 w-4 h-4' />
               Add Product
             </Button>
           </DialogTrigger>
@@ -212,7 +212,7 @@ export default function AdminProducts({ data }: TProps) {
                 {serverError && <FormError message={serverError} />}
 
                 {/* Basic Information */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                <div className='gap-4 grid grid-cols-1 md:grid-cols-2'>
                   <FormField
                     control={form.control}
                     name='name'
@@ -266,7 +266,7 @@ export default function AdminProducts({ data }: TProps) {
                           src={thumbnailFile.thumbnail}
                           alt='Thumbnail'
                           fill
-                          className='object-cover rounded-md border'
+                          className='border rounded-md object-cover'
                         />
                       </div>
                     )}
@@ -275,7 +275,7 @@ export default function AdminProducts({ data }: TProps) {
 
                 {/* Gallery Images */}
                 <div className='space-y-2'>
-                  <div className='flex items-center justify-between'>
+                  <div className='flex justify-between items-center'>
                     <FormLabel>Gallery Images</FormLabel>
                     <Button
                       type='button'
@@ -286,7 +286,7 @@ export default function AdminProducts({ data }: TProps) {
                         setImageFiles((prev) => [...prev, { file: '', fileId: '', thumbnail: '' }])
                       }}
                     >
-                      <Plus className='h-4 w-4 mr-2' />
+                      <Plus className='mr-2 w-4 h-4' />
                       Add Gallery Image
                     </Button>
                   </div>
@@ -299,16 +299,16 @@ export default function AdminProducts({ data }: TProps) {
                               src={image.thumbnail}
                               alt={`Gallery ${index + 1}`}
                               fill
-                              className='object-cover rounded-md'
+                              className='rounded-md object-cover'
                             />
                           </div>
                         ) : (
-                          <div className='w-16 h-16 bg-muted rounded-md flex items-center justify-center'>
-                            <Upload className='h-6 w-6 text-muted-foreground' />
+                          <div className='flex justify-center items-center bg-muted rounded-md w-16 h-16'>
+                            <Upload className='w-6 h-6 text-muted-foreground' />
                           </div>
                         )}
                         <div className='flex-1 space-y-2'>
-                          <p className='text-sm font-medium'>Gallery Image {index + 1}</p>
+                          <p className='font-medium text-sm'>Gallery Image {index + 1}</p>
                           <div className='flex items-center gap-2'>
                             <ImageUploader
                               fileId={image.fileId}
@@ -320,7 +320,7 @@ export default function AdminProducts({ data }: TProps) {
                               id={`gallery-${index}`}
                             />
                             {!image.thumbnail && (
-                              <span className='text-xs text-muted-foreground'>
+                              <span className='text-muted-foreground text-xs'>
                                 Choose image file
                               </span>
                             )}
@@ -372,14 +372,14 @@ export default function AdminProducts({ data }: TProps) {
                             }}
                             title='Remove image'
                           >
-                            <Trash2 className='h-4 w-4' />
+                            <Trash2 className='w-4 h-4' />
                           </Button>
                         </div>
                       </div>
                     ))}
                     {imageFiles.length === 0 && (
-                      <div className='text-center py-8 text-muted-foreground'>
-                        <Upload className='h-12 w-12 mx-auto mb-4 opacity-50' />
+                      <div className='py-8 text-muted-foreground text-center'>
+                        <Upload className='opacity-50 mx-auto mb-4 w-12 h-12' />
                         <p className='text-sm'>No gallery images yet</p>
                         <p className='text-xs'>Click "Add Gallery Image" to get started</p>
                       </div>
@@ -389,7 +389,7 @@ export default function AdminProducts({ data }: TProps) {
 
                 {/* Features */}
                 <div className='space-y-4'>
-                  <div className='flex items-center justify-between'>
+                  <div className='flex justify-between items-center'>
                     <FormLabel>Product Features</FormLabel>
                     <Button
                       type='button'
@@ -397,13 +397,13 @@ export default function AdminProducts({ data }: TProps) {
                       size='sm'
                       onClick={() => append({ key: '', value: '' })}
                     >
-                      <Plus className='h-4 w-4 mr-2' />
+                      <Plus className='mr-2 w-4 h-4' />
                       Add Feature
                     </Button>
                   </div>
 
                   {fields.map((field, index) => (
-                    <div key={field.id} className='flex gap-2 items-center'>
+                    <div key={field.id} className='flex items-center gap-2'>
                       <FormField
                         control={form.control}
                         name={`features.${index}.key`}
@@ -443,7 +443,7 @@ export default function AdminProducts({ data }: TProps) {
                         onClick={() => remove(index)}
                         disabled={isSubmitting}
                       >
-                        <Trash2 className='h-4 w-4' />
+                        <Trash2 className='w-4 h-4' />
                       </Button>
                     </div>
                   ))}
@@ -462,7 +462,7 @@ export default function AdminProducts({ data }: TProps) {
                   <Button type='submit' disabled={isSubmitting}>
                     {isSubmitting ? (
                       <>
-                        <Loader2 className='h-4 w-4 mr-2 animate-spin' />
+                        <Loader2 className='mr-2 w-4 h-4 animate-spin' />
                         {editingProduct ? 'Updating...' : 'Adding...'}
                       </>
                     ) : (
@@ -479,20 +479,20 @@ export default function AdminProducts({ data }: TProps) {
       {/* Products Grid */}
       {data.length === 0 ? (
         <Card>
-          <CardContent className='flex flex-col items-center justify-center py-12'>
-            <Upload className='h-12 w-12 text-muted-foreground mb-4' />
-            <h3 className='text-lg font-semibold mb-2'>No products yet</h3>
-            <p className='text-muted-foreground text-center mb-4'>
+          <CardContent className='flex flex-col justify-center items-center py-12'>
+            <Upload className='mb-4 w-12 h-12 text-muted-foreground' />
+            <h3 className='mb-2 font-semibold text-lg'>No products yet</h3>
+            <p className='mb-4 text-muted-foreground text-center'>
               Get started by adding your first product
             </p>
             <Button onClick={openAddDialog}>
-              <Plus className='h-4 w-4 mr-2' />
+              <Plus className='mr-2 w-4 h-4' />
               Add Your First Product
             </Button>
           </CardContent>
         </Card>
       ) : (
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+        <div className='gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {productsWithIndex.map((product) => (
             <Card key={product.index} className='overflow-hidden'>
               <CardHeader className='p-0'>
@@ -506,20 +506,20 @@ export default function AdminProducts({ data }: TProps) {
                     />
                   </div>
                 ) : (
-                  <div className='w-full h-48 bg-muted flex items-center justify-center'>
-                    <Upload className='h-8 w-8 text-muted-foreground' />
+                  <div className='flex justify-center items-center bg-muted w-full h-48'>
+                    <Upload className='w-8 h-8 text-muted-foreground' />
                   </div>
                 )}
               </CardHeader>
               <CardContent className='p-4'>
                 <CardTitle className='mb-2 line-clamp-1'>{product.name}</CardTitle>
-                <p className='text-sm text-muted-foreground mb-3 line-clamp-2'>
+                <p className='mb-3 text-muted-foreground text-sm line-clamp-2'>
                   {product.description}
                 </p>
 
                 {product.features && product.features.length > 0 && (
                   <div className='space-y-1'>
-                    <p className='text-xs font-medium text-muted-foreground'>Features:</p>
+                    <p className='font-medium text-muted-foreground text-xs'>Features:</p>
                     <div className='space-y-1'>
                       {product.features.slice(0, 3).map((feature, featureIndex) => (
                         <div key={featureIndex} className='text-xs'>
@@ -527,7 +527,7 @@ export default function AdminProducts({ data }: TProps) {
                         </div>
                       ))}
                       {product.features.length > 3 && (
-                        <p className='text-xs text-muted-foreground'>
+                        <p className='text-muted-foreground text-xs'>
                           +{product.features.length - 3} more features
                         </p>
                       )}
@@ -537,20 +537,20 @@ export default function AdminProducts({ data }: TProps) {
 
                 {product.images && product.images.length > 0 && (
                   <div className='mt-3'>
-                    <p className='text-xs font-medium text-muted-foreground mb-1'>
+                    <p className='mb-1 font-medium text-muted-foreground text-xs'>
                       Gallery: {product.images.length} images
                     </p>
                   </div>
                 )}
               </CardContent>
-              <CardFooter className='p-4 pt-0 flex gap-2'>
+              <CardFooter className='flex gap-2 p-4 pt-0'>
                 <Button
                   variant='outline'
                   size='sm'
                   className='flex-1'
                   onClick={() => openEditDialog(product)}
                 >
-                  <Edit className='h-4 w-4 mr-2' />
+                  <Edit className='mr-2 w-4 h-4' />
                   Edit
                 </Button>
                 <Button
@@ -558,7 +558,7 @@ export default function AdminProducts({ data }: TProps) {
                   size='sm'
                   onClick={() => handleDeleteProduct(product.index)}
                 >
-                  <Trash2 className='h-4 w-4' />
+                  <Trash2 className='w-4 h-4' />
                 </Button>
               </CardFooter>
             </Card>

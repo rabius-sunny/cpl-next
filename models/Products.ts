@@ -2,28 +2,24 @@ import mongoose, { Schema } from 'mongoose'
 
 const productsSchema = new Schema(
   {
-    products: [
+    name: String,
+    description: String,
+    features: [
       {
-        name: String,
-        description: String,
-        features: [
-          {
-            key: String,
-            value: String
-          }
-        ],
-        thumbnail: {
-          file: String,
-          fileId: String,
-          thumbnail: String
-        },
-        images: [
-          {
-            file: String,
-            fileId: String,
-            thumbnail: String
-          }
-        ]
+        key: String,
+        value: String
+      }
+    ],
+    thumbnail: {
+      file: String,
+      fileId: String,
+      thumbnail: String
+    },
+    images: [
+      {
+        file: String,
+        fileId: String,
+        thumbnail: String
       }
     ]
   },
