@@ -38,7 +38,6 @@ export async function getProductDetails(id: string) {
     await connectToDatabase()
 
     let data = await products.findById(id)
-    console.log('getData :>> ', data, id)
 
     return {
       success: true,

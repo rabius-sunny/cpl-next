@@ -1,3 +1,6 @@
+type Params<Key extends string> = Promise<{ [K in Key]: string }>
+type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>
+
 type TUser = {
   id: string
   email: string
