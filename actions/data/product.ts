@@ -61,7 +61,7 @@ export async function addProduct(productData: any) {
   try {
     await connectToDatabase()
 
-    await products.create({ productData })
+    const res = await products.create(productData)
     revalidatePath('/dashboard/products')
 
     return {
@@ -108,7 +108,7 @@ export async function deleteProduct(index: string) {
   try {
     await connectToDatabase()
 
-    let data = await products.findByIdAndDelete(index)
+    await products.findByIdAndDelete(index)
 
     revalidatePath('/dashboard/products')
 

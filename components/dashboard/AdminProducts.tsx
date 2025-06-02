@@ -34,11 +34,6 @@ type TProps = {
   data: Product[]
 }
 
-// Extended Product type with index for operations
-type ProductWithIndex = Product & {
-  index: string
-}
-
 // Define the Zod schema for product features
 const featureSchema = z.object({
   key: z.string().min(1, { message: 'Feature key is required' }),
@@ -64,17 +59,11 @@ type ProductFormValues = z.infer<typeof productSchema>
 
 export default function AdminProducts({ data }: TProps) {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [editingProduct, setEditingProduct] = useState<ProductWithIndex | null>(null)
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [serverError, setServerError] = useState<string | undefined>()
   const [thumbnailFile, setThumbnailFile] = useState<MediaFile | null>(null)
   const [imageFiles, setImageFiles] = useState<MediaFile[]>([])
-
-  // Create products with index for operations
-  const productsWithIndex: ProductWithIndex[] = data.map((product, index) => ({
-    ...product,
-    index: index.toString()
-  }))
 
   // Initialize the form
   const form = useForm<ProductFormValues>({
@@ -109,7 +98,7 @@ export default function AdminProducts({ data }: TProps) {
     setIsDialogOpen(true)
   }
 
-  const openEditDialog = (product: ProductWithIndex) => {
+  const openEditDialog = (product: Product) => {
     setEditingProduct(product)
     form.reset({
       name: product.name,
@@ -129,10 +118,10 @@ export default function AdminProducts({ data }: TProps) {
       // Clean the media file data to avoid circular references
       const cleanThumbnail = thumbnailFile
         ? {
-          file: thumbnailFile.file,
-          fileId: thumbnailFile.fileId,
-          thumbnail: thumbnailFile.thumbnail
-        }
+            file: thumbnailFile.file,
+            fileId: thumbnailFile.fileId,
+            thumbnail: thumbnailFile.thumbnail
+          }
         : undefined
 
       const cleanImages = imageFiles.map((image) => ({
@@ -149,7 +138,7 @@ export default function AdminProducts({ data }: TProps) {
 
       let result
       if (editingProduct) {
-        result = await updateProduct(editingProduct.index, productData)
+        result = await updateProduct(editingProduct._id, productData)
       } else {
         result = await addProduct(productData)
       }
@@ -493,8 +482,8 @@ export default function AdminProducts({ data }: TProps) {
         </Card>
       ) : (
         <div className='gap-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-          {productsWithIndex.map((product) => (
-            <Card key={product.index} className='overflow-hidden'>
+          {data.map((product, idx) => (
+            <Card key={idx} className='overflow-hidden'>
               <CardHeader className='p-0'>
                 {product.thumbnail?.thumbnail ? (
                   <div className='relative w-full h-48'>
@@ -556,7 +545,7 @@ export default function AdminProducts({ data }: TProps) {
                 <Button
                   variant='destructive'
                   size='sm'
-                  onClick={() => handleDeleteProduct(product.index)}
+                  onClick={() => handleDeleteProduct(product._id)}
                 >
                   <Trash2 className='w-4 h-4' />
                 </Button>
