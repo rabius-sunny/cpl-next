@@ -12,7 +12,7 @@ export default async function ProductDetailsPage({ params }: TProps) {
   const pageParams = await params
   const data = await getProductDetails(pageParams?.productId)
   const productData = data?.data
-  console.log('data :>> ', data.data?.images);
+  console.log('data :>> ', data.data);
 
 
   return (

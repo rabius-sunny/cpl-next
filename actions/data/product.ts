@@ -1,6 +1,7 @@
 'use server'
 
 import { connectToDatabase } from '@/configs/dbConnect'
+import { generateSlug } from '@/lib/utils'
 import products from '@/models/Products'
 import { revalidatePath } from 'next/cache'
 
@@ -83,7 +84,10 @@ export async function updateProduct(index: string, productData: any) {
   try {
     await connectToDatabase()
 
-    let data = await products.findByIdAndUpdate(index, productData)
+    await products.findOneAndUpdate(
+      { _id: index },
+      { ...productData, slug: generateSlug(productData?.name) }
+    )
 
     revalidatePath('/dashboard/products')
 

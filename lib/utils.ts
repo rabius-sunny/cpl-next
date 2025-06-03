@@ -23,3 +23,13 @@ export function formatDate(dateString: string | Date): string {
     day: 'numeric'
   })
 }
+
+export function generateSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove non-word characters except space/hyphen
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/--+/g, '-') // Replace multiple hyphens with a single one
+    .replace(/^-+|-+$/g, '') // Trim leading/trailing hyphens
+}
