@@ -121,16 +121,8 @@ type Product = {
     value: string
     _id?: string
   }>
-  thumbnail?: {
-    file: string
-    fileId: string
-    thumbnail: string
-  }
-  images?: Array<{
-    file: string
-    fileId: string
-    thumbnail: string
-  }>
+  thumbnail?: MediaFile
+  images?: MediaFile[]
 }
 
 type Aboutus = {

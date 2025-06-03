@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import './embla.css';
 
 /* Import Tiptap Editor styles */
 @import '../components/shared/editor.css';
