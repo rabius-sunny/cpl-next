@@ -4,12 +4,13 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
   const getPreset = (index: number) => {
     const baseTransition = {
       duration: 0.8,
-      ease: [0.43, 0.13, 0.23, 0.96]
+      ease: [0.43, 0.13, 0.23, 0.96],
+      delay: index * 0.3
     }
 
     const scaleBase = 1
     const scaleReduction = 0.05
-    const offset = direction === 'horizontal' ? 60 : 80
+    const offset = direction === 'horizontal' ? 60 : 50
 
     // Calculate directional values based on direction
     const getDirectionalValues = () => {
@@ -17,17 +18,17 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
         return {
           initial: {
             x: 300 + index * offset,
-            y: index * 8,
+            y: index * 5,
             rotateY: -15
           },
           animate: {
-            x: index * offset,
-            y: index * 8,
+            x: index * 50,
+            y: index * 5,
             rotateY: 0
           },
           exit: {
             x: 300 + (total + index + 1) * offset,
-            y: index * 8,
+            y: index * 5,
             rotateY: 15
           }
         }
@@ -37,18 +38,18 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
       return {
         initial: {
           x: 0,
-          y: 300 + index * offset,
-          rotateZ: -90
+          y: 100 + index * offset,
+          rotateZ: 90
         },
         animate: {
-          x: 0,
+          x: index * offset,
           y: index * offset,
           rotateZ: 0
         },
         exit: {
           x: 0,
-          y: 300 + (total + index + 1) * offset,
-          rotateZ: 90
+          y: 100 + (total + index + 1) * offset,
+          rotateZ: -90
         }
       }
     }

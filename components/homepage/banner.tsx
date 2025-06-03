@@ -21,7 +21,7 @@ export default function Banner({ data }: TPops) {
 
     // Get total number of images for current slide
     const total = data?.[currentSlide]?.images?.length || 0
-    const { getPreset, containerVariants } = useImageSliderVariants(total, 'horizontal')
+    const { getPreset, containerVariants } = useImageSliderVariants(total, total === 3 ? 'vertical' : 'horizontal')
 
     useEffect(() => {
         if (!isAutoPlaying) return
@@ -36,7 +36,7 @@ export default function Banner({ data }: TPops) {
     const [firstWord, ...rest] = (data[currentSlide]?.title || '').split(' ')
 
     return (
-        <div className="relative bg-gray-100 min-h-screen overflow-hidden">
+        <div className="relative bg-gray-100 overflow-hidden">
             {/* Background Layer */}
             <AnimatePresence mode="wait">
                 <motion.div
@@ -59,11 +59,11 @@ export default function Banner({ data }: TPops) {
             </AnimatePresence>
 
             {/* Content Layer */}
-            <motion.div className="z-20 relative flex items-center h-screen" style={{ y: textY }}>
-                <div className="relative bg-amber-200 mx-auto px-6 container">
+            <motion.div className="z-20 relative flex items-center h-[60vh]" style={{ y: textY }}>
+                <div className="relative mx-auto px-6 border-4 container">
                     <div className="relative flex justify-between items-center gap-20">
                         {/* Text Content */}
-                        <div className="bg-amber-100 w-full lg:w-1/2">
+                        <div className="w-full lg:w-1/2">
                             <AnimatePresence mode="wait">
                                 <motion.div
                                     key={`content-${currentSlide}`}
@@ -92,22 +92,21 @@ export default function Banner({ data }: TPops) {
                                     animate="animate"
                                     exit="exit"
                                 >
-                                    <div className="relative" style={{ perspective: "1000px" }}>
+                                    <div className="top-0 absolute inset-0 bg-amber-500" style={{ perspective: "1000px" }}>
                                         {[...data[currentSlide].images!].map((image, index) => {
                                             const variants = getPreset(index + 2)
                                             return (
                                                 <motion.div
                                                     key={index}
-                                                    className="absolute origin-center"
-                                                    variants={variants}
+                                                    className="top-0 left-0 absolute w-80 origin-center -translate-y-1/2" variants={variants}
                                                     style={{
                                                         filter: 'drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.2))'
                                                     }}
                                                 >
-                                                    <div className={`relative ${index === 0 ? 'w-96 h-[28rem]' : 'w-80 h-96'}`}>
+                                                    <div className={`relative h-[30rem]`}>
                                                         <Image
                                                             src={image.file!}
-                                                            alt=""
+                                                            alt="card"
                                                             fill
                                                             className="rounded-lg object-cover"
                                                             priority={index === 0}
