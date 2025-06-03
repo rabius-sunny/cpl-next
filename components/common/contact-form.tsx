@@ -58,8 +58,8 @@ export default function ContactForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='space-y-10'>
-      <div className="flex gap-6">
+    <form onSubmit={handleSubmit(onSubmit)} className='space-y-6 lg:space-y-10'>
+      <div className="flex lg:flex-row flex-col gap-6">
         <div className='w-full'>
           <InputField placeholder='First Name' {...register('name')} />
           {errors.name && (
