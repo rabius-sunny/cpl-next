@@ -4,15 +4,21 @@ import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "motion/react"
 import { useState } from "react"
 
-const AnimatedButton = ({
-    href,
-    children,
-    className,
-}: {
-    href: string
+type AnimatedButtonProps = {
+    href?: string
+    onClick?: () => void
     children: React.ReactNode
     className?: string
-}) => {
+    type?: 'button' | 'submit' | 'reset'
+}
+
+const AnimatedButton = ({
+    href,
+    onClick,
+    children,
+    className,
+    type = 'button'
+}: AnimatedButtonProps) => {
     const [direction, setDirection] = useState<'left' | 'right'>('left')
     const [isHovering, setIsHovering] = useState(false)
 
@@ -25,16 +31,17 @@ const AnimatedButton = ({
 
     const handleMouseLeave = () => setIsHovering(false)
 
-    return (
-        <motion.a
-            href={href}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            className={cn(
-                "relative bg-primary inline-block focus:outline-none font-semibold text-white overflow-hidden",
-                className
-            )}
-        >
+    const sharedMotionProps = {
+        onMouseEnter: handleMouseEnter,
+        onMouseLeave: handleMouseLeave,
+        className: cn(
+            "relative bg-primary inline-block focus:outline-none font-semibold text-white overflow-hidden",
+            className
+        )
+    }
+
+    const content = (
+        <>
             {/* Base content layer with sliding exit */}
             <motion.div
                 className="relative px-10 py-3"
@@ -47,7 +54,7 @@ const AnimatedButton = ({
                 {children}
             </motion.div>
 
-            {/* Hover effect layer - slides in from opposite direction */}
+            {/* Hover effect layer */}
             <AnimatePresence mode="wait">
                 {isHovering && (
                     <motion.div
@@ -69,7 +76,25 @@ const AnimatedButton = ({
                     </motion.div>
                 )}
             </AnimatePresence>
-        </motion.a>
+        </>
+    )
+
+    if (href) {
+        return (
+            <motion.a href={href} {...sharedMotionProps}>
+                {content}
+            </motion.a>
+        )
+    }
+
+    return (
+        <motion.button
+            onClick={onClick}
+            type={type}
+            {...sharedMotionProps}
+        >
+            {content}
+        </motion.button>
     )
 }
 

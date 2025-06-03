@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import AnimatedButton from './AnimatedButton'
 
 // Define the validation schema
 const contactFormSchema = z.object({
@@ -99,9 +100,9 @@ export default function ContactForm() {
       </div>
 
       <div className='flex justify-center'>
-        <button type='submit' disabled={isSubmitting} className='inline-flex items-center gap-2 bg-white hover:bg-primary disabled:opacity-50 px-12 py-3 border-2 border-primary text-gray-800 text-base uppercase transition-colors duration-300 cursor-pointer disabled:cursor-not-allowed'>
+        <AnimatedButton type="submit" className='bg-white disabled:opacity-50 px-12 border-2 border-primary hover:border-secondary text-primary hover:text-white transition-colors duration-300 cursor-pointer disabled:cursor-not-allowed'>
           {isSubmitting ? 'Sending...' : 'Send'}
-        </button>
+        </AnimatedButton>
       </div>
     </form>
   )
