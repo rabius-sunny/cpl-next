@@ -30,7 +30,7 @@ const AnimatedButton = ({
             href={href}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={cn("relative bg-primary inline-block focus:outline-none font-semibold text-white overflow-hidden rounded-lg", className)}
+            className={cn("relative bg-primary inline-block focus:outline-none font-semibold text-white overflow-hidden", className)}
         >
             {/* Angled sliding background */}
             <AnimatePresence>
@@ -45,7 +45,7 @@ const AnimatedButton = ({
                             x: direction === 'left' ? '-100%' : '100%',
                         }}
                         transition={{ type: 'spring', stiffness: 180, damping: 18 }}
-                        className="z-0 absolute inset-0 bg-secondary rounded-lg"
+                        className="z-0 absolute inset-0 bg-secondary"
                     />
                 )}
             </AnimatePresence>
