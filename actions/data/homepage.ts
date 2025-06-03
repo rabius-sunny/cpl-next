@@ -134,3 +134,15 @@ export async function retrieveHomepage(): Promise<TResponse> {
   }
   return await res.json()
 }
+export async function retrieveAboutus(): Promise<{
+  success: boolean
+  data: Aboutus
+}> {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API}/get-aboutus`, {
+    next: { tags: ['aboutus'] }
+  })
+  if (!res.ok) {
+    throw new Error('Failed to fetch data')
+  }
+  return await res.json()
+}
