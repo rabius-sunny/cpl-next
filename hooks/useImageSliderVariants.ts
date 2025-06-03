@@ -2,80 +2,88 @@ type Direction = 'horizontal' | 'vertical'
 
 export const useImageSliderVariants = (total: number, direction: Direction = 'horizontal') => {
   const getPreset = (index: number) => {
-    if (total >= 4) {
+    const baseTransition = {
+      duration: 0.8,
+      ease: [0.43, 0.13, 0.23, 0.96]
+    }
+
+    const scaleBase = 1
+    const scaleReduction = 0.05
+    const offset = direction === 'horizontal' ? 60 : 80
+
+    // Calculate directional values based on direction
+    const getDirectionalValues = () => {
+      if (direction === 'horizontal') {
+        return {
+          initial: {
+            x: 300 + index * offset,
+            y: index * 8,
+            rotateY: -15
+          },
+          animate: {
+            x: index * offset,
+            y: index * 8,
+            rotateY: 0
+          },
+          exit: {
+            x: 300 + (total + index + 1) * offset,
+            y: index * 8,
+            rotateY: 15
+          }
+        }
+      }
+
+      // Vertical animation with 90-degree rotation
       return {
         initial: {
-          opacity: 0.5,
-          x: 500 + index * 200,
-          y: 0,
-          rotateY: index * 15,
-          scale: 0.8 - (1 - index * 0.05)
+          x: 0,
+          y: 300 + index * offset,
+          rotateZ: -90
         },
         animate: {
-          opacity: 1,
-          x: -index * 55,
-          y: 0,
-          rotateY: -index * 1,
-          scale: 1 + index * 0.02
+          x: 0,
+          y: index * offset,
+          rotateZ: 0
         },
         exit: {
-          opacity: 0,
-          x: 800 - index * 100,
-          y: 0,
-          rotateY: -90 - index * 25,
-          scale: 0.85
+          x: 0,
+          y: 300 + (total + index + 1) * offset,
+          rotateZ: 90
         }
       }
     }
 
-    if (total === 3) {
-      return {
-        initial: {
-          opacity: 0,
-          x: 0,
-          y: 300 + index * 100,
-          rotateY: -90,
-          scale: 0.7
-        },
-        animate: {
-          opacity: 1,
-          x: 0,
-          y: -index * 10,
-          rotateY: 0,
-          scale: 1
-        },
-        exit: {
-          opacity: 0,
-          x: 0,
-          y: -300 - index * 100,
-          rotateY: -90,
-          scale: 0.7
-        }
-      }
-    }
+    const dirValues = getDirectionalValues()
 
-    // <= 2
     return {
       initial: {
         opacity: 0,
-        x: direction === 'horizontal' ? 300 : 0,
-        y: direction === 'vertical' ? 300 : 0,
-        rotateY: 0,
-        scale: 0.9
+        scale: scaleBase - index * scaleReduction,
+        zIndex: total - index,
+        ...dirValues.initial,
+        transition: {
+          ...baseTransition,
+          delay: index * 0.3
+        }
       },
       animate: {
         opacity: 1,
-        x: 0,
-        y: 0,
-        rotateY: 0,
-        scale: 1.15
+        scale: scaleBase - index * scaleReduction,
+        zIndex: total - index,
+        ...dirValues.animate,
+        transition: {
+          ...baseTransition,
+          delay: index * 0.3
+        }
       },
       exit: {
         opacity: 0,
-        x: direction === 'horizontal' ? -300 : 0,
-        y: direction === 'vertical' ? -300 : 0,
-        rotateY: 0,
-        scale: 0.9
+        scale: 0.9,
+        ...dirValues.exit,
+        transition: {
+          ...baseTransition,
+          delay: (total - index - 1) * 0.3
+        }
       }
     }
   }
@@ -84,11 +92,17 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
     initial: {},
     animate: {
       transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+        staggerDirection: 1
       }
     },
-    exit: {}
+    exit: {
+      transition: {
+        staggerChildren: 0.3,
+        staggerDirection: -1
+      }
+    }
   }
 
   return { getPreset, containerVariants }
