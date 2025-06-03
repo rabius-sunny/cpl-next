@@ -5,12 +5,12 @@ import Image from "next/image";
 
 
 type TProps = {
-  params: Params<'productId'>
+  params: Params<'productSlug'>
 }
 
 export default async function ProductDetailsPage({ params }: TProps) {
   const pageParams = await params
-  const data = await getProductDetails(pageParams?.productId)
+  const data = await getProductDetails(pageParams?.productSlug)
   const productData = data?.data
   console.log('data :>> ', data.data);
 
@@ -18,7 +18,7 @@ export default async function ProductDetailsPage({ params }: TProps) {
   return (
     <section id="about_us" className={cn("py-20")}>
       <div className="mx-auto px-4 max-w-7xl container">
-        <div className="flex lg:flex-row flex-col gap-12 lg:gap-20">
+        <div className="flex lg:flex-row flex-col items-center gap-12 lg:gap-20">
           <div className="space-y-8 w-full lg:w-1/2">
             <h1 className="font-bold text-gray-700 text-3xl lg:text-6xl">{productData?.name}</h1>
             <p className="text-base leading-loose">{productData?.description}</p>

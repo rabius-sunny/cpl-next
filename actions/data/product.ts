@@ -34,11 +34,11 @@ export async function getProducts() {
   }
 }
 
-export async function getProductDetails(id: string) {
+export async function getProductDetails(slug: string) {
   try {
     await connectToDatabase()
 
-    let data = await products.findById(id)
+    let data = await products.findOne({ slug })
 
     return {
       success: true,

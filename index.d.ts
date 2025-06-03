@@ -115,6 +115,7 @@ type HomePageContent = {
 type Product = {
   _id: string
   name: string
+  slug: string
   description: string
   features: Array<{
     key: string
