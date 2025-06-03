@@ -129,6 +129,9 @@
   h1 {
     @apply text-3xl;
   }
+  .box {
+    @apply mx-auto lg:px-4 max-w-7xl container;
+  }
 }
 
 ::selection {
