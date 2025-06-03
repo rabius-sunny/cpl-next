@@ -7,12 +7,12 @@ export default async function ContactPage() {
   const siteData = data?.data?.footer
 
   return (
-    <section id="about_us" className="bg-white py-20">
+    <section id="about_us" className="bg-white py-28">
       <div className="space-y-28 mx-auto px-4 max-w-7xl container">
         <div className="flex lg:flex-row flex-col justify-between items-center gap-20 w-full">
 
           <div className="w-full lg:w-1/2">
-            <div className="space-y-16 shadow-xl p-16">
+            <div className="space-y-16 shadow-md lg:shadow-xl p-5 lg:p-16">
               <div className="space-y-4 col-span-full lg:col-span-1">
                 <h2 className="font-bold text-primary text-4xl">
                   Corporate Office
@@ -31,7 +31,7 @@ export default async function ContactPage() {
             </div>
           </div>
 
-          <div className="space-y-14 w-full lg:w-1/2">
+          <div className="space-y-14 p-4 w-full lg:w-1/2">
             <h2 className="font-bold text-4xl text-center">
               Get in <span className="text-primary">Touch</span>
             </h2>

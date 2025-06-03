@@ -30,45 +30,47 @@ const AnimatedButton = ({
             href={href}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={cn("relative bg-primary inline-block focus:outline-none font-semibold text-white overflow-hidden", className)}
+            className={cn(
+                "relative bg-primary inline-block focus:outline-none font-semibold text-white overflow-hidden",
+                className
+            )}
         >
-            {/* Angled sliding background */}
-            <AnimatePresence>
-                {isHovering && (
-                    <motion.span
-                        key="hover-bg"
-                        initial={{
-                            x: direction === 'left' ? '-100%' : '100%',
-                        }}
-                        animate={{ x: 0 }}
-                        exit={{
-                            x: direction === 'left' ? '-100%' : '100%',
-                        }}
-                        transition={{ type: 'spring', stiffness: 180, damping: 18 }}
-                        className="z-0 absolute inset-0 bg-secondary"
-                    />
-                )}
-            </AnimatePresence>
-
-            {/* Foreground content */}
+            {/* Base content layer with sliding exit */}
             <motion.div
-                initial={{
-                    x: direction === 'left' ? '-100%' : '100%',
-                }}
-                animate={{ x: 0 }}
-                exit={{
-                    x: direction === 'left' ? '-100%' : '100%',
+                className="relative px-10 py-3"
+                animate={{
+                    x: isHovering ? (direction === 'left' ? '-100%' : '100%') : 0,
+                    opacity: isHovering ? 0 : 1
                 }}
                 transition={{ type: 'spring', stiffness: 180, damping: 18 }}
-                whileTap={{ scale: 0.95 }}
-                // transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="z-10 relative px-10 py-3 w-full h-full"
             >
                 {children}
             </motion.div>
+
+            {/* Hover effect layer - slides in from opposite direction */}
+            <AnimatePresence mode="wait">
+                {isHovering && (
+                    <motion.div
+                        className="absolute inset-0 bg-secondary"
+                        initial={{
+                            x: direction === 'left' ? '100%' : '-100%'
+                        }}
+                        animate={{
+                            x: 0
+                        }}
+                        exit={{
+                            x: direction === 'left' ? '100%' : '-100%'
+                        }}
+                        transition={{ type: 'spring', stiffness: 180, damping: 18 }}
+                    >
+                        <div className="flex justify-center items-center px-10 py-3 w-full h-full">
+                            {children}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.a>
     )
 }
-
 
 export default AnimatedButton

@@ -99,7 +99,7 @@ export default function ContactForm() {
       </div>
 
       <div className='flex justify-center'>
-        <button type='submit' disabled={isSubmitting} className='inline-flex items-center gap-2 bg-white hover:bg-gray-100 disabled:opacity-50 px-6 py-3 text-gray-800 text-base uppercase transition-colors duration-300 cursor-pointer disabled:cursor-not-allowed'>
+        <button type='submit' disabled={isSubmitting} className='inline-flex items-center gap-2 bg-white hover:bg-primary disabled:opacity-50 px-12 py-3 border-2 border-primary text-gray-800 text-base uppercase transition-colors duration-300 cursor-pointer disabled:cursor-not-allowed'>
           {isSubmitting ? 'Sending...' : 'Send'}
         </button>
       </div>
