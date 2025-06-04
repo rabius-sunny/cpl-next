@@ -35,6 +35,11 @@ const homePageSchema = new Schema(
           },
           title: String,
           subtitle: String,
+          direction: {
+            type: String,
+            enum: ['vertical', 'horizontal'],
+            default: 'horizontal'
+          },
           images: [
             {
               file: String,

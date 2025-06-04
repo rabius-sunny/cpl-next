@@ -15,6 +15,13 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 import { Separator } from '@/components/ui/separator'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Plus, Trash2 } from 'lucide-react'
@@ -32,6 +39,7 @@ type TProps = {
 const sliderItemSchema = z.object({
   title: z.string().optional(),
   subtitle: z.string().optional(),
+  direction: z.enum(['vertical', 'horizontal']).optional(),
   _id: z.string().optional() // For React key management
 })
 
@@ -91,6 +99,7 @@ export default function Sliders({ data }: TProps) {
         data?.map((slider, index) => ({
           title: slider.title || '',
           subtitle: slider.subtitle || '',
+          direction: slider.direction || 'horizontal',
           _id: createStableId(index)
         })) || []
     },
@@ -115,6 +124,7 @@ export default function Sliders({ data }: TProps) {
     appendSlider({
       title: '',
       subtitle: '',
+      direction: 'horizontal',
       _id: newId
     })
   }
@@ -213,6 +223,7 @@ export default function Sliders({ data }: TProps) {
         return {
           title: slider.title,
           subtitle: slider.subtitle,
+          direction: slider.direction,
           backgroundImage,
           images: images && images.length > 0 ? images : undefined
         }
@@ -282,7 +293,7 @@ export default function Sliders({ data }: TProps) {
 
                   <CardContent className='p-0 space-y-3'>
                     {/* Basic Fields */}
-                    <div className='grid md:grid-cols-2 gap-3'>
+                    <div className='grid md:grid-cols-3 gap-3'>
                       {/* Title field */}
                       <FormField
                         control={form.control}
@@ -318,6 +329,31 @@ export default function Sliders({ data }: TProps) {
                                 className='h-7 text-sm'
                               />
                             </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+
+                      {/* Direction field */}
+                      <FormField
+                        control={form.control}
+                        name={`sliders.${index}.direction`}
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel className='text-xs text-muted-foreground'>
+                              Direction
+                            </FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger className='h-7 text-sm'>
+                                  <SelectValue placeholder='Select direction' />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                <SelectItem value='horizontal'>Horizontal</SelectItem>
+                                <SelectItem value='vertical'>Vertical</SelectItem>
+                              </SelectContent>
+                            </Select>
                             <FormMessage />
                           </FormItem>
                         )}
