@@ -24,8 +24,8 @@ export default function GridLayoutSection({ data }: GridLayoutSectionProps) {
   }
 
   return (
-    <section className='py-16 bg-gray-50'>
-      <div className='container mx-auto px-4'>
+    <section className='py-16'>
+      <div className='box'>
         {title && (
           <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center'>
             {title}
@@ -34,27 +34,25 @@ export default function GridLayoutSection({ data }: GridLayoutSectionProps) {
 
         <div className={`grid ${getGridCols(columns)} gap-8`}>
           {items.map((item, index) => (
-            <div
-              key={item.id || index}
-              className='bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300'
-            >
+            <div key={item.id || index} className='grid gap-2'>
               {item.image?.file && (
-                <div className='relative h-48 w-full'>
+                <div className='flex justify-center items-center size-full'>
                   <Image
                     src={item.image.file || '/placeholder.webp'}
                     alt={item.title || `Grid item ${index + 1}`}
-                    fill
-                    className='object-cover'
+                    width={250}
+                    height={250}
+                    className='rounded-full size-36 lg:size-40  overflow-hidden shadow-lg'
                   />
                 </div>
               )}
 
               <div className='p-6'>
                 {item.title && (
-                  <h3 className='text-xl font-semibold text-gray-900 mb-3'>{item.title}</h3>
+                  <h3 className='text-lg text-center font-bold text-gray-900 mb-3'>{item.title}</h3>
                 )}
                 {item.description && (
-                  <p className='text-gray-600 leading-relaxed'>{item.description}</p>
+                  <p className='text-gray-600 text-center leading-relaxed'>{item.description}</p>
                 )}
               </div>
             </div>

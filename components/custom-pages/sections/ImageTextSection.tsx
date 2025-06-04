@@ -9,7 +9,7 @@ export default function ImageTextSection({ data }: ImageTextSectionProps) {
 
   return (
     <section className='py-16 bg-white'>
-      <div className='container mx-auto px-4'>
+      <div className='box'>
         <div
           className={`flex flex-col lg:flex-row items-center gap-12 ${
             imagePosition === 'right' ? 'lg:flex-row-reverse' : ''
