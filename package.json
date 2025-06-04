@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "check": "pnpm tsc --noEmit"
+    "check": "pnpm tsc --noEmit",
+    "up": "./docker-setup.sh"
   },
   "dependencies": {
     "@hello-pangea/dnd": "^18.0.1",

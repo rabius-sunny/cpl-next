@@ -14,6 +14,10 @@ echo -e "${BLUE}======================================${NC}"
 echo -e "${BLUE}     Creative Papers Docker Setup    ${NC}"
 echo -e "${BLUE}======================================${NC}"
 
+# Pull latest changes from git
+echo -e "${BLUE}Pulling latest changes from git...${NC}"
+git pull
+
 # Check if .env file exists
 if [ -f ".env" ]; then
     echo -e "${GREEN}Using existing .env file for configuration${NC}"
