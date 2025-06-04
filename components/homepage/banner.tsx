@@ -23,7 +23,8 @@ export default function Banner({ data }: TPops) {
 
     // Get total number of images for current slide
     const total = data?.[currentSlide]?.images?.length || 0
-    const { getPreset, containerVariants } = useImageSliderVariants(total, total === 3 ? 'vertical' : 'horizontal')
+    const dir = data?.[currentSlide]?.direction ?? 'horizontal'
+    const { getPreset, containerVariants } = useImageSliderVariants(total, dir)
 
     useEffect(() => {
         if (!isAutoPlaying) return
