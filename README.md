@@ -44,7 +44,7 @@ If you prefer to configure Docker manually:
 ```bash
 export MONGODB_URI="mongodb+srv://username:password@cluster0.example.mongodb.net/database?retryWrites=true&w=majority"
 export JWT_SECRET="your-secret-key"
-export NEXT_PUBLIC_APP_URL="http://localhost:3000"
+export NEXT_PUBLIC_APP_URL="http://localhost:3001"
 ```
 
 2. Build and start the Docker container:
@@ -65,7 +65,7 @@ docker compose down
 docker compose up -d --build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3001](http://localhost:3001) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
@@ -91,4 +91,5 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/bui
 # ingress-solution
 
 # ingress-solution
+
 # cpl-next

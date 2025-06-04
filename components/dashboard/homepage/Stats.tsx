@@ -189,7 +189,7 @@ export default function Stats({ data }: TProps) {
                   <div className='mb-3 relative max-w-xs'>
                     <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
                       <Image
-                        src={backgroundImage.file}
+                        src={backgroundImage.file || '/placeholder.webp'}
                         alt='Stats background'
                         fill
                         className='object-cover'

@@ -252,7 +252,7 @@ export default function AdminProducts({ data }: TProps) {
                     {thumbnailFile?.thumbnail && (
                       <div className='relative w-20 h-20'>
                         <Image
-                          src={thumbnailFile.thumbnail}
+                          src={thumbnailFile.thumbnail || '/placeholder.webp'}
                           alt='Thumbnail'
                           fill
                           className='border rounded-md object-cover'
@@ -285,7 +285,7 @@ export default function AdminProducts({ data }: TProps) {
                         {image.thumbnail ? (
                           <div className='relative w-16 h-16'>
                             <Image
-                              src={image.thumbnail}
+                              src={image.thumbnail || '/placeholder.webp'}
                               alt={`Gallery ${index + 1}`}
                               fill
                               className='rounded-md object-cover'
@@ -488,7 +488,7 @@ export default function AdminProducts({ data }: TProps) {
                 {product.thumbnail?.thumbnail ? (
                   <div className='relative w-full h-48'>
                     <Image
-                      src={product.thumbnail.thumbnail}
+                      src={product.thumbnail.thumbnail || '/placeholder.webp'}
                       alt={product.name}
                       fill
                       className='object-cover'

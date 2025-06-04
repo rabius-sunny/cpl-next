@@ -1,11 +1,11 @@
-"use client"
+'use client'
 
-import { Button } from "@/components/ui/button"
-import { useImageSliderVariants } from "@/hooks/useImageSliderVariants"
-import { ChevronLeft, ChevronRight } from "lucide-react"
-import { AnimatePresence, motion, useScroll, useTransform } from "motion/react"
-import Image from "next/image"
-import { useEffect, useState } from "react"
+import { Button } from '@/components/ui/button'
+import { useImageSliderVariants } from '@/hooks/useImageSliderVariants'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 type TPops = {
     data?: SliderItem[]
@@ -23,7 +23,10 @@ export default function Banner({ data }: TPops) {
 
     // Get total number of images for current slide
     const total = data?.[currentSlide]?.images?.length || 0
-    const { getPreset, containerVariants } = useImageSliderVariants(total, total === 3 ? 'vertical' : 'horizontal')
+    const { getPreset, containerVariants } = useImageSliderVariants(
+        total,
+        total === 3 ? 'vertical' : 'horizontal'
+    )
 
     useEffect(() => {
         if (!isAutoPlaying) return
@@ -237,6 +240,49 @@ export default function Banner({ data }: TPops) {
                 >
                     <ChevronRight className="w-6 h-6" />
                 </Button>
+            </div>
+
+            <div className='relative w-full lg:w-1/2'>
+                {/* Image Gallery */}
+                <AnimatePresence mode='wait'>
+                    <motion.div
+                        key={`gallery-${currentSlide}`}
+                        className='hidden lg:block'
+                        variants={containerVariants}
+                        initial='initial'
+                        animate='animate'
+                        exit='exit'
+                    >
+                        <div
+                            className='top-0 absolute inset-0 bg-amber-500'
+                            style={{ perspective: '1000px' }}
+                        >
+                            {[...data[currentSlide].images!].map((image, index) => {
+                                const variants = getPreset(index + 2)
+                                return (
+                                    <motion.div
+                                        key={index}
+                                        className='top-0 left-0 absolute w-80 origin-center -translate-y-1/2'
+                                        variants={variants}
+                                        style={{
+                                            filter: 'drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.2))'
+                                        }}
+                                    >
+                                        <div className={`relative h-[30rem]`}>
+                                            <Image
+                                                src={image.file! || '/placeholder.webp'}
+                                                alt='card'
+                                                fill
+                                                className='rounded-lg object-cover'
+                                                priority={index === 0}
+                                            />
+                                        </div>
+                                    </motion.div>
+                                )
+                            })}
+                        </div>
+                    </motion.div>
+                </AnimatePresence>
             </div>
         </div>
     )

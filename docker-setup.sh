@@ -14,6 +14,10 @@ echo -e "${BLUE}======================================${NC}"
 echo -e "${BLUE}     Creative Papers Docker Setup    ${NC}"
 echo -e "${BLUE}======================================${NC}"
 
+# Pull latest changes from git
+echo -e "${BLUE}Pulling latest changes from git...${NC}"
+git pull
+
 # Check if .env file exists
 if [ -f ".env" ]; then
     echo -e "${GREEN}Using existing .env file for configuration${NC}"
@@ -31,7 +35,7 @@ else
         # Set default values
         export MONGODB_URI="mongodb+srv://username:password@cluster0.example.mongodb.net/database?retryWrites=true&w=majority"
         export JWT_SECRET=$(openssl rand -base64 32)
-        export NEXT_PUBLIC_APP_URL="http://localhost:3000"
+        export NEXT_PUBLIC_APP_URL="http://localhost:3001"
     fi
 fi
 
@@ -48,30 +52,22 @@ if [ -z "$JWT_SECRET" ]; then
 fi
 
 if [ -z "$NEXT_PUBLIC_APP_URL" ]; then
-    export NEXT_PUBLIC_APP_URL="http://localhost:3000"
+    export NEXT_PUBLIC_APP_URL="http://localhost:3001"
 fi
 
 # Set up environment variables for Docker Compose
 echo -e "${BLUE}Setting up Docker environment with your settings...${NC}"
 
-# Create a .env file for reference
-if [ -f "env.docker" ]; then
-    cp env.docker .env.docker
-    sed -i "s|MONGODB_URI=|MONGODB_URI=$MONGODB_URI|g" .env.docker
-    sed -i "s|NEXT_PUBLIC_APP_URL=.*|NEXT_PUBLIC_APP_URL=$NEXT_PUBLIC_APP_URL|g" .env.docker
-    sed -i "s|JWT_SECRET=|JWT_SECRET=$JWT_SECRET|g" .env.docker
-    echo -e "${GREEN}Created .env.docker file for reference${NC}"
-fi
-
 # Build and start the Docker container
 # Environment variables are automatically passed to docker-compose from the current shell
 echo -e "${BLUE}Building and starting Docker containers...${NC}"
-docker compose up -d --build
+docker compose build --no-cache
+docker compose up -d
 
 # Check if Docker containers started successfully
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}Docker setup completed successfully!${NC}"
-    echo -e "${GREEN}Your application is now running at: http://localhost:3000${NC}"
+    echo -e "${GREEN}Your application is now running at: http://localhost:3001${NC}"
 else
     echo -e "${RED}Error: Failed to start Docker containers. Please check the logs.${NC}"
     exit 1

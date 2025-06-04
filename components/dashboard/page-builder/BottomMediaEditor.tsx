@@ -73,7 +73,7 @@ export default function BottomMediaEditor({ data, onChange, onDelete }: Props) {
                 </video>
               ) : (
                 <Image
-                  src={data.media.file}
+                  src={data.media.file || '/placeholder.webp'}
                   alt={data.title || 'Bottom media'}
                   fill
                   className='object-cover rounded-md'

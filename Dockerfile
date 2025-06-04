@@ -24,13 +24,6 @@ COPY . .
 # Build the application
 # We don't need to copy .env file, environment variables will be provided in docker-compose
 ENV NODE_ENV=production
-# During build, use dummy values for any required environment variables (they'll be replaced at runtime)
-ENV MONGODB_URI="mongodb+srv://cpl:266696687@curlware.s8xco.mongodb.net/?retryWrites=true&w=majority&appName=Curlware"
-ENV JWT_SECRET=dummy-build-secret
-ENV IMAGEKIT_PRIVATE_KEY=private_GXKh12J0vpBsX9Ae563qq7CLxLU=
-ENV IMAGEKIT_PUBLIC_KEY=public_FDarbtqogcccz1AM0mjcCOV7p/8=
-ENV NEXT_PUBLIC_APP_URL=http://localhost:3000
-ENV NEXT_PUBLIC_API=http://localhost:3000/api
 ENV NEXT_SKIP_API_CALLS=true
 RUN corepack enable && corepack prepare pnpm@latest --activate && pnpm build
 
@@ -58,9 +51,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 3000
+EXPOSE 3001
 
-ENV PORT 3000
+ENV PORT 3001
 ENV HOSTNAME "0.0.0.0"
 
 CMD ["node", "server.js"]

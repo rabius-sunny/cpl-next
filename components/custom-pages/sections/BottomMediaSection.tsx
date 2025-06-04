@@ -8,9 +8,9 @@ export default function BottomMediaSection({ data }: BottomMediaSectionProps) {
   const { media, type = 'image', title, description } = data
 
   return (
-    <section className='py-16 bg-gray-900 text-white'>
-      <div className='container mx-auto px-4'>
-        <div className='max-w-6xl mx-auto text-center'>
+    <section className='py-16 text-white'>
+      <div className='box'>
+        <div className=' text-center'>
           {(title || description) && (
             <div className='mb-12'>
               {title && <h2 className='text-3xl md:text-4xl font-bold mb-4'>{title}</h2>}
@@ -24,19 +24,14 @@ export default function BottomMediaSection({ data }: BottomMediaSectionProps) {
             <div className='relative w-full max-w-4xl mx-auto'>
               {type === 'video' ? (
                 <div className='relative aspect-video'>
-                  <video
-                    src={media.file}
-                    controls
-                    className='w-full h-full rounded-lg'
-                    preload='metadata'
-                  >
+                  <video src={media.file} controls className='size-full' preload='metadata'>
                     Your browser does not support the video tag.
                   </video>
                 </div>
               ) : (
                 <div className='relative aspect-video'>
                   <Image
-                    src={media.file}
+                    src={media.file || '/placeholder.webp'}
                     alt={title || 'Bottom media'}
                     fill
                     className='object-cover rounded-lg'

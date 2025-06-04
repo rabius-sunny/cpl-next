@@ -44,6 +44,7 @@ type SliderItem = {
   title?: string
   subtitle?: string
   images?: MediaFile[]
+  direction?: 'vertical' | 'horizontal'
 }
 
 // Homepage About Types
