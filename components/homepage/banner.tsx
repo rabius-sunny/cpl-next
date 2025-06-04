@@ -17,7 +17,6 @@ export default function Banner({ data }: TPops) {
     const { scrollY } = useScroll()
     const [direction, setDirection] = useState(0)
 
-    console.log('data :>> ', data);
     const backgroundY = useTransform(scrollY, [0, 500], [0, 150])
     const textY = useTransform(scrollY, [0, 500], [0, 200])
 
@@ -119,7 +118,7 @@ export default function Banner({ data }: TPops) {
             </AnimatePresence>
             {/* Content Layer */}
             <motion.div className="z-20 relative flex items-center h-[60vh]" style={{ y: textY }}>
-                <div className="relative mx-auto px-6 border-4 container">
+                <div className="relative mx-auto px-6 container">
                     <div className="relative flex lg:flex-row flex-col justify-between items-center gap-20">
                         {/* Text Content */}
                         <div className="w-full lg:w-1/2">
@@ -187,7 +186,7 @@ export default function Banner({ data }: TPops) {
                                                             src={image.file!}
                                                             alt="card"
                                                             fill
-                                                            className="object-contain"
+                                                            className="h-80 object-contain"
                                                             priority={index === 0}
                                                         />
                                                     </div>

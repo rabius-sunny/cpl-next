@@ -79,9 +79,9 @@ const AnimatedButton = ({
     if (href) {
         return (
             <Link href={href} passHref>
-                <motion.a {...sharedMotionProps}>
+                <motion.span {...sharedMotionProps}>
                     {content}
-                </motion.a>
+                </motion.span>
             </Link>
         )
     }
