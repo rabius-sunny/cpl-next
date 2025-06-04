@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/utils"
 import { AnimatePresence, motion } from "motion/react"
+import Link from "next/link"
 import { useState } from "react"
 
 type AnimatedButtonProps = {
@@ -42,9 +43,8 @@ const AnimatedButton = ({
 
     const content = (
         <>
-            {/* Base content layer with sliding exit */}
             <motion.div
-                className="relative px-10 py-3"
+                className="relative px-10 py-3 whitespace-nowrap"
                 animate={{
                     x: isHovering ? (direction === 'left' ? '-100%' : '100%') : 0,
                     opacity: isHovering ? 0 : 1
@@ -54,7 +54,6 @@ const AnimatedButton = ({
                 {children}
             </motion.div>
 
-            {/* Hover effect layer */}
             <AnimatePresence mode="wait">
                 {isHovering && (
                     <motion.div
@@ -62,15 +61,13 @@ const AnimatedButton = ({
                         initial={{
                             x: direction === 'left' ? '100%' : '-100%'
                         }}
-                        animate={{
-                            x: 0
-                        }}
+                        animate={{ x: 0 }}
                         exit={{
                             x: direction === 'left' ? '100%' : '-100%'
                         }}
                         transition={{ type: 'spring', stiffness: 180, damping: 18 }}
                     >
-                        <div className="flex justify-center items-center px-10 py-3 w-full h-full">
+                        <div className="flex justify-center items-center px-10 py-3 w-full h-full whitespace-nowrap">
                             {children}
                         </div>
                     </motion.div>
@@ -81,9 +78,11 @@ const AnimatedButton = ({
 
     if (href) {
         return (
-            <motion.a href={href} {...sharedMotionProps}>
-                {content}
-            </motion.a>
+            <Link href={href} passHref>
+                <motion.a {...sharedMotionProps}>
+                    {content}
+                </motion.a>
+            </Link>
         )
     }
 

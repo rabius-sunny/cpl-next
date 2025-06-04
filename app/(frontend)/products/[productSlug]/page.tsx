@@ -12,8 +12,6 @@ export default async function ProductDetailsPage({ params }: TProps) {
   const pageParams = await params
   const data = await getProductDetails(pageParams?.productSlug)
   const productData = data?.data
-  console.log('data :>> ', data.data);
-
 
   return (
     <section id="about_us" className={cn("py-20")}>

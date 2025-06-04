@@ -11,7 +11,7 @@ export default async function Footer() {
     <footer className="bg-slate-800 text-white">
       <div className="py-20">
         <div className="mx-auto px-4 max-w-7xl container">
-          <div className="justify-center gap-16 lg:gap-24 grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 [&_p]:mb-1.5 w-full [&_p]:font-medium [&_h2]:text-primary">
+          <div className="lg:justify-center gap-16 lg:gap-24 grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 [&_p]:mb-1.5 w-full [&_p]:font-medium [&_h2]:text-primary">
 
             <div className="space-y-6 col-span-full lg:col-span-1">
               <h2 className="font-bold text-xl">Contacts Information (Office)</h2>
@@ -49,7 +49,7 @@ export default async function Footer() {
         </div>
       </div>
       <div className="py-10 border-gray-700 border-t">
-        <div className="flex justify-between items-center mx-auto px-4 max-w-7xl container">
+        <div className="flex lg:flex-row flex-col justify-between items-center gap-6 mx-auto px-4 max-w-7xl lg:text-inherit text-center container">
           <p>{siteData?.copyright}</p>
           <div className="flex [&>*]:px-4 [&>*:last-child]:pr-0 divide-x divide-gray-300 leading-tight">
             <Link href='/privacy'>Privacy Policy</Link>
