@@ -1,25 +1,14 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import type { Swiper as SwiperType } from 'swiper' // Import Swiper styles
-import 'swiper/css'
-import 'swiper/css/pagination' // Add pagination styles
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react'
+import { useRef, useState } from 'react';
+import type { Swiper as SwiperType } from 'swiper'; // Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/pagination'; // Add pagination styles
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 
-type TestimonialItem = {
-  name: string
-  designation: string
-  message: string
-}
-
-type TestimonialsSection = {
-  title?: string
-  subtitle?: string
-  items?: TestimonialItem[]
-}
 
 type TProps = {
-  data?: TestimonialsSection
+  data?: TestimonialsSection | undefined
 }
 
 const TestimonialItem = ({ data }: { data: TestimonialItem }) => {
@@ -64,9 +53,8 @@ export const TestimonialCarousel = ({ data }: TProps) => {
             <div
               key={i}
               onClick={() => handleDotClick(i)}
-              className={`size-2.5 rounded-full transition-colors duration-300 cursor-pointer ${
-                i === index ? 'bg-primary' : 'bg-gray-300'
-              }`}
+              className={`size-2.5 rounded-full transition-colors duration-300 cursor-pointer ${i === index ? 'bg-primary' : 'bg-gray-300'
+                }`}
             />
           ))}
         </div>

@@ -10,7 +10,7 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
 
     const scaleBase = 1
     const scaleReduction = 0.05
-    const offset = direction === 'horizontal' ? 60 : 50
+    const offset = direction === 'horizontal' ? 30 : 30
 
     // Calculate directional values based on direction
     const getDirectionalValues = () => {
@@ -18,7 +18,7 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
         return {
           initial: {
             x: 300 + index * offset,
-            y: index * 5,
+            y: index * 10,
             rotateY: -15
           },
           animate: {
@@ -37,18 +37,18 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
       // Vertical animation with 90-degree rotation
       return {
         initial: {
-          x: 0,
-          y: 100 + index * offset,
+          x: 300 + index * offset,
+          y: 300 + index,
           rotateZ: 90
         },
         animate: {
-          x: index * offset,
-          y: index * offset,
+          x: index * 45,
+          y: (index - 2.5) * offset,
           rotateZ: 0
         },
         exit: {
-          x: 0,
-          y: 100 + (total + index + 1) * offset,
+          x: 300 + (total + index + 1) * offset,
+          y: 300 + (total + index + 1) * offset,
           rotateZ: -90
         }
       }

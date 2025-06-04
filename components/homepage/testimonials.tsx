@@ -21,7 +21,7 @@ export const TestimonialSection = ({ data }: TProps) => {
                             </div>
                         </div>
                     </div>
-                    <TestimonialCarousel data={data} />
+                    {data && <TestimonialCarousel data={data!} />}
                 </div>
             </div>
         </section>

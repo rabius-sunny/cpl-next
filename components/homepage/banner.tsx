@@ -15,7 +15,9 @@ export default function Banner({ data }: TPops) {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [isAutoPlaying, setIsAutoPlaying] = useState(true)
     const { scrollY } = useScroll()
+    const [direction, setDirection] = useState(0)
 
+    console.log('data :>> ', data);
     const backgroundY = useTransform(scrollY, [0, 500], [0, 150])
     const textY = useTransform(scrollY, [0, 500], [0, 200])
 
@@ -35,33 +37,89 @@ export default function Banner({ data }: TPops) {
 
     const [firstWord, ...rest] = (data[currentSlide]?.title || '').split(' ')
 
+    const handleNextSlide = () => {
+        setDirection(1)
+        setCurrentSlide((prev) => (prev + 1) % data!.length)
+        setIsAutoPlaying(false)
+    }
+
+    const handlePrevSlide = () => {
+        setDirection(-1)
+        setCurrentSlide((prev) => (prev - 1 + data!.length) % data!.length)
+        setIsAutoPlaying(false)
+    }
+
     return (
-        <div className="relative bg-gray-100 overflow-hidden">
+        <div className="relative bg-gray-200 overflow-hidden">
             {/* Background Layer */}
-            <AnimatePresence mode="wait">
+            <AnimatePresence mode="wait" initial={false} custom={direction}>
                 <motion.div
                     key={`bg-${currentSlide}`}
-                    initial={{ scale: 1.1, opacity: 0.8 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0.8 }}
-                    transition={{ duration: 1.5, ease: "easeInOut" }}
-                    className="absolute inset-0"
+                    custom={direction}
+                    variants={{
+                        initial: (direction: number) => ({
+                            position: 'absolute',
+                            y: direction >= 0 ? '100%' : '-100%',
+                            scale: 1.1,
+                            zIndex: 1
+                        }),
+                        animate: {
+                            position: 'absolute',
+                            y: 0,
+                            scale: 1,
+                            zIndex: 2,
+                            transition: {
+                                duration: 0.2,
+                                ease: [0.43, 0.13, 0.23, 0.96]
+                            }
+                        },
+                        exit: (direction: number) => ({
+                            position: 'absolute',
+                            y: direction >= 0 ? '-100%' : '100%',
+                            scale: 0.9,
+                            zIndex: 0,
+                            transition: {
+                                duration: 1.2,
+                                ease: [0.43, 0.13, 0.23, 0.96]
+                            }
+                        })
+                    }}
+                    initial="initial"
+                    animate="animate"
+                    exit="exit"
+                    className="absolute inset-0 w-full h-full overflow-hidden"
                     style={{ y: backgroundY }}
                 >
-                    <div
-                        className="bg-cover bg-no-repeat bg-center w-full h-full"
-                        style={{
-                            backgroundImage: `url(${data[currentSlide].backgroundImage?.file})`,
+                    {/* Background Image Layer */}
+                    <motion.div
+                        className="absolute inset-0 w-full h-full"
+                        initial={{ opacity: 0 }}
+                        animate={{
+                            opacity: 1,
+                            transition: {
+                                duration: 0.8,
+                                ease: "easeOut",
+                                delay: 0.2 // Delay opacity animation to ensure smooth transition
+                            }
                         }}
-                    />
+                        exit={{ opacity: 1 }} // Keep opacity 1 on exit
+                    >
+                        <div
+                            className="bg-cover bg-no-repeat bg-center w-full h-full transform-gpu"
+                            style={{
+                                backgroundImage: `url(${data[currentSlide].backgroundImage?.file})`,
+                            }}
+                        />
+                    </motion.div>
+
+                    {/* Gradient Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/10 to-transparent" />
                 </motion.div>
             </AnimatePresence>
-
             {/* Content Layer */}
             <motion.div className="z-20 relative flex items-center h-[60vh]" style={{ y: textY }}>
                 <div className="relative mx-auto px-6 border-4 container">
-                    <div className="relative flex justify-between items-center gap-20">
+                    <div className="relative flex lg:flex-row flex-col justify-between items-center gap-20">
                         {/* Text Content */}
                         <div className="w-full lg:w-1/2">
                             <AnimatePresence mode="wait">
@@ -72,10 +130,33 @@ export default function Banner({ data }: TPops) {
                                     animate="animate"
                                     exit="exit"
                                 >
-                                    <motion.h1 className="mb-6 font-raleway font-semibold text-gray-800 text-5xl md:text-6xl capitalize leading-tight">
+                                    <motion.h1
+                                        initial={{ x: -100, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        exit={{ x: -100, opacity: 0 }}
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 260,
+                                            damping: 20,
+                                            duration: 1.5
+                                        }}
+                                        className="mb-6 font-raleway font-semibold text-gray-800 text-5xl md:text-6xl capitalize leading-tight"
+                                    >
                                         {firstWord} <br /> {rest.join(' ')}
                                     </motion.h1>
-                                    <motion.h3 className="mb-4 font-roboto font-light text-zinc-500 text-3xl">
+                                    <motion.h3
+                                        initial={{ x: -100, opacity: 0 }}
+                                        animate={{ x: 0, opacity: 1 }}
+                                        exit={{ x: -100, opacity: 0 }}
+                                        transition={{
+                                            type: "spring",
+                                            stiffness: 200,
+                                            damping: 20,
+                                            duration: 1.5,
+                                            delay: 0.2
+                                        }}
+                                        className="mb-4 font-roboto font-light text-zinc-500 text-2xl lg:text-3xl"
+                                    >
                                         {data[currentSlide].subtitle}
                                     </motion.h3>
                                 </motion.div>
@@ -92,23 +173,20 @@ export default function Banner({ data }: TPops) {
                                     animate="animate"
                                     exit="exit"
                                 >
-                                    <div className="top-0 absolute inset-0 bg-amber-500" style={{ perspective: "1000px" }}>
+                                    <div style={{ perspective: "1000px" }}>
                                         {[...data[currentSlide].images!].map((image, index) => {
                                             const variants = getPreset(index + 2)
                                             return (
                                                 <motion.div
                                                     key={index}
-                                                    className="top-0 left-0 absolute w-80 origin-center -translate-y-1/2" variants={variants}
-                                                    style={{
-                                                        filter: 'drop-shadow(0px 10px 15px rgba(0, 0, 0, 0.2))'
-                                                    }}
+                                                    className="-top-6 left-0 absolute w-fit origin-center -translate-y-1/2" variants={variants}
                                                 >
-                                                    <div className={`relative h-[30rem]`}>
+                                                    <div className={`relative h-96 w-96 flex items-center justify-center`}>
                                                         <Image
                                                             src={image.file!}
                                                             alt="card"
                                                             fill
-                                                            className="rounded-lg object-cover"
+                                                            className="object-contain"
                                                             priority={index === 0}
                                                         />
                                                     </div>
@@ -129,11 +207,8 @@ export default function Banner({ data }: TPops) {
                 <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => {
-                        setCurrentSlide((prev) => (prev - 1 + data.length) % data.length)
-                        setIsAutoPlaying(false)
-                    }}
-                    className="hover:bg-white/20 rounded-full text-gray-300"
+                    onClick={handlePrevSlide}
+                    className="bg-primary/20 hover:bg-primary/60 rounded-full text-white hover:text-white"
                 >
                     <ChevronLeft className="w-6 h-6" />
                 </Button>
@@ -142,11 +217,8 @@ export default function Banner({ data }: TPops) {
                     {data.map((_, index) => (
                         <motion.button
                             key={index}
-                            onClick={() => {
-                                setCurrentSlide(index)
-                                setIsAutoPlaying(false)
-                            }}
-                            className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentSlide ? "bg-gray-300 w-8" : "bg-gray-300/50"
+                            onClick={handleNextSlide}
+                            className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${index === currentSlide ? "bg-primary/60 w-8" : "bg-primary/30"
                                 }`}
                             whileHover={{ scale: 1.2 }}
                             whileTap={{ scale: 0.9 }}
@@ -161,7 +233,7 @@ export default function Banner({ data }: TPops) {
                         setCurrentSlide((prev) => (prev + 1) % data.length)
                         setIsAutoPlaying(false)
                     }}
-                    className="hover:bg-white/20 rounded-full text-gray-300"
+                    className="bg-primary/20 hover:bg-primary/60 rounded-full text-white hover:text-white"
                 >
                     <ChevronRight className="w-6 h-6" />
                 </Button>
