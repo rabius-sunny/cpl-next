@@ -551,7 +551,7 @@ export default function AdminAboutus({ data }: TProps) {
                   <div className='mb-4 relative max-w-xs'>
                     <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
                       <Image
-                        src={backgroundImage.file}
+                        src={backgroundImage.file || '/placeholder.webp'}
                         alt='Background image preview'
                         fill
                         className='object-cover'
@@ -596,7 +596,7 @@ export default function AdminAboutus({ data }: TProps) {
                               <div className='mt-2 relative max-w-[200px]'>
                                 <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
                                   <Image
-                                    src={sectionImages[index]!.file}
+                                    src={sectionImages[index]!.file || '/placeholder.webp'}
                                     alt='Section image'
                                     fill
                                     className='object-cover'
@@ -773,7 +773,7 @@ export default function AdminAboutus({ data }: TProps) {
                   <div className='mb-4 relative max-w-xs'>
                     <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
                       <Image
-                        src={bottomImage.file}
+                        src={bottomImage.file || '/placeholder.webp'}
                         alt='Bottom image preview'
                         fill
                         className='object-cover'
@@ -856,7 +856,7 @@ export default function AdminAboutus({ data }: TProps) {
                   <div className='mb-4 relative max-w-xs'>
                     <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
                       <Image
-                        src={currentSectionImage.file}
+                        src={currentSectionImage.file || '/placeholder.webp'}
                         alt='Section image preview'
                         fill
                         className='object-cover'

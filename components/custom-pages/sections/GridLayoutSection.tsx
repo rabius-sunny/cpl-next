@@ -41,7 +41,7 @@ export default function GridLayoutSection({ data }: GridLayoutSectionProps) {
               {item.image?.file && (
                 <div className='relative h-48 w-full'>
                   <Image
-                    src={item.image.file}
+                    src={item.image.file || '/placeholder.webp'}
                     alt={item.title || `Grid item ${index + 1}`}
                     fill
                     className='object-cover'

@@ -335,7 +335,7 @@ export default function Sliders({ data }: TProps) {
                         <div className='mb-3 relative max-w-xs'>
                           <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
                             <Image
-                              src={backgroundImage.file}
+                              src={backgroundImage.file || '/placeholder.webp'}
                               alt={`Slider ${index + 1} background`}
                               fill
                               className='object-cover'
@@ -409,7 +409,7 @@ export default function Sliders({ data }: TProps) {
                             <div key={imgIndex} className='relative group'>
                               <div className='border rounded-md overflow-hidden relative aspect-video'>
                                 <Image
-                                  src={img.file || ''}
+                                  src={img.file || '/placeholder.webp'}
                                   alt={`Slider ${index + 1} image ${imgIndex + 1}`}
                                   fill
                                   className='object-cover'

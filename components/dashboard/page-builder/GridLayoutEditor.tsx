@@ -118,7 +118,7 @@ export default function GridLayoutEditor({ data, onChange, onDelete }: Props) {
                     {item.image?.file && (
                       <div className='relative aspect-square w-full max-w-[200px]'>
                         <Image
-                          src={item.image.file}
+                          src={item.image.file || '/placeholder.webp'}
                           alt={item.title || 'Grid item'}
                           fill
                           className='object-cover rounded-md'

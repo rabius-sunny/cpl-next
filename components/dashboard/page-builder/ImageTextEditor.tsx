@@ -64,7 +64,7 @@ export default function ImageTextEditor({ data, onChange, onDelete }: Props) {
             {data.image?.file && (
               <div className='relative aspect-square w-full max-w-[300px]'>
                 <Image
-                  src={data.image.file}
+                  src={data.image.file || '/placeholder.webp'}
                   alt={data.title || 'Section image'}
                   fill
                   className='object-cover rounded-md'

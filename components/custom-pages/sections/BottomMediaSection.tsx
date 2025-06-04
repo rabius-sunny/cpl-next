@@ -36,7 +36,7 @@ export default function BottomMediaSection({ data }: BottomMediaSectionProps) {
               ) : (
                 <div className='relative aspect-video'>
                   <Image
-                    src={media.file}
+                    src={media.file || '/placeholder.webp'}
                     alt={title || 'Bottom media'}
                     fill
                     className='object-cover rounded-lg'

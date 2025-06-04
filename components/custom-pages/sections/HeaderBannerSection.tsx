@@ -11,7 +11,7 @@ export default function HeaderBannerSection({ data }: HeaderBannerSectionProps) 
       {data.image?.file && (
         <div className='absolute inset-0'>
           <Image
-            src={data.image.file}
+            src={data.image.file || '/placeholder.webp'}
             alt={data.title || 'Header banner'}
             fill
             className='object-cover'

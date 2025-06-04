@@ -6,7 +6,6 @@ export default async function page() {
   if (!data.success || !data?.data) {
     return <div>Error loading data</div>
   }
-  console.log('data', data.data)
   return (
     <div className='grid gap-8 md:gap-12 lg:gap-16'>
       <div>

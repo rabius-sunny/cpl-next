@@ -20,7 +20,7 @@ export default function ImageTextSection({ data }: ImageTextSectionProps) {
             <div className='flex-1 w-full'>
               <div className='relative aspect-[4/3] w-full max-w-2xl mx-auto'>
                 <Image
-                  src={image.file}
+                  src={image.file || '/placeholder.webp'}
                   alt={title || 'Section image'}
                   fill
                   className='object-cover rounded-lg'

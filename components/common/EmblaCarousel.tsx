@@ -19,8 +19,19 @@ export const Thumb = ({
   onClick: () => void
 }) => {
   return (
-    <div className={' embla-thumbs__slide'.concat(selected ? ' embla-thumbs__slide--selected cursor-pointer' : '')} onClick={onClick}>
-      <Image src={item} alt='Thumbnail' width={125} height={125} className={cn('w-full object-cover aspect-square', { "": selected })} />
+    <div
+      className={' embla-thumbs__slide'.concat(
+        selected ? ' embla-thumbs__slide--selected cursor-pointer' : ''
+      )}
+      onClick={onClick}
+    >
+      <Image
+        src={item || '/placeholder.webp'}
+        alt='Thumbnail'
+        width={125}
+        height={125}
+        className={cn('w-full object-cover aspect-square', { '': selected })}
+      />
     </div>
   )
 }
@@ -35,7 +46,6 @@ const EmblaCarousel: React.FC<TProps> = (props) => {
     dragFree: true,
     axis: axis
   })
-
 
   // Change axis on resize
   useEffect(() => {
