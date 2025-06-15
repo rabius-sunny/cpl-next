@@ -1,14 +1,17 @@
 'use client'
 
+import { cn } from '@/lib/utils'
 import { Menu, Minus, Plus, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 
 function DesktopDropdown({ item, level = 0 }: { item: NavItem; level?: number }) {
     const [open, setOpen] = useState(false)
     const hasChildren = !!item.childrens?.length
+    const pathname = usePathname()
 
     const positionClass =
         level === 0
@@ -24,7 +27,7 @@ function DesktopDropdown({ item, level = 0 }: { item: NavItem; level?: number })
             {item.link ? (
                 <Link
                     href={item.link}
-                    className="block hover:bg-gray-100 px-4 py-2 whitespace-nowrap"
+                    className={cn("block hover:bg-gray-100 px-4 py-2 whitespace-nowrap mx-0.5", { "bg-gray-100": pathname === item?.link })}
                 >
                     {item.title}
                 </Link>
@@ -58,14 +61,14 @@ function DesktopDropdown({ item, level = 0 }: { item: NavItem; level?: number })
 export function MobileMenuItem({ item, level = 0 }: { item: NavItem; level?: number }) {
     const [open, setOpen] = useState(false)
     const hasChildren = !!item.childrens?.length
-
+    const pathname = usePathname()
     return (
         <div className="relative w-full">
             <div className={`flex justify-between items-center px-4 py-2 overflow-hidden text-base font-medium ${level > 0 ? 'pl-6' : ''}`}
                 onClick={() => setOpen((o) => !o)}
             >
                 {item.link ? (
-                    <Link href={item.link}>
+                    <Link href={item.link} className={cn({ 'text-primary': pathname === item.link })}>
                         {item.title}
                     </Link>
                 ) : (
@@ -78,24 +81,26 @@ export function MobileMenuItem({ item, level = 0 }: { item: NavItem; level?: num
                 )}
             </div>
 
-            {hasChildren && (
-                <AnimatePresence>
-                    {open && (
-                        <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden"
-                        >
-                            {item.childrens!.map((child, idx) => (
-                                <MobileMenuItem key={idx} item={child} level={level + 1} />
-                            ))}
-                        </motion.div>
-                    )}
-                </AnimatePresence>
-            )}
-        </div>
+            {
+                hasChildren && (
+                    <AnimatePresence>
+                        {open && (
+                            <motion.div
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: 'auto', opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                transition={{ duration: 0.2 }}
+                                className="overflow-hidden"
+                            >
+                                {item.childrens!.map((child, idx) => (
+                                    <MobileMenuItem key={idx} item={child} level={level + 1} />
+                                ))}
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                )
+            }
+        </div >
     )
 }
 
