@@ -166,12 +166,15 @@ export default function Banner({ data }: TPops) {
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={`gallery-${currentSlide}`}
-                            className="relative flex justify-center items-center mx-auto w-full h-full"
+                            className="relative w-full h-full"
                             variants={containerVariants}
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            style={{ perspective: "1000px" }}
+                            style={{
+                                perspective: "1000px",
+                                // transformStyle: "preserve-3d"
+                            }}
                         >
                             {[...data[currentSlide].images!].map((image, index) => {
                                 const variants = getPreset(index)
@@ -179,9 +182,9 @@ export default function Banner({ data }: TPops) {
                                     <motion.div
                                         key={index}
                                         variants={variants}
-                                        className="top-1/2 left-1/2 absolute shadow-xl w-[200px] lg:w-[280px] h-[250px] lg:h-[380px] overflow-hidden -translate-x-1/2 -translate-y-1/2"
+                                        className="absolute inset-0 m-auto w-[200px] lg:w-[280px] h-[250px] lg:h-[380px] overflow-hidden"
                                         style={{
-                                            transformOrigin: "center center",
+                                            transformOrigin: "center center"
                                         }}
                                     >
                                         <Image
@@ -189,7 +192,7 @@ export default function Banner({ data }: TPops) {
                                             alt={`gallery image ${index + 1}`}
                                             fill
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            className="relative w-full h-full object-cover"
+                                            className="object-cover"
                                             priority={index === 0}
                                         />
                                     </motion.div>
