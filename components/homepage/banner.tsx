@@ -117,93 +117,91 @@ export default function Banner({ data }: TPops) {
                 </motion.div>
             </AnimatePresence>
             {/* Content Layer */}
-            <motion.div className="z-20 relative flex items-center h-[60vh]" style={{ y: textY }}>
-                <div className="relative mx-auto px-6 container">
-                    <div className="relative flex lg:flex-row flex-col justify-between items-center gap-20">
-                        {/* Text Content */}
-                        <div className="w-full lg:w-1/2">
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={`content-${currentSlide}`}
-                                    variants={containerVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                >
-                                    <motion.h1
-                                        initial={{ x: -100, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        exit={{ x: -100, opacity: 0 }}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 260,
-                                            damping: 20,
-                                            duration: 1.5
-                                        }}
-                                        className="mb-6 font-raleway font-semibold text-gray-800 text-5xl md:text-6xl capitalize leading-tight"
-                                    >
-                                        {firstWord} <br /> {rest.join(' ')}
-                                    </motion.h1>
-                                    <motion.h3
-                                        initial={{ x: -100, opacity: 0 }}
-                                        animate={{ x: 0, opacity: 1 }}
-                                        exit={{ x: -100, opacity: 0 }}
-                                        transition={{
-                                            type: "spring",
-                                            stiffness: 200,
-                                            damping: 20,
-                                            duration: 1.5,
-                                            delay: 0.2
-                                        }}
-                                        className="mb-4 font-roboto font-light text-zinc-500 text-2xl lg:text-3xl"
-                                    >
-                                        {data[currentSlide].subtitle}
-                                    </motion.h3>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-                        <div className="relative w-full lg:w-1/2">
-                            {/* Image Gallery */}
-                            <AnimatePresence mode="wait">
-                                <motion.div
-                                    key={`gallery-${currentSlide}`}
-                                    className="hidden lg:block"
-                                    variants={containerVariants}
-                                    initial="initial"
-                                    animate="animate"
-                                    exit="exit"
-                                >
-                                    <div style={{ perspective: "1000px" }}>
-                                        {[...data[currentSlide].images!].map((image, index) => {
-                                            const variants = getPreset(index + 2)
-                                            return (
-                                                <motion.div
-                                                    key={index}
-                                                    className="-top-6 left-0 absolute w-fit origin-center -translate-y-1/2" variants={variants}
-                                                >
-                                                    <div className={`relative h-96 w-96 flex items-center justify-center`}>
-                                                        <Image
-                                                            src={image.file!}
-                                                            alt="card"
-                                                            fill
-                                                            className="h-80 object-contain"
-                                                            priority={index === 0}
-                                                        />
-                                                    </div>
-                                                </motion.div>
-                                            )
-                                        })}
-                                    </div>
-                                </motion.div>
-                            </AnimatePresence>
-                        </div>
-
-                    </div>
+            <motion.div className="z-20 relative flex lg:flex-row flex-col justify-between items-center gap-6 lg:gap-20 mx-auto px-4 py-8 max-w-[1400px] h-[calc(100vh-220px)] lg:h-[60vh] container" style={{ y: textY }}>
+                {/* Text Content */}
+                <div className="w-full lg:w-1/2">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={`content-${currentSlide}`}
+                            variants={containerVariants}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                        >
+                            <motion.h1
+                                initial={{ x: -100, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                exit={{ x: -100, opacity: 0 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 260,
+                                    damping: 20,
+                                    duration: 1.5
+                                }}
+                                className="mb-6 font-raleway font-semibold text-gray-800 text-4xl md:text-6xl capitalize leading-tight"
+                            >
+                                {firstWord} <br /> {rest.join(' ')}
+                            </motion.h1>
+                            <motion.h3
+                                initial={{ x: -100, opacity: 0 }}
+                                animate={{ x: 0, opacity: 1 }}
+                                exit={{ x: -100, opacity: 0 }}
+                                transition={{
+                                    type: "spring",
+                                    stiffness: 200,
+                                    damping: 20,
+                                    duration: 1.5,
+                                    delay: 0.2
+                                }}
+                                className="mb-4 font-roboto font-light text-zinc-500 text-xl lg:text-3xl"
+                            >
+                                {data[currentSlide].subtitle}
+                            </motion.h3>
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
-            </motion.div>
+
+                {/* Image Gallery */}
+                <div className="relative w-full lg:w-1/2 h-[500px] lg:h-full">
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={`gallery-${currentSlide}`}
+                            className="relative flex justify-center items-center mx-auto w-full h-full"
+                            variants={containerVariants}
+                            initial="initial"
+                            animate="animate"
+                            exit="exit"
+                            style={{ perspective: "1000px" }}
+                        >
+                            {[...data[currentSlide].images!].map((image, index) => {
+                                const variants = getPreset(index)
+                                return (
+                                    <motion.div
+                                        key={index}
+                                        variants={variants}
+                                        className="top-1/2 left-1/2 absolute shadow-xl w-[200px] lg:w-[280px] h-[250px] lg:h-[380px] overflow-hidden -translate-x-1/2 -translate-y-1/2"
+                                        style={{
+                                            transformOrigin: "center center",
+                                        }}
+                                    >
+                                        <Image
+                                            src={image.file!}
+                                            alt={`gallery image ${index + 1}`}
+                                            fill
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            className="relative w-full h-full object-cover"
+                                            priority={index === 0}
+                                        />
+                                    </motion.div>
+                                )
+                            })}
+                        </motion.div>
+                    </AnimatePresence>
+                </div>
+            </motion.div >
 
             {/* Navigation Controls */}
-            <div className="bottom-8 left-1/2 z-30 absolute flex items-center space-x-4 -translate-x-1/2">
+            <div className="hidden bottom-2 lg:bottom-8 left-1/2 z-30 absolute lg:flex items-center space-x-4 -translate-x-1/2" >
                 <Button
                     variant="ghost"
                     size="icon"
@@ -237,7 +235,7 @@ export default function Banner({ data }: TPops) {
                 >
                     <ChevronRight className="w-6 h-6" />
                 </Button>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }

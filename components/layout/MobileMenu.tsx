@@ -21,7 +21,7 @@ export default function MobileMenu({ items }: TProps) {
             <SheetTrigger onClick={() => setOpen(true)}>
                 <span className="group lg:hidden flex flex-col justify-center items-center gap-1.5 p-2 border border-transparent rounded-md focus:outline-none focus:ring-0 focus:ring-primary focus:ring-offset-0 font-medium text-white text-sm cursor-pointer">
                     <span className="bg-gray-800 w-6 h-[3px]" />
-                    <span className="bg-gray-800 -mr-5 group-hover:-mr-0 w-6 h-[3px] transition-all duration-300 ease-in-out transform" />
+                    <span className="bg-gray-800 w-6 h-[3px] transition-all duration-300 ease-in-out transform" />
                     <span className="bg-gray-800 w-6 h-[3px]" />
                 </span>
             </SheetTrigger>

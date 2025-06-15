@@ -38,11 +38,11 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
       return {
         initial: {
           x: 300 + index * offset,
-          y: 300 + index,
+          y: 300 + index * offset,
           rotateZ: 90
         },
         animate: {
-          x: index * 45,
+          x: (index - 2.5) * offset,
           y: (index - 2.5) * offset,
           rotateZ: 0
         },

@@ -64,7 +64,7 @@ export function MobileMenuItem({ item, level = 0 }: { item: NavItem; level?: num
     const pathname = usePathname()
     return (
         <div className="relative w-full">
-            <div className={`flex justify-between items-center px-4 py-2 overflow-hidden text-base font-medium ${level > 0 ? 'pl-6' : ''}`}
+            <div className={`flex justify-between items-center px-4 py-2 overflow-hidden text-gray-800 font-medium ${level > 0 ? 'pl-6' : ''}`}
                 onClick={() => setOpen((o) => !o)}
             >
                 {item.link ? (
