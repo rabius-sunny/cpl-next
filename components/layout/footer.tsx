@@ -13,12 +13,12 @@ export default async function Footer() {
         <div className="mx-auto px-4 max-w-7xl container">
           <div className="lg:justify-center gap-16 lg:gap-24 grid grid-cols-none sm:grid-cols-2 lg:grid-cols-3 [&_p]:mb-1.5 w-full [&_p]:font-medium [&_h2]:text-primary">
 
-            <div className="space-y-6 col-span-full lg:col-span-1">
+            <div className="space-y-6 col-span-full sm:col-span-1">
               <h2 className="font-bold text-xl">Contacts Information (Office)</h2>
               {siteData?.office?.items?.map((data, idx) => <p key={idx}>{data}</p>)}
             </div>
 
-            <div className="space-y-6 col-span-full lg:col-span-1">
+            <div className="space-y-6 col-span-full sm:col-span-1">
               <h2 className="font-bold text-xl">Contacts Information (Factory)</h2>
               {siteData?.factory?.items?.map((data, idx) => <p key={idx}>{data}</p>)}
             </div>
