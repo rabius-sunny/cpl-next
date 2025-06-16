@@ -10,7 +10,7 @@ type TProps = {
 export default function ProductCard({ item }: TProps) {
   return (
     <motion.div
-      className='group relative bg-white shadow-md pb-20 w-full h-[400px] overflow-hidden'
+      className='group relative bg-white shadow-md pb-20 w-full max-h-[300px] lg:max-h-[400px] overflow-hidden'
       initial='rest'
       whileHover='hover'
       animate='rest'

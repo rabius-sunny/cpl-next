@@ -18,7 +18,7 @@ export default async function ProductsSection({ data }: TPops) {
             <p>CPML continuously strives to build a reputation for delivery of quality products and services of all scales and complexity, to the satisfaction of our customers.</p>
           </div>
         </div>
-        <div className="gap-8 grid grid-cols-none lg:grid-cols-3">
+        <div className="gap-4 lg:gap-8 grid grid-cols-none sm:grid-cols-3">
           {products?.data?.map((item: Product, index: number) => (
             <ProductCard item={item} key={index} />
           ))}
