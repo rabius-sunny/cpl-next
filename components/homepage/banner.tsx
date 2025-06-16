@@ -42,17 +42,17 @@ export default function Banner({ data }: TPops) {
         setIsAutoPlaying(false)
     }
 
-    const handleNextSlide = () => {
-        setDirection(1)
-        setCurrentSlide((prev) => (prev + 1) % data!.length)
-        setIsAutoPlaying(false)
-    }
+    // const handleNextSlide = () => {
+    //     setDirection(1)
+    //     setCurrentSlide((prev) => (prev + 1) % data!.length)
+    //     setIsAutoPlaying(false)
+    // }
 
-    const handlePrevSlide = () => {
-        setDirection(-1)
-        setCurrentSlide((prev) => (prev - 1 + data!.length) % data!.length)
-        setIsAutoPlaying(false)
-    }
+    // const handlePrevSlide = () => {
+    //     setDirection(-1)
+    //     setCurrentSlide((prev) => (prev - 1 + data!.length) % data!.length)
+    //     setIsAutoPlaying(false)
+    // }
 
     return (
         <div className="relative bg-gray-200 overflow-hidden">
@@ -122,7 +122,7 @@ export default function Banner({ data }: TPops) {
                 </motion.div>
             </AnimatePresence>
             {/* Content Layer */}
-            <motion.div className="z-20 relative flex lg:flex-row flex-col justify-between items-center gap-6 lg:gap-20 mx-auto px-4 py-8 max-w-[1400px] h-[calc(100vh-220px)] lg:h-[60vh] container" style={{ y: textY }}>
+            <motion.div className="z-20 relative flex sm:flex-row flex-col justify-between items-center gap-6 sm:gap-10 lg:gap-20 mx-auto px-4 py-8 max-w-[1400px] max-sm:h-[calc(100vh-220px)] sm:h-full lg:h-[60vh] container" style={{ y: textY }}>
                 {/* Text Content */}
                 <div className="w-full lg:w-1/2">
                     <AnimatePresence mode="wait">
@@ -143,7 +143,7 @@ export default function Banner({ data }: TPops) {
                                     damping: 20,
                                     duration: 1.5
                                 }}
-                                className="mb-6 font-raleway font-bold text-gray-800 text-4xl md:text-6xl capitalize leading-tight"
+                                className="mb-6 font-raleway font-bold text-gray-800 text-4xl lg:text-6xl capitalize leading-tight"
                             >
                                 {firstWord} <br /> {rest.join(' ')}
                             </motion.h1>
@@ -167,7 +167,7 @@ export default function Banner({ data }: TPops) {
                 </div>
 
                 {/* Image Gallery */}
-                <div className="relative w-full lg:w-1/2 h-[500px] lg:h-full">
+                <div className="relative w-full lg:w-1/2 h-80 lg:h-full">
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={`gallery-${currentSlide}`}
@@ -190,7 +190,7 @@ export default function Banner({ data }: TPops) {
                                         className={cn(
                                             "absolute inset-0 m-auto w-[200px] lg:w-[300px] h-[250px] lg:h-[380px] overflow-hidden",
                                             { "max-md:-left-16": dir === 'horizontal' },
-                                            { "max-md:-top-16 max-md:-left-16": dir === 'vertical' },
+                                            { "-top-16 max-md:-top-20 max-md:-left-16": dir === 'vertical' },
                                             { "h-full w-full lg:h-full lg:w-full max-md:left-0 max-md:top-0": total === 1 },
                                         )}
                                         style={{
