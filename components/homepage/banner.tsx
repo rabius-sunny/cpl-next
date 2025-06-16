@@ -1,9 +1,7 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
 import { useImageSliderVariants } from "@/hooks/useImageSliderVariants"
 import { cn } from "@/lib/utils"
-import { ChevronLeft, ChevronRight } from "lucide-react"
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react"
 import Image from "next/image"
 import { useEffect, useState } from "react"
@@ -37,6 +35,12 @@ export default function Banner({ data }: TPops) {
     if (!data?.length) return null
 
     const [firstWord, ...rest] = (data[currentSlide]?.title || '').split(' ')
+
+    const handlePagination = (index: number) => {
+        setDirection(index > currentSlide ? 1 : -1)
+        setCurrentSlide(index)
+        setIsAutoPlaying(false)
+    }
 
     const handleNextSlide = () => {
         setDirection(1)
@@ -114,7 +118,7 @@ export default function Banner({ data }: TPops) {
                     </motion.div>
 
                     {/* Gradient Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/10 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-r from-white/30 via-white/10 to-transparent" />
                 </motion.div>
             </AnimatePresence>
             {/* Content Layer */}
@@ -139,7 +143,7 @@ export default function Banner({ data }: TPops) {
                                     damping: 20,
                                     duration: 1.5
                                 }}
-                                className="mb-6 font-raleway font-semibold text-gray-800 text-4xl md:text-6xl capitalize leading-tight"
+                                className="mb-6 font-raleway font-bold text-gray-800 text-4xl md:text-6xl capitalize leading-tight"
                             >
                                 {firstWord} <br /> {rest.join(' ')}
                             </motion.h1>
@@ -184,10 +188,10 @@ export default function Banner({ data }: TPops) {
                                         key={index}
                                         variants={variants}
                                         className={cn(
-                                            "absolute inset-0 m-auto w-[200px] lg:w-[280px] h-[250px] lg:h-[380px] overflow-hidden",
-                                            { "@max-md:-left-20": dir === 'horizontal' },
-                                            { "@max-md:-top-20 @max-md:-left-20": dir === 'vertical' },
-                                            { "h-full w-full lg:h-full lg:w-full left-0 top-0": total === 1 },
+                                            "absolute inset-0 m-auto w-[200px] lg:w-[300px] h-[250px] lg:h-[380px] overflow-hidden",
+                                            { "max-md:-left-16": dir === 'horizontal' },
+                                            { "max-md:-top-16 max-md:-left-16": dir === 'vertical' },
+                                            { "h-full w-full lg:h-full lg:w-full max-md:left-0 max-md:top-0": total === 1 },
                                         )}
                                         style={{
                                             transformOrigin: "center center"
@@ -211,20 +215,20 @@ export default function Banner({ data }: TPops) {
 
             {/* Navigation Controls */}
             <div className="hidden bottom-2 lg:bottom-8 left-1/2 z-30 absolute lg:flex items-center space-x-4 -translate-x-1/2" >
-                <Button
+                {/* <Button
                     variant="ghost"
                     size="icon"
                     onClick={handlePrevSlide}
                     className="bg-primary/20 hover:bg-primary/60 rounded-full text-white hover:text-white"
                 >
                     <ChevronLeft className="w-6 h-6" />
-                </Button>
+                </Button> */}
 
                 <div className="flex space-x-2">
                     {data.map((_, index) => (
                         <motion.button
                             key={index}
-                            onClick={handleNextSlide}
+                            onClick={() => handlePagination(index)}
                             className={`w-3 h-3 rounded-full transition-all duration-300 cursor-pointer ${index === currentSlide ? "bg-primary/60 w-8" : "bg-primary/30"
                                 }`}
                             whileHover={{ scale: 1.2 }}
@@ -233,17 +237,14 @@ export default function Banner({ data }: TPops) {
                     ))}
                 </div>
 
-                <Button
+                {/* <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => {
-                        setCurrentSlide((prev) => (prev + 1) % data.length)
-                        setIsAutoPlaying(false)
-                    }}
+                    onClick={handleNextSlide}
                     className="bg-primary/20 hover:bg-primary/60 rounded-full text-white hover:text-white"
                 >
                     <ChevronRight className="w-6 h-6" />
-                </Button>
+                </Button> */}
             </div >
         </div >
     )

@@ -94,19 +94,19 @@ export default function SectionButtons({ onAddSection, isDragging }: SectionButt
           >
             {/* Gradient Background */}
             <div
-              className={`absolute inset-0 bg-gradient-to-r ${section.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-200`}
+              className={`absolute inset-0 bg-linear-to-r ${section.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-200`}
             />
 
             <div className='relative p-4'>
               <div className='flex items-start gap-3'>
                 {/* Drag Handle */}
-                <div className='flex-shrink-0 opacity-0 group-hover:opacity-60 transition-opacity duration-200 pt-1'>
+                <div className='shrink-0 opacity-0 group-hover:opacity-60 transition-opacity duration-200 pt-1'>
                   <GripVertical className='h-4 w-4 text-muted-foreground' />
                 </div>
 
                 {/* Icon */}
                 <div
-                  className={`flex-shrink-0 p-2 rounded-lg ${section.iconBg} group-hover:scale-110 transition-transform duration-200`}
+                  className={`shrink-0 p-2 rounded-lg ${section.iconBg} group-hover:scale-110 transition-transform duration-200`}
                 >
                   {section.icon}
                 </div>
@@ -122,7 +122,7 @@ export default function SectionButtons({ onAddSection, isDragging }: SectionButt
                 </div>
 
                 {/* Arrow */}
-                <div className='flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
+                <div className='shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200'>
                   <Plus className='h-4 w-4 text-primary' />
                 </div>
               </div>

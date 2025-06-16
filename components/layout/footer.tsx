@@ -51,7 +51,7 @@ export default async function Footer() {
       <div className="py-10 border-gray-700 border-t">
         <div className="flex lg:flex-row flex-col justify-between items-center gap-6 mx-auto px-4 max-w-7xl lg:text-inherit text-center container">
           <p>{siteData?.copyright}</p>
-          <div className="flex [&>*]:px-4 [&>*:last-child]:pr-0 divide-x divide-gray-300 leading-tight">
+          <div className="flex *:px-4 [&>*:last-child]:pr-0 divide-x divide-gray-300 leading-tight">
             <Link href='/privacy'>Privacy Policy</Link>
             <Link href='/terms'>Terms and Condition</Link>
           </div>

@@ -25,7 +25,7 @@ export default function MobileMenu({ items }: TProps) {
                     <span className="bg-gray-800 w-6 h-[3px]" />
                 </span>
             </SheetTrigger>
-            <SheetContent className="bg-white !border-none w-[85%] max-w-sm">
+            <SheetContent className="bg-white border-none! w-[85%] max-w-sm">
                 <SheetHeader>
                     <SheetTitle className=''>Menu</SheetTitle>
                     <SheetClose />

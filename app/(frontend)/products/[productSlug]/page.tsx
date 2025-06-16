@@ -30,7 +30,7 @@ export default async function ProductDetailsPage({ params }: TProps) {
               ))}
             </div>
           </div>
-          <div className="order-first lg:order-none w-full lg:w-1/2">
+          <div className="order-first lg:order-0 w-full lg:w-1/2">
             <EmblaCarousel
               thumbs={data.data?.images?.map(
                 (item: MediaFile) => item?.file || '/placeholder.webp'
