@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useImageSliderVariants } from "@/hooks/useImageSliderVariants"
+import { cn } from "@/lib/utils"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { AnimatePresence, motion, useScroll, useTransform } from "motion/react"
 import Image from "next/image"
@@ -182,7 +183,12 @@ export default function Banner({ data }: TPops) {
                                     <motion.div
                                         key={index}
                                         variants={variants}
-                                        className="absolute inset-0 m-auto w-[200px] lg:w-[280px] h-[250px] lg:h-[380px] overflow-hidden"
+                                        className={cn(
+                                            "absolute inset-0 m-auto w-[200px] lg:w-[280px] h-[250px] lg:h-[380px] overflow-hidden",
+                                            { "@max-md:-left-20": dir === 'horizontal' },
+                                            { "@max-md:-top-20 @max-md:-left-20": dir === 'vertical' },
+                                            { "h-full w-full lg:h-full lg:w-full left-0 top-0": total === 1 },
+                                        )}
                                         style={{
                                             transformOrigin: "center center"
                                         }}

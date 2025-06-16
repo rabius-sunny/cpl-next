@@ -22,12 +22,12 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
             rotateY: -15
           },
           animate: {
-            x: index * 50,
+            x: index * offset,
             y: index * 5,
             rotateY: 0
           },
           exit: {
-            x: 300 + (total + index + 1) * offset,
+            x: 300 + (total + index) * offset,
             y: index * 5,
             rotateY: 15
           }
@@ -42,13 +42,13 @@ export const useImageSliderVariants = (total: number, direction: Direction = 'ho
           rotateZ: 90
         },
         animate: {
-          x: (index - 2.5) * offset,
-          y: (index - 2.5) * offset,
+          x: index * offset,
+          y: index * offset,
           rotateZ: 0
         },
         exit: {
-          x: 300 + (total + index + 1) * offset,
-          y: 300 + (total + index + 1) * offset,
+          x: 300 + (total + index) * offset,
+          y: 300 + (total + index) * offset,
           rotateZ: -90
         }
       }

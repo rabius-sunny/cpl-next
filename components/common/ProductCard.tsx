@@ -49,7 +49,9 @@ export default function ProductCard({ item }: TProps) {
             hover: { opacity: 1, y: 0 }
           }}
         >
-          {item?.name}
+          <Link href={`/products/${item?.slug}`} prefetch>
+            {item?.name}
+          </Link>
         </motion.h4>
 
         <motion.p
