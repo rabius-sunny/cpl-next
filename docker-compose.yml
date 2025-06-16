@@ -1,6 +1,6 @@
 services:
   app:
-    container_name: ingress-solution-next
+    container_name: cpml-next
     build:
       context: .
       dockerfile: Dockerfile
