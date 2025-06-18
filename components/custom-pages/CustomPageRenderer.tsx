@@ -39,8 +39,8 @@ export default function CustomPageRenderer({ page }: CustomPageRendererProps) {
     <div className='min-h-screen'>
       {/* Page Title - Optional, uncomment if you want to display the page title */}
       {/* <div className="bg-gray-50 py-8">
-        <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold text-gray-900">{page.title}</h1>
+        <div className="mx-auto px-4 container">
+          <h1 className="font-bold text-gray-900 text-3xl">{page.title}</h1>
         </div>
       </div> */}
 
