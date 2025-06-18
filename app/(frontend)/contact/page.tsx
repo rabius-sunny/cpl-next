@@ -40,7 +40,7 @@ export default async function ContactPage() {
                 </BouncyLink>
 
                 <BouncyLink
-                  href={'https://www.google.com/maps/place/Creative+Paper+Mills+Ltd./@23.7582897,90.391711,12z/data=!4m6!3m5!1s0x3755b61df55d91f9:0x2debbb343d8464a7!8m2!3d23.7624931!4d90.5110292!16s%2Fg%2F11dyzdkb_3?entry=ttu&g_ep=EgoyMDI1MDUyOC4wIKXMDSoASAFQAw%3D%3D'}
+                  href={'https://maps.app.goo.gl/HUrZguF8FJ1tntff8'}
                   target="_blank"
                   className="inline-block relative bg-primary px-6 py-4 rounded-lg w-full font-semibold text-white text-center"
                 >
@@ -53,13 +53,14 @@ export default async function ContactPage() {
         <div className="z-0 absolute inset-0 bg-amber-100">
           <div className="z-0 absolute inset-0 bg-gray-900/50" />
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d116854.20741097258!2d90.391711!3d23.7582897!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b61df55d91f9%3A0x2debbb343d8464a7!2sCreative%20Paper%20Mills%20Ltd.!5e0!3m2!1sen!2sbd!4v1748942628012!5m2!1sen!2sbd"
+            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d3651.366075549314!2d90.3996883!3d23.7699751!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c7b50c1e86a5%3A0x434c9c95fc5b6730!2sSena%20Kalyan%20Business%20Mart!5e0!3m2!1sen!2sbd!4v1750222760706!5m2!1sen!2sbd"
             className="w-full h-full"
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
           />
         </div>
-      </section >
+      </section>
+
 
       <section id="about_us" className="bg-white py-28">
         <div className="space-y-28 mx-auto px-4 max-w-7xl container">
