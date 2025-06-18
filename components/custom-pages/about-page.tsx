@@ -26,13 +26,21 @@ export default function AboutPageContent({ data }: TProps) {
         <div className='gap-8 md:gap-20 lg:gap-28 grid'>
             {/* Hero Section */}
             <div className='relative'>
-                <Image
-                    src={data?.backgroundImage?.file || '/placeholder.webp'}
-                    alt='Background'
-                    width={1920}
-                    height={1080}
-                    className='brightness-80 w-full h-32 lg:h-48 object-cover'
-                />
+                <motion.div
+                    initial={{ opacity: 0.5, scale: 1.05 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, ease: 'easeOut' }}
+                >
+                    <Image
+                        src={data?.backgroundImage?.file || '/placeholder.webp'}
+                        alt={data.title || 'Header banner'}
+                        width={1920}
+                        height={1080}
+                        className='brightness-80 w-full h-32 lg:h-48 object-cover'
+                        priority
+                    />
+                </motion.div>
+
                 <motion.h1
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}

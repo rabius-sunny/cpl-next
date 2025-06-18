@@ -9,7 +9,7 @@ interface PageProps {
 }
 
 export default async function CustomPage({ params }: PageProps) {
-  const { slug } = params
+  const { slug } = await params
 
   try {
     const result = await getPageBySlug(slug)
@@ -32,7 +32,7 @@ export default async function CustomPage({ params }: PageProps) {
 }
 
 export async function generateMetadata({ params }: PageProps) {
-  const { slug } = params
+  const { slug } = await params
 
   try {
     const result = await getPageBySlug(slug)
