@@ -1,13 +1,8 @@
 import {
   FileText,
   Home,
-  Lightbulb,
-  Phone,
-  Settings,
-  ShoppingBag,
-  SquareStack,
-  Ticket,
-  Users
+  Lightbulb, Settings,
+  ShoppingBag, Users
 } from 'lucide-react'
 
 export const siteContentNavItems = [
@@ -31,26 +26,26 @@ export const siteContentNavItems = [
     link: '/dashboard/custom',
     icon: <Lightbulb className='mr-2 w-4 h-4' />
   },
-  {
-    label: 'Projects',
-    link: '/dashboard/projects',
-    icon: <SquareStack className='mr-2 w-4 h-4' />
-  },
-  {
-    label: 'Clients',
-    link: '/dashboard/clients',
-    icon: <ShoppingBag className='mr-2 w-4 h-4' />
-  },
-  {
-    label: 'Contact',
-    link: '/dashboard/contact',
-    icon: <Phone className='mr-2 w-4 h-4' />
-  },
-  {
-    label: 'Footer',
-    link: '/dashboard/footer',
-    icon: <Settings className='mr-2 w-4 h-4' />
-  }
+  // {
+  //   label: 'Projects',
+  //   link: '/dashboard/projects',
+  //   icon: <SquareStack className='mr-2 w-4 h-4' />
+  // },
+  // {
+  //   label: 'Clients',
+  //   link: '/dashboard/clients',
+  //   icon: <ShoppingBag className='mr-2 w-4 h-4' />
+  // },
+  // {
+  //   label: 'Contact',
+  //   link: '/dashboard/contact',
+  //   icon: <Phone className='mr-2 w-4 h-4' />
+  // },
+  // {
+  //   label: 'Footer',
+  //   link: '/dashboard/footer',
+  //   icon: <Settings className='mr-2 w-4 h-4' />
+  // }
 ]
 
 export const adminNavItems = [
@@ -65,11 +60,11 @@ export const adminNavItems = [
     icon: <Settings className='mr-2 w-4 h-4' />,
     children: siteContentNavItems
   },
-  {
-    label: 'Bookings',
-    link: '/dashboard/bookings',
-    icon: <Ticket className='mr-2 w-4 h-4' />
-  },
+  // {
+  //   label: 'Bookings',
+  //   link: '/dashboard/bookings',
+  //   icon: <Ticket className='mr-2 w-4 h-4' />
+  // },
   {
     label: 'Users',
     link: '/dashboard/users',
