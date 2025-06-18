@@ -27,7 +27,7 @@ function DesktopDropdown({ item, level = 0 }: { item: NavItem; level?: number })
             {item.link ? (
                 <Link
                     href={item.link}
-                    className={cn("block hover:bg-gray-100 px-4 py-2 whitespace-nowrap mx-0.5", { "bg-gray-100": pathname === item?.link })}
+                    className={cn("block py-4 whitespace-nowrap mx-3 before:h-0.5 before:left-0 before:w-0 hover:before:w-full before:transform-3d before:transition-all before:duration-500 before:ease-in-out before:bg-secondary relative before:absolute before:bottom-0 uppercase text-xs font-medium", { "before:w-full": pathname === item?.link })}
                 >
                     {item.title}
                 </Link>
