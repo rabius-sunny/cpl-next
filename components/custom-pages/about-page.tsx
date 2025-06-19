@@ -102,6 +102,7 @@ export default function AboutPageContent({ data }: TProps) {
             <motion.div
                 {...fadeIn}
                 className='flex flex-col justify-center items-center gap-3 box'
+                id='leadership'
             >
                 <h2 className='font-bold text-primary text-4xl text-center'>
                     {data?.leadership?.title || 'Leadership Team'}
@@ -113,7 +114,7 @@ export default function AboutPageContent({ data }: TProps) {
             </motion.div>
 
             {/* Leadership Members */}
-            <div className='gap-12 grid grid-cols-1 lg:grid-cols-2 box'>
+            <div className='gap-12 grid grid-cols-1 lg:grid-cols-2 box' id='membership'>
                 {data?.leadership?.leaders?.map((item, idx) => (
                     <motion.div
                         key={idx}
