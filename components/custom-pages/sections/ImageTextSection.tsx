@@ -56,7 +56,7 @@ export default function ImageTextSection({ data }: ImageTextSectionProps) {
             )}
             {content && (
               <div
-                className='max-w-none text-gray-700 leading-relaxed prose prose-lg'
+                className='space-y-4 max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap prose prose-lg'
                 dangerouslySetInnerHTML={{ __html: content }}
               />
             )}
