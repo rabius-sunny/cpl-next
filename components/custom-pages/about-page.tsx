@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { useScrollToHash } from '@/utils/scrollTo'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 
@@ -21,6 +22,9 @@ export default function AboutPageContent({ data }: TProps) {
         transition: { duration: 0.6, ease: 'easeOut' },
         viewport: { once: true, amount: 0.4 },
     })
+
+
+    useScrollToHash(150)
 
     return (
         <div className='gap-8 md:gap-20 lg:gap-28 grid'>
@@ -59,6 +63,8 @@ export default function AboutPageContent({ data }: TProps) {
                         <div
                             key={idx}
                             className='xl:items-end gap-12 grid grid-cols-1 lg:grid-cols-2'
+                            id={section?.title?.toLocaleLowerCase()?.replaceAll(' ', '-')}
+
                         >
                             {/* Image with animation */}
                             <motion.div
