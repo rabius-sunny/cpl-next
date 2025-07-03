@@ -46,7 +46,7 @@ export default function PageList({
                   </div>
                 </button>
 
-                <div className='flex items-center gap-2 flex-shrink-0'>
+                <div className='flex items-center gap-2 shrink-0'>
                   <div
                     className={`text-xs px-2 py-1 rounded-full whitespace-nowrap ${
                       page.isPublished

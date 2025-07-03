@@ -10,13 +10,13 @@ interface BouncyLinkProps extends HTMLMotionProps<'a'> {
     children: ReactNode;
 }
 
-const MotionLink = motion.a; // motion-enhanced anchor tag
+// const MotionLink = motion.a; // motion-enhanced anchor tag
 
 const BouncyLink = ({ href, children, className, ...rest }: BouncyLinkProps) => (
     <Link href={href} passHref prefetch={false}>
-        <MotionLink
+        <motion.span
+            // href={href}
             {...rest}
-            href={href}
             className={`relative inline-block ${className}`}
             initial={{ y: 0 }}
             whileHover={{
@@ -30,7 +30,7 @@ const BouncyLink = ({ href, children, className, ...rest }: BouncyLinkProps) => 
         >
 
             {children}
-        </MotionLink>
+        </motion.span>
     </Link>
 );
 

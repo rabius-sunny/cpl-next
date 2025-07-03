@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import { Menu, Minus, Plus, X } from 'lucide-react'
+import { ChevronDown, Menu, Minus, Plus, X } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -27,9 +27,15 @@ function DesktopDropdown({ item, level = 0 }: { item: NavItem; level?: number })
             {item.link ? (
                 <Link
                     href={item.link}
-                    className={cn("block hover:bg-gray-100 px-4 py-2 whitespace-nowrap mx-0.5", { "bg-gray-100": pathname === item?.link })}
+                    className={cn("py-4 flex whitespace-nowrap mx-3 gap-2 group before:h-0.5 before:left-0 before:w-0 hover:before:w-full before:transform-3d before:transition-all before:duration-500 before:ease-in-out before:bg-secondary relative before:absolute before:bottom-0 uppercase text-xs font-medium", { "before:w-full": pathname === item?.link })}
                 >
                     {item.title}
+                    {hasChildren && (
+                        <ChevronDown
+                            size={18}
+                            className="text-gray-500 group-hover:-rotate-180 transition-transform duration-500"
+                        />
+                    )}
                 </Link>
             ) : (
                 <div className="block hover:bg-gray-100 px-4 py-2 whitespace-nowrap cursor-default">
@@ -45,7 +51,7 @@ function DesktopDropdown({ item, level = 0 }: { item: NavItem; level?: number })
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -8 }}
                             transition={{ duration: 0.2 }}
-                            className={`absolute ${positionClass} bg-white border rounded shadow w-52 z-50`}
+                            className={`absolute ${positionClass} shadow w-52 z-50 p-4 bg-accent-foreground text-white`}
                         >
                             {item.childrens!.map((child, i) => (
                                 <DesktopDropdown key={i} item={child} level={level + 1} />

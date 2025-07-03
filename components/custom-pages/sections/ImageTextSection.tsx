@@ -1,3 +1,6 @@
+'use client'
+
+import { motion } from 'motion/react'
 import Image from 'next/image'
 
 interface ImageTextSectionProps {
@@ -7,40 +10,57 @@ interface ImageTextSectionProps {
 export default function ImageTextSection({ data }: ImageTextSectionProps) {
   const { image, title, content, imagePosition = 'left' } = data
 
+  // Determine directions
+  const imageFrom = imagePosition === 'right' ? 100 : -100
+  const textFrom = imagePosition === 'right' ? -100 : 100
+
   return (
-    <section className='py-16 bg-white'>
+    <section className='bg-white py-16'>
       <div className='box'>
         <div
-          className={`flex flex-col lg:flex-row items-center gap-12 ${
-            imagePosition === 'right' ? 'lg:flex-row-reverse' : ''
-          }`}
+          className={`flex flex-col lg:flex-row items-center gap-12 ${imagePosition === 'right' ? 'lg:flex-row-reverse' : ''
+            }`}
         >
           {/* Image */}
           {image?.file && (
-            <div className='flex-1 w-full'>
-              <div className='relative aspect-[4/3] w-full max-w-2xl mx-auto'>
+            <motion.div
+              initial={{ opacity: 0, x: imageFrom }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, ease: 'easeOut' }}
+              viewport={{ once: true, amount: 0.4 }}
+              className='flex-1 w-full'
+            >
+              <div className='relative mx-auto w-full max-w-2xl aspect-4/3'>
                 <Image
                   src={image.file || '/placeholder.webp'}
                   alt={title || 'Section image'}
                   fill
-                  className='object-cover rounded-lg'
+                  className='rounded-lg object-cover'
                 />
               </div>
-            </div>
+            </motion.div>
           )}
 
           {/* Text Content */}
-          <div className='flex-1 w-full'>
+          <motion.div
+            initial={{ opacity: 0, x: textFrom }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.1 }}
+            viewport={{ once: true, amount: 0.4 }}
+            className='flex-1 w-full'
+          >
             {title && (
-              <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-6'>{title}</h2>
+              <h2 className='mb-6 font-bold text-gray-900 text-3xl md:text-4xl'>
+                {title}
+              </h2>
             )}
             {content && (
               <div
-                className='prose prose-lg max-w-none text-gray-700 leading-relaxed'
+                className='space-y-4 max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap prose prose-lg'
                 dangerouslySetInnerHTML={{ __html: content }}
               />
             )}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

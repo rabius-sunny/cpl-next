@@ -1,4 +1,6 @@
-import Image from 'next/image'
+'use client'
+import { motion } from 'motion/react';
+import Image from 'next/image';
 
 interface GridLayoutSectionProps {
   data: GridLayoutSection
@@ -27,14 +29,21 @@ export default function GridLayoutSection({ data }: GridLayoutSectionProps) {
     <section className='py-16'>
       <div className='box'>
         {title && (
-          <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center'>
+          <h2 className='mb-12 font-bold text-gray-900 text-3xl md:text-4xl text-center'>
             {title}
           </h2>
         )}
 
         <div className={`grid ${getGridCols(columns)} gap-8`}>
           {items.map((item, index) => (
-            <div key={item.id || index} className='grid gap-2'>
+            <motion.div
+              key={item.id || index}
+              className='gap-2 grid'
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+            >
               {item.image?.file && (
                 <div className='flex justify-center items-center size-full'>
                   <Image
@@ -42,25 +51,26 @@ export default function GridLayoutSection({ data }: GridLayoutSectionProps) {
                     alt={item.title || `Grid item ${index + 1}`}
                     width={250}
                     height={250}
-                    className='rounded-full size-36 lg:size-40  overflow-hidden shadow-lg'
+                    className='shadow-lg rounded-full size-36 lg:size-40 overflow-hidden'
                   />
                 </div>
               )}
 
               <div className='p-6'>
                 {item.title && (
-                  <h3 className='text-lg text-center font-bold text-gray-900 mb-3'>{item.title}</h3>
+                  <h3 className='mb-3 font-bold text-gray-900 text-lg text-center'>{item.title}</h3>
                 )}
                 {item.description && (
                   <p className='text-gray-600 text-center leading-relaxed'>{item.description}</p>
                 )}
               </div>
-            </div>
+            </motion.div>
           ))}
+
         </div>
 
         {items.length === 0 && (
-          <div className='text-center py-12'>
+          <div className='py-12 text-center'>
             <p className='text-gray-500'>No items to display</p>
           </div>
         )}

@@ -10,7 +10,7 @@ type TProps = {
 export default function ProductCard({ item }: TProps) {
   return (
     <motion.div
-      className='group relative bg-white shadow-md pb-20 w-full h-[400px] overflow-hidden'
+      className='group relative bg-white shadow-md pb-20 w-full max-h-[300px] lg:max-h-[400px] overflow-hidden'
       initial='rest'
       whileHover='hover'
       animate='rest'
@@ -20,7 +20,7 @@ export default function ProductCard({ item }: TProps) {
         className='relative flex justify-center items-center size-full'
         variants={{
           rest: { scale: 1 },
-          hover: { scale: 1.05 }
+          hover: { scale: 1.05 },
         }}
         transition={{ duration: 0.4, ease: 'easeInOut' }}
       >
@@ -35,10 +35,10 @@ export default function ProductCard({ item }: TProps) {
 
       {/* Animated Description Box */}
       <motion.div
-        className='right-0 bottom-0 left-0 z-10 absolute space-y-6 bg-primary/95 group-hover:bg-gray-950/90 px-6 py-6 transition-colors duration-500 ease-in-out'
+        className='right-0 bottom-0 left-0 z-10 absolute space-y-6 bg-primary/95 group-hover:bg-gray-950/90 px-4 lg:px-6 py-6 transition-colors duration-500 ease-in-out'
         variants={{
           rest: { height: 80 },
-          hover: { height: 200 }
+          hover: { height: 200 },
         }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
@@ -49,7 +49,9 @@ export default function ProductCard({ item }: TProps) {
             hover: { opacity: 1, y: 0 }
           }}
         >
-          {item?.name}
+          <Link href={`/products/${item?.slug}`} prefetch>
+            {item?.name}
+          </Link>
         </motion.h4>
 
         <motion.p

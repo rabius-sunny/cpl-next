@@ -53,7 +53,7 @@ export function SocialLinkItem({
       </div>
 
       {/* Social Link */}
-      <div className='flex-[2]'>
+      <div className='flex-2'>
         <Input
           placeholder='https://...'
           defaultValue={link}
