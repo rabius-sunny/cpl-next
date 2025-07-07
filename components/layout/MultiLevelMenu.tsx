@@ -27,7 +27,7 @@ function DesktopDropdown({ item, level = 0 }: { item: NavItem; level?: number })
             {item.link ? (
                 <Link
                     href={item.link}
-                    className={cn("py-4 flex whitespace-nowrap mx-3 gap-2 group uppercase text-xs font-medium hover:text-primary", { "__before:w-full text-primary": pathname === item?.link })} // before:h-0.5 before:left-0 before:w-0 hover:before:w-full before:transform-3d before:transition-all before:duration-500 before:ease-in-out before:bg-secondary relative before:absolute before:bottom-0
+                    className={cn("py-4 flex w-full mx-3 gap-2 group uppercase text-xs font-medium hover:text-primary", { "__before:w-full text-primary": pathname === item?.link })} // before:h-0.5 before:left-0 before:w-0 hover:before:w-full before:transform-3d before:transition-all before:duration-500 before:ease-in-out before:bg-secondary relative before:absolute before:bottom-0
                 >
                     {item.title}
                     {hasChildren && (
