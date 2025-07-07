@@ -88,9 +88,6 @@ export default function AboutPageContent({ data }: TProps) {
                                 <h2 className='font-bold text-primary text-3xl text-center lg:text-start'>
                                     {section.title}
                                 </h2>
-                                <div className='flex justify-center lg:justify-start'>
-                                    <div className='bg-primary w-12 h-1' />
-                                </div>
                                 <p className='mt-4 font-medium text-justify'>{section.description}</p>
                             </motion.div>
                         </div>
@@ -107,7 +104,6 @@ export default function AboutPageContent({ data }: TProps) {
                 <h2 className='font-bold text-primary text-4xl text-center'>
                     {data?.leadership?.title || 'Leadership Team'}
                 </h2>
-                <div className='bg-primary w-12 h-1' />
                 <p className='mt-2 font-medium text-center'>
                     {data?.leadership?.description || 'No description available.'}
                 </p>
