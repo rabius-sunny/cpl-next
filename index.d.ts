@@ -109,7 +109,7 @@ type HomePageContent = {
   about?: AboutSection
   stats?: StatsSection
   testimonials?: TestimonialsSection
-  video?: VideoSection
+  video?: string
   footer?: FooterSection
 }
 

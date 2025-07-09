@@ -78,11 +78,7 @@ const homePageSchema = new Schema(
           }
         ]
       },
-      video: {
-        file: String,
-        fileId: String,
-        thumbnail: String
-      },
+      video: String,
       footer: {
         office: {
           items: [String]
