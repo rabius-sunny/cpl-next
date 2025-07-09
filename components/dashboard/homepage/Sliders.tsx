@@ -249,7 +249,7 @@ export default function Sliders({ data }: TProps) {
   return (
     <div className='space-y-4'>
       <div className='flex justify-between items-center'>
-        <h1 className='text-lg font-semibold lg:text-2xl'>Sliders Management</h1>
+        <h1 className='font-semibold text-lg lg:text-2xl'>Sliders Management</h1>
         <Button
           type='button'
           onClick={addSlider}
@@ -257,7 +257,7 @@ export default function Sliders({ data }: TProps) {
           size='sm'
           className='cursor-pointer'
         >
-          <Plus className='h-4 w-4 mr-2' />
+          <Plus className='mr-2 w-4 h-4' />
           Add Slider
         </Button>
       </div>
@@ -283,24 +283,24 @@ export default function Sliders({ data }: TProps) {
                         onClick={() => handleRemoveSlider(index)}
                         variant='ghost'
                         size='icon'
-                        className='size-7 bg-red-100 text-destructive hover:text-white cursor-pointer hover:bg-destructive'
+                        className='bg-red-100 hover:bg-destructive size-7 text-destructive hover:text-white cursor-pointer'
                         disabled={sliderFields.length <= 1}
                       >
-                        <Trash2 className='h-4 w-4' />
+                        <Trash2 className='w-4 h-4' />
                       </Button>
                     </div>
                   </CardHeader>
 
-                  <CardContent className='p-0 space-y-3'>
+                  <CardContent className='space-y-3 p-0'>
                     {/* Basic Fields */}
-                    <div className='grid md:grid-cols-3 gap-3'>
+                    <div className='gap-3 grid md:grid-cols-3'>
                       {/* Title field */}
                       <FormField
                         control={form.control}
                         name={`sliders.${index}.title`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className='text-xs text-muted-foreground'>Title</FormLabel>
+                            <FormLabel className='text-muted-foreground text-xs'>Title</FormLabel>
                             <FormControl>
                               <Input
                                 placeholder='Enter slider title'
@@ -319,7 +319,7 @@ export default function Sliders({ data }: TProps) {
                         name={`sliders.${index}.subtitle`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className='text-xs text-muted-foreground'>
+                            <FormLabel className='text-muted-foreground text-xs'>
                               Subtitle
                             </FormLabel>
                             <FormControl>
@@ -340,7 +340,7 @@ export default function Sliders({ data }: TProps) {
                         name={`sliders.${index}.direction`}
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className='text-xs text-muted-foreground'>
+                            <FormLabel className='text-muted-foreground text-xs'>
                               Direction
                             </FormLabel>
                             <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -364,12 +364,12 @@ export default function Sliders({ data }: TProps) {
 
                     {/* Background Image Section */}
                     <div className='space-y-2'>
-                      <Label className='text-xs text-muted-foreground'>Background Image</Label>
+                      <Label className='text-muted-foreground text-xs'>Background Image</Label>
 
                       {/* Background image preview */}
                       {backgroundImage?.file && (
-                        <div className='mb-3 relative max-w-xs'>
-                          <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
+                        <div className='relative mb-3 max-w-xs'>
+                          <div className='relative border rounded-md w-full aspect-video overflow-hidden'>
                             <Image
                               src={backgroundImage.file || '/placeholder.webp'}
                               alt={`Slider ${index + 1} background`}
@@ -377,15 +377,15 @@ export default function Sliders({ data }: TProps) {
                               className='object-cover'
                             />
                           </div>
-                          <p className='text-xs text-muted-foreground mt-1'>Background image</p>
+                          <p className='mt-1 text-muted-foreground text-xs'>Background image.</p>
                         </div>
                       )}
 
                       {/* Loading state for background image */}
                       {isUploadingBackground[sliderId] && (
-                        <div className='mb-2 p-2 bg-muted/20 rounded-md flex items-center gap-2'>
-                          <div className='h-3 w-3 animate-spin rounded-full border-2 border-primary border-t-transparent'></div>
-                          <span className='text-xs text-muted-foreground'>
+                        <div className='flex items-center gap-2 bg-muted/20 mb-2 p-2 rounded-md'>
+                          <div className='border-2 border-primary border-t-transparent rounded-full w-3 h-3 animate-spin'></div>
+                          <span className='text-muted-foreground text-xs'>
                             Uploading background image...
                           </span>
                         </div>
@@ -401,7 +401,7 @@ export default function Sliders({ data }: TProps) {
                           }
                         }}
                       />
-                      <p className='text-xs text-muted-foreground'>
+                      <p className='text-muted-foreground text-xs'>
                         Upload a background image for the slider. Recommended size: 1920x1080px.
                       </p>
                     </div>
@@ -411,7 +411,7 @@ export default function Sliders({ data }: TProps) {
                     {/* Additional Images Section */}
                     <div className='space-y-2'>
                       <div className='flex justify-between items-center'>
-                        <Label className='text-xs text-muted-foreground'>
+                        <Label className='text-muted-foreground text-xs'>
                           Additional Images ({additionalImages.length})
                         </Label>
                         <Button
@@ -426,12 +426,12 @@ export default function Sliders({ data }: TProps) {
                         >
                           {isUploadingAdditional[sliderId] ? (
                             <>
-                              <div className='h-3 w-3 mr-1 animate-spin rounded-full border border-primary border-t-transparent'></div>
+                              <div className='mr-1 border border-primary border-t-transparent rounded-full w-3 h-3 animate-spin'></div>
                               Uploading...
                             </>
                           ) : (
                             <>
-                              <Plus className='h-3 w-3 mr-1' />
+                              <Plus className='mr-1 w-3 h-3' />
                               Add Image
                             </>
                           )}
@@ -440,10 +440,10 @@ export default function Sliders({ data }: TProps) {
 
                       {/* Additional images preview */}
                       {additionalImages.length > 0 && (
-                        <div className='grid grid-cols-2 sm:grid-cols-3 gap-2 mb-2'>
+                        <div className='gap-2 grid grid-cols-2 sm:grid-cols-3 mb-2'>
                           {additionalImages.map((img: MediaFile, imgIndex: number) => (
-                            <div key={imgIndex} className='relative group'>
-                              <div className='border rounded-md overflow-hidden relative aspect-video'>
+                            <div key={imgIndex} className='group relative'>
+                              <div className='relative border rounded-md aspect-video overflow-hidden'>
                                 <Image
                                   src={img.file || '/placeholder.webp'}
                                   alt={`Slider ${index + 1} image ${imgIndex + 1}`}
@@ -454,7 +454,7 @@ export default function Sliders({ data }: TProps) {
                               <Button
                                 type='button'
                                 variant='destructive'
-                                className='absolute -top-1 -right-1 size-6 p-0 opacity-0 group-hover:opacity-100 transition-opacity'
+                                className='-top-1 -right-1 absolute opacity-0 group-hover:opacity-100 p-0 size-6 transition-opacity'
                                 onClick={() => {
                                   if (sliderId) {
                                     removeAdditionalImage(sliderId, imgIndex)
@@ -487,26 +487,27 @@ export default function Sliders({ data }: TProps) {
 
                       {/* Loading state for additional images */}
                       {isUploadingAdditional[sliderId] && (
-                        <div className='mb-2 p-2 bg-muted/20 rounded-md flex items-center gap-2'>
-                          <div className='h-3 w-3 animate-spin rounded-full border-2 border-primary border-t-transparent'></div>
-                          <span className='text-xs text-muted-foreground'>Uploading image...</span>
+                        <div className='flex items-center gap-2 bg-muted/20 mb-2 p-2 rounded-md'>
+                          <div className='border-2 border-primary border-t-transparent rounded-full w-3 h-3 animate-spin'></div>
+                          <span className='text-muted-foreground text-xs'>Uploading image...</span>
                         </div>
                       )}
 
                       {additionalImages.length === 0 && (
-                        <div className='text-center py-4 border border-dashed rounded-md bg-muted/20'>
-                          <p className='text-xs text-muted-foreground'>
+                        <div className='bg-muted/20 py-4 border border-dashed rounded-md text-center'>
+                          <p className='text-muted-foreground text-xs'>
                             No additional images added yet
                           </p>
-                          <p className='text-xs text-muted-foreground'>
+                          <p className='text-muted-foreground text-xs'>
                             Click "Add Image" to upload images
                           </p>
                         </div>
                       )}
 
-                      <p className='text-xs text-muted-foreground'>
+                      <p className='text-muted-foreground text-xs'>
                         Upload additional images for the slider (optional). Recommended size:
-                        800x600px.
+                        800x600px. <br />
+                        <span className='text-red-500'><b>N.B.</b> All layered images must maintain the same size and aspect ratio.</span>
                       </p>
                     </div>
                   </CardContent>
@@ -516,7 +517,7 @@ export default function Sliders({ data }: TProps) {
           </div>
 
           {sliderFields.length === 0 && (
-            <div className='text-center py-8 text-muted-foreground border border-dashed rounded-md'>
+            <div className='py-8 border border-dashed rounded-md text-muted-foreground text-center'>
               <p>No sliders added yet. Click the "Add Slider" button to add one.</p>
             </div>
           )}

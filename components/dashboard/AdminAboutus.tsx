@@ -233,10 +233,10 @@ export default function AdminAboutus({ data }: TProps) {
         title: values.title,
         backgroundImage: backgroundImage
           ? {
-              file: backgroundImage.file || '',
-              fileId: backgroundImage.fileId || '',
-              thumbnail: backgroundImage.thumbnail || ''
-            }
+            file: backgroundImage.file || '',
+            fileId: backgroundImage.fileId || '',
+            thumbnail: backgroundImage.thumbnail || ''
+          }
           : undefined,
         leadership: {
           title: values.leadership.title,
@@ -244,10 +244,10 @@ export default function AdminAboutus({ data }: TProps) {
         },
         bottomImage: bottomImage
           ? {
-              file: bottomImage.file || '',
-              fileId: bottomImage.fileId || '',
-              thumbnail: bottomImage.thumbnail || ''
-            }
+            file: bottomImage.file || '',
+            fileId: bottomImage.fileId || '',
+            thumbnail: bottomImage.thumbnail || ''
+          }
           : undefined
       }
 
@@ -296,10 +296,10 @@ export default function AdminAboutus({ data }: TProps) {
         description: values.description,
         image: currentSectionImage
           ? {
-              file: currentSectionImage.file || '',
-              fileId: currentSectionImage.fileId || '',
-              thumbnail: currentSectionImage.thumbnail || ''
-            }
+            file: currentSectionImage.file || '',
+            fileId: currentSectionImage.fileId || '',
+            thumbnail: currentSectionImage.thumbnail || ''
+          }
           : undefined
       }
 
@@ -513,9 +513,9 @@ export default function AdminAboutus({ data }: TProps) {
 
   return (
     <div>
-      <div className='flex items-center justify-between mb-6'>
+      <div className='flex justify-between items-center mb-6'>
         <div>
-          <h1 className='text-3xl font-bold'>About Us Management</h1>
+          <h1 className='font-bold text-3xl'>About Us Management</h1>
           <p className='text-muted-foreground'>Manage your organization's about us content</p>
         </div>
       </div>
@@ -548,8 +548,8 @@ export default function AdminAboutus({ data }: TProps) {
               <div className='space-y-2'>
                 <FormLabel>Background Image</FormLabel>
                 {backgroundImage?.file && (
-                  <div className='mb-4 relative max-w-xs'>
-                    <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
+                  <div className='relative mb-4 max-w-xs'>
+                    <div className='relative border rounded-md w-full aspect-video overflow-hidden'>
                       <Image
                         src={backgroundImage.file || '/placeholder.webp'}
                         alt='Background image preview'
@@ -557,7 +557,7 @@ export default function AdminAboutus({ data }: TProps) {
                         className='object-cover'
                       />
                     </div>
-                    <p className='text-xs text-muted-foreground mt-1'>Background image</p>
+                    <p className='mt-1 text-muted-foreground text-xs'>Background image. Recommended size: 1920x1080px.</p>
                   </div>
                 )}
                 <ImageUploader
@@ -575,26 +575,26 @@ export default function AdminAboutus({ data }: TProps) {
               <CardDescription>Add multiple content sections to your about us page</CardDescription>
             </CardHeader>
             <CardContent className='space-y-4'>
-              <div className='flex items-center justify-between'>
-                <h3 className='text-lg font-medium'>Sections</h3>
+              <div className='flex justify-between items-center'>
+                <h3 className='font-medium text-lg'>Sections</h3>
                 <Button type='button' onClick={handleAddSection} variant='outline' size='sm'>
-                  <Plus className='h-4 w-4 mr-2' />
+                  <Plus className='mr-2 w-4 h-4' />
                   Add Section
                 </Button>
               </div>
 
               {sectionFields.length > 0 ? (
-                <div className='grid gap-4'>
+                <div className='gap-4 grid'>
                   {sectionFields.map((section, index) => (
                     <Card key={section._id} className='border-l-4 border-l-blue-500/30'>
                       <CardContent className='p-4'>
-                        <div className='flex flex-col lg:flex-row items-start justify-between gap-4'>
+                        <div className='flex lg:flex-row flex-col justify-between items-start gap-4'>
                           <div className='flex-1 order-last lg:order-first'>
                             <h4 className='font-medium'>{section.title}</h4>
-                            <p className='text-sm mt-2 line-clamp-2'>{section.description}</p>
+                            <p className='mt-2 text-sm line-clamp-2'>{section.description}</p>
                             {sectionImages[index]?.file && (
-                              <div className='mt-2 relative max-w-[200px]'>
-                                <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
+                              <div className='relative mt-2 max-w-[200px]'>
+                                <div className='relative border rounded-md w-full aspect-video overflow-hidden'>
                                   <Image
                                     src={sectionImages[index]!.file || '/placeholder.webp'}
                                     alt='Section image'
@@ -605,7 +605,7 @@ export default function AdminAboutus({ data }: TProps) {
                               </div>
                             )}
                           </div>
-                          <div className='flex shadow px-2 rounded-md  gap-2'>
+                          <div className='flex gap-2 shadow px-2 rounded-md'>
                             <Button
                               type='button'
                               variant='ghost'
@@ -613,7 +613,7 @@ export default function AdminAboutus({ data }: TProps) {
                               onClick={() => handleMoveSectionUp(index)}
                               disabled={index === 0}
                             >
-                              <MoveUp className='h-4 w-4' />
+                              <MoveUp className='w-4 h-4' />
                             </Button>
                             <Button
                               type='button'
@@ -622,7 +622,7 @@ export default function AdminAboutus({ data }: TProps) {
                               onClick={() => handleMoveSectionDown(index)}
                               disabled={index === sectionFields.length - 1}
                             >
-                              <MoveDown className='h-4 w-4' />
+                              <MoveDown className='w-4 h-4' />
                             </Button>
                             <Button
                               type='button'
@@ -630,7 +630,7 @@ export default function AdminAboutus({ data }: TProps) {
                               size='sm'
                               onClick={() => handleEditSection(index)}
                             >
-                              <Edit className='h-4 w-4' />
+                              <Edit className='w-4 h-4' />
                             </Button>
                             <Button
                               type='button'
@@ -639,7 +639,7 @@ export default function AdminAboutus({ data }: TProps) {
                               onClick={() => handleDeleteSection(index)}
                               className='text-destructive hover:text-destructive'
                             >
-                              <Trash2 className='h-4 w-4' />
+                              <Trash2 className='w-4 h-4' />
                             </Button>
                           </div>
                         </div>
@@ -648,9 +648,9 @@ export default function AdminAboutus({ data }: TProps) {
                   ))}
                 </div>
               ) : (
-                <div className='text-center py-8 border border-dashed rounded-md'>
+                <div className='py-8 border border-dashed rounded-md text-center'>
                   <p className='text-muted-foreground'>No sections added yet</p>
-                  <p className='text-xs text-muted-foreground mt-1'>
+                  <p className='mt-1 text-muted-foreground text-xs'>
                     Click "Add Section" to add content sections
                   </p>
                 </div>
@@ -665,7 +665,7 @@ export default function AdminAboutus({ data }: TProps) {
               <CardDescription>Information about your company's leadership team</CardDescription>
             </CardHeader>
             <CardContent className='space-y-6'>
-              <div className='grid md:grid-cols-2 gap-4'>
+              <div className='gap-4 grid md:grid-cols-2'>
                 <FormField
                   control={form.control}
                   name='leadership.title'
@@ -703,24 +703,24 @@ export default function AdminAboutus({ data }: TProps) {
 
               {/* Leaders Management */}
               <div className='space-y-4'>
-                <div className='flex items-center justify-between'>
-                  <h3 className='text-lg font-medium'>Leadership Team</h3>
+                <div className='flex justify-between items-center'>
+                  <h3 className='font-medium text-lg'>Leadership Team</h3>
                   <Button type='button' onClick={handleAddLeader} variant='outline' size='sm'>
-                    <Plus className='h-4 w-4 mr-2' />
+                    <Plus className='mr-2 w-4 h-4' />
                     Add Leader
                   </Button>
                 </div>
 
                 {leaderFields.length > 0 ? (
-                  <div className='grid gap-4'>
+                  <div className='gap-4 grid'>
                     {leaderFields.map((leader, index) => (
                       <Card key={leader._id} className='border-l-4 border-l-primary/30'>
                         <CardContent className='p-4'>
-                          <div className='flex items-start justify-between gap-4'>
+                          <div className='flex justify-between items-start gap-4'>
                             <div className='flex-1'>
                               <h4 className='font-medium'>{leader.name}</h4>
-                              <p className='text-sm text-muted-foreground'>{leader.designation}</p>
-                              <p className='text-sm mt-2 line-clamp-2'>{leader.bio}</p>
+                              <p className='text-muted-foreground text-sm'>{leader.designation}</p>
+                              <p className='mt-2 text-sm line-clamp-2'>{leader.bio}</p>
                             </div>
                             <div className='flex gap-2'>
                               <Button
@@ -729,7 +729,7 @@ export default function AdminAboutus({ data }: TProps) {
                                 size='sm'
                                 onClick={() => handleEditLeader(index)}
                               >
-                                <Edit className='h-4 w-4' />
+                                <Edit className='w-4 h-4' />
                               </Button>
                               <Button
                                 type='button'
@@ -738,7 +738,7 @@ export default function AdminAboutus({ data }: TProps) {
                                 onClick={() => handleDeleteLeader(index)}
                                 className='text-destructive hover:text-destructive'
                               >
-                                <Trash2 className='h-4 w-4' />
+                                <Trash2 className='w-4 h-4' />
                               </Button>
                             </div>
                           </div>
@@ -747,9 +747,9 @@ export default function AdminAboutus({ data }: TProps) {
                     ))}
                   </div>
                 ) : (
-                  <div className='text-center py-8 border border-dashed rounded-md'>
+                  <div className='py-8 border border-dashed rounded-md text-center'>
                     <p className='text-muted-foreground'>No leaders added yet</p>
-                    <p className='text-xs text-muted-foreground mt-1'>
+                    <p className='mt-1 text-muted-foreground text-xs'>
                       Click "Add Leader" to add leadership team members
                     </p>
                   </div>
@@ -770,8 +770,8 @@ export default function AdminAboutus({ data }: TProps) {
               <div className='space-y-2'>
                 <FormLabel>Bottom Image</FormLabel>
                 {bottomImage?.file && (
-                  <div className='mb-4 relative max-w-xs'>
-                    <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
+                  <div className='relative mb-4 max-w-xs'>
+                    <div className='relative border rounded-md w-full aspect-video overflow-hidden'>
                       <Image
                         src={bottomImage.file || '/placeholder.webp'}
                         alt='Bottom image preview'
@@ -779,7 +779,7 @@ export default function AdminAboutus({ data }: TProps) {
                         className='object-cover'
                       />
                     </div>
-                    <p className='text-xs text-muted-foreground mt-1'>Bottom section image</p>
+                    <p className='mt-1 text-muted-foreground text-xs'>Bottom section image</p>
                   </div>
                 )}
                 <ImageUploader
@@ -791,11 +791,11 @@ export default function AdminAboutus({ data }: TProps) {
           </Card>
 
           {/* Submit Button */}
-          <div className='flex flex-col lg:flex-row gap-3 lg:gap-0 justify-start mb-10'>
+          <div className='flex lg:flex-row flex-col justify-start gap-3 lg:gap-0 mb-10'>
             <Button type='submit' disabled={isSubmitting} size='lg'>
               {isSubmitting ? 'Saving...' : 'Save Basic Information'}
             </Button>
-            <p className='text-sm text-muted-foreground ml-4 self-center'>
+            <p className='self-center ml-4 text-muted-foreground text-sm'>
               Sections and leaders are saved automatically when added/edited
             </p>
           </div>
@@ -853,8 +853,8 @@ export default function AdminAboutus({ data }: TProps) {
               <div className='space-y-2'>
                 <FormLabel>Section Image (Optional)</FormLabel>
                 {currentSectionImage?.file && (
-                  <div className='mb-4 relative max-w-xs'>
-                    <div className='border rounded-md overflow-hidden relative aspect-video w-full'>
+                  <div className='relative mb-4 max-w-xs'>
+                    <div className='relative border rounded-md w-full aspect-video overflow-hidden'>
                       <Image
                         src={currentSectionImage.file || '/placeholder.webp'}
                         alt='Section image preview'
@@ -862,7 +862,7 @@ export default function AdminAboutus({ data }: TProps) {
                         className='object-cover'
                       />
                     </div>
-                    <p className='text-xs text-muted-foreground mt-1'>Section image</p>
+                    <p className='mt-1 text-muted-foreground text-xs'>Section image</p>
                   </div>
                 )}
                 <ImageUploader
