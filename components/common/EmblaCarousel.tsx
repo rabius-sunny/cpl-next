@@ -84,7 +84,7 @@ const EmblaCarousel: React.FC<TProps> = (props) => {
     <div className='flex lg:flex-row flex-col justify-center items-center gap-8 lg:gap-12 embla'>
       <div className='w-full embla__viewport' ref={emblaMainRef}>
         <div className='embla__container'>
-          {slides.map((item, idx) => (
+          {slides?.map((item, idx) => (
             <div className='embla__slide' key={idx}>
               {item}
             </div>

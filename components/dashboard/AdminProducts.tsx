@@ -29,6 +29,7 @@ import { useState } from 'react'
 import { useFieldArray, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import * as z from 'zod'
+import { CopyToClipboard } from '../common/CopyToClipboard'
 
 type TProps = {
   data: Product[]
@@ -118,10 +119,10 @@ export default function AdminProducts({ data }: TProps) {
       // Clean the media file data to avoid circular references
       const cleanThumbnail = thumbnailFile
         ? {
-            file: thumbnailFile.file,
-            fileId: thumbnailFile.fileId,
-            thumbnail: thumbnailFile.thumbnail
-          }
+          file: thumbnailFile.file,
+          fileId: thumbnailFile.fileId,
+          thumbnail: thumbnailFile.thumbnail
+        }
         : undefined
 
       const cleanImages = imageFiles.map((image) => ({
@@ -504,6 +505,8 @@ export default function AdminProducts({ data }: TProps) {
                 <CardTitle className='mb-2 line-clamp-1'>{product.name}</CardTitle>
                 <p className='mb-3 text-muted-foreground text-sm line-clamp-2'>
                   {product.description}
+                </p>  <p className='mb-3 text-muted-foreground text-sm line-clamp-2'>
+                  {product.slug}
                 </p>
 
                 {product.features && product.features.length > 0 && (
@@ -542,6 +545,9 @@ export default function AdminProducts({ data }: TProps) {
                   <Edit className='mr-2 w-4 h-4' />
                   Edit
                 </Button>
+
+                <CopyToClipboard text={product.slug} />
+
                 <Button
                   variant='destructive'
                   size='sm'
