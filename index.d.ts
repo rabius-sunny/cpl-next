@@ -15,6 +15,12 @@ type MediaFile = {
 
 type Logo = MediaFile
 
+type ResponseData = {
+  success: boolean
+  data?: SiteContentData | null
+  error?: string
+}
+
 // Homepage Navigation Types
 type NavChildItem = {
   title: string
